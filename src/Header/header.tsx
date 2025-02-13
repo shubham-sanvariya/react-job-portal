@@ -1,5 +1,6 @@
 import {IconBell, IconSettings} from "@tabler/icons-react";
 import {Avatar, Indicator} from "@mantine/core";
+import NavLinks from "@/Header/navLinks.tsx";
 
 const Header = () => {
     return (
@@ -10,12 +11,7 @@ const Header = () => {
                     JobFetch
                 </div>
             </div>
-            <div className={'flex gap-4'}>
-                <a href="">Find Job</a>
-                <a href="">Find Talent</a>
-                <a href="">Upload Jobs</a>
-                <a href="">About Us</a>
-            </div>
+            <NavLinks/>
             <div className={'flex gap-3 items-center'}>
                 <div className={'flex items-center gap-2'}>
                     <div>
