@@ -1,7 +1,8 @@
+import Header from "@/Header/header.tsx";
 
 const HomePage = () => {
     return (
-        <div>HomePage</div>
+       <Header/>
     )
 }
 export default HomePage
