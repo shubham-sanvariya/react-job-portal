@@ -3,6 +3,7 @@ import './App.css'
 
 import '@mantine/core/styles.css';
 import HomePage from "@/pages/homePage.tsx";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
 
@@ -39,7 +40,9 @@ function App() {
 
     return (
         <MantineProvider theme={theme}>
-            <HomePage/>
+            <BrowserRouter>
+                <HomePage/>
+            </BrowserRouter>
         </MantineProvider>
     )
 }
