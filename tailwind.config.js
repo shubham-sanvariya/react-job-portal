@@ -4,11 +4,6 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
     theme: {
     	extend: {
-    		borderRadius: {
-    			lg: 'var(--radius)',
-    			md: 'calc(var(--radius) - 2px)',
-    			sm: 'calc(var(--radius) - 4px)'
-    		},
     		colors: {
 				'mine-shaft': {
 					'50': '#f6f6f6',
