@@ -29,18 +29,19 @@ const DreamJob = () => {
                             <Avatar>+5</Avatar>
                         </AvatarGroup>
                     </div>
-                    <div>
-                        <div>
-                            <div>
-                                <img src={'/src/assets/'}/>
+                    <div className={'absolute -left-10 top-[25%] w-fit border-bright-sun-400 border rounded-lg p-3 backdrop-blur-md flex flex-col gap-3'}>
+                        <div className={'flex items-center gap-2'}>
+                            <div className={'w-10 h-10 p-1 bg-mine-shaft-900 rounded-lg'}>
+                                <img src={'/src/assets/icons/Google.png'} alt={'google'}/>
                             </div>
-                            <div>
-                                <div></div>
-                                <div></div>
+                            <div className={'text-sm text-mine-shaft-100'}>
+                                <div>software Engineer</div>
+                                <div className={'text-mine-shaft-200 text-xs'}>New york</div>
                             </div>
                         </div>
-                        <div>
-
+                        <div className={'flex gap-2 justify-around text-mine-shaft-200 text-xs'}>
+                            <span>1 day ago</span>
+                            <span> 120 Applicants</span>
                         </div>
                     </div>
                 </div>
