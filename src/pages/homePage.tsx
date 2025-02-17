@@ -4,6 +4,7 @@ import Companies from "@/landingPage/companies.tsx";
 import JobCategory from "@/landingPage/jobCategory.tsx";
 import Working from "@/landingPage/working.tsx";
 import Testimonials from "@/landingPage/testimonials.tsx";
+import Subscribe from "@/landingPage/subscribe.tsx";
 
 const HomePage = () => {
     return (
@@ -14,6 +15,7 @@ const HomePage = () => {
             <JobCategory/>
             <Working/>
             <Testimonials/>
+            <Subscribe/>
         </div>
     )
 }
