@@ -5,6 +5,7 @@ import JobCategory from "@/landingPage/jobCategory.tsx";
 import Working from "@/landingPage/working.tsx";
 import Testimonials from "@/landingPage/testimonials.tsx";
 import Subscribe from "@/landingPage/subscribe.tsx";
+import Footer from "@/footer/footer.tsx";
 
 const HomePage = () => {
     return (
@@ -16,6 +17,7 @@ const HomePage = () => {
             <Working/>
             <Testimonials/>
             <Subscribe/>
+            <Footer/>
         </div>
     )
 }
