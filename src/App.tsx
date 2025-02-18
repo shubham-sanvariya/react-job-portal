@@ -39,11 +39,12 @@ function App() {
                 '#7a330d',
                 '#461902',
             ],
-        }
+        },
+        fontFamily: 'poppins, san-serif'
     })
 
     return (
-        <MantineProvider theme={theme}>
+        <MantineProvider defaultColorScheme={"dark"} theme={theme}>
             <BrowserRouter>
                 <Header/>
                 <Routes>
