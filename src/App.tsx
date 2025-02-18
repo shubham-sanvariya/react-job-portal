@@ -5,6 +5,8 @@ import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import HomePage from "@/pages/homePage.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Header from "@/Header/header.tsx";
+import Footer from "@/footer/footer.tsx";
 
 function App() {
 
@@ -42,9 +44,11 @@ function App() {
     return (
         <MantineProvider theme={theme}>
             <BrowserRouter>
+                <Header/>
                 <Routes>
                     <Route path={'*'} element={<HomePage/>}/>
                 </Routes>
+                <Footer/>
             </BrowserRouter>
         </MantineProvider>
     )

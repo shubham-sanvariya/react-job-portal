@@ -4,7 +4,7 @@ import NavLinks from "@/Header/navLinks.tsx";
 
 const Header = () => {
     return (
-        <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20'}>
+        <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20 font-[poppins]'}>
             <div className={'flex gap-3 items-center text-bright-sun-400'}>
                 <img src="src/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-12 h-12"/>
                 <div className={'text-3xl font-bold'}>
