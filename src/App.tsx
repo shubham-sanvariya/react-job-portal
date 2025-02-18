@@ -7,6 +7,7 @@ import HomePage from "@/pages/homePage.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "@/Header/header.tsx";
 import Footer from "@/footer/footer.tsx";
+import FindJobs from "@/pages/findJobs.tsx";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
             <BrowserRouter>
                 <Header/>
                 <Routes>
+                    <Route path={'/find-jobs'} element={<FindJobs/>}/>
                     <Route path={'*'} element={<HomePage/>}/>
                 </Routes>
                 <Footer/>
