@@ -1,4 +1,6 @@
 import Sort from "@/findjobs/sort.tsx";
+import JobCard from "@/findjobs/jobCard.tsx";
+import {jobList} from "@/Data/JobsData.tsx";
 
 const Jobs = () => {
     return (
@@ -6,6 +8,13 @@ const Jobs = () => {
             <div className={'flex justify-between'}>
                 <div className={'text-2xl font-semibold'}>Recommended Jobs</div>
                 <Sort/>
+            </div>
+            <div className={'flex flex-wrap mt-10 gap-5'}>
+                {
+                    jobList.map((job, index) => (
+                        <JobCard key={index} {...job}/>
+                    ))
+                }
             </div>
         </div>
     )

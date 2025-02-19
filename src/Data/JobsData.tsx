@@ -7,6 +7,18 @@ const dropdownData = [
     { title: "Job Type", icon: IconRecharging, options: ['Full Time', 'Part Time', 'Contract', 'Freelance', 'Internship'] }
 ];
 
+export interface jobListProps{
+    jobTitle:  string,
+    company: string,
+    applicants: number,
+    experience:  string,
+    jobType: string,
+    location:  string,
+    package:  string,
+    postedDaysAgo: number,
+    description: string
+}
+
 const jobList = [
     {
       jobTitle: "Product Designer",
