@@ -9,6 +9,7 @@ import Header from "@/Header/header.tsx";
 import Footer from "@/footer/footer.tsx";
 import FindJobs from "@/pages/findJobs.tsx";
 import FindTalent from "@/pages/findTalent.tsx";
+import TalentProfilePage from "@/pages/talentProfilePage.tsx";
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
                 <Routes>
                     <Route path={'/find-jobs'} element={<FindJobs/>}/>
                     <Route path={'/find-talent'} element={<FindTalent/>}/>
+                    <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
                     <Route path={'*'} element={<HomePage/>}/>
                 </Routes>
                 <Footer/>
