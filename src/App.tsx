@@ -14,6 +14,10 @@ import TalentProfilePage from "@/pages/talentProfilePage.tsx";
 function App() {
 
     const theme = createTheme({
+        focusRing: "never",
+        fontFamily: 'poppins, san-serif',
+        primaryColor: 'bright-sun',
+        primaryShade: 4,
         colors: {
             'mine-shaft': [
                 '#f6f6f6',
@@ -42,7 +46,6 @@ function App() {
                 '#461902',
             ],
         },
-        fontFamily: 'poppins, san-serif'
     })
 
     return (
@@ -52,6 +55,7 @@ function App() {
                 <Routes>
                     <Route path={'/find-jobs'} element={<FindJobs/>}/>
                     <Route path={'/find-talent'} element={<FindTalent/>}/>
+                    <Route path={'/post-job'} element={<div></div>}/>
                     <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
                     <Route path={'*'} element={<HomePage/>}/>
                 </Routes>
