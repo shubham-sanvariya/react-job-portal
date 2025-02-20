@@ -1,6 +1,7 @@
-import {createTheme, MantineProvider} from '@mantine/core'
+import {createTheme, Divider, MantineProvider} from '@mantine/core'
 import './App.css'
 
+import '@mantine/tiptap/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import HomePage from "@/pages/homePage.tsx";
@@ -10,6 +11,7 @@ import Footer from "@/footer/footer.tsx";
 import FindJobs from "@/pages/findJobs.tsx";
 import FindTalent from "@/pages/findTalent.tsx";
 import TalentProfilePage from "@/pages/talentProfilePage.tsx";
+import PostJobPage from "@/pages/postJobPage.tsx";
 
 function App() {
 
@@ -52,10 +54,11 @@ function App() {
         <MantineProvider defaultColorScheme={"dark"} theme={theme}>
             <BrowserRouter>
                 <Header/>
+                <Divider size={'xs'}/>
                 <Routes>
                     <Route path={'/find-jobs'} element={<FindJobs/>}/>
                     <Route path={'/find-talent'} element={<FindTalent/>}/>
-                    <Route path={'/post-job'} element={<div></div>}/>
+                    <Route path={'/post-job'} element={<PostJobPage/>}/>
                     <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
                     <Route path={'*'} element={<HomePage/>}/>
                 </Routes>
