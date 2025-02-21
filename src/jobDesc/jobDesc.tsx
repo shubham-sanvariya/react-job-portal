@@ -34,8 +34,8 @@ const JobDesc = () => {
             <div className={'flex justify-between'}>
                 {
                     card.map((item, index: number) => (
-                        <div key={index} className={'flex flex-col items-center gap-1'}>
-                            <ActionIcon color={'birght-sun.4'} className="!h-12 !w-1/2" variant="light" radius="xl"
+                        <div key={index} className={'flex flex-col items-center gap-1 '}>
+                            <ActionIcon color={'bright-sun.4'} className="!h-12 !w-12" variant="light" radius="xl"
                                         aria-label="Settings">
                                 <item.icon className="h-4/5 w-4/5" stroke={1.5}/>
                             </ActionIcon>
@@ -53,7 +53,7 @@ const JobDesc = () => {
                 <div className={'flex flex-wrap gap-2'}>
                     {
                         skills.map((item, index: number) => (
-                            <ActionIcon key={index} color={'birght-sun.4'}
+                            <ActionIcon key={index} color={'bright-sun.4'}
                                         className="!text-sm !h-fit !w-fit font-medium" variant="light"
                                         radius="xl" p={"xs"}
                                         aria-label="Settings">
