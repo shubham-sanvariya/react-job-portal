@@ -13,6 +13,7 @@ import FindTalent from "@/pages/findTalent.tsx";
 import TalentProfilePage from "@/pages/talentProfilePage.tsx";
 import PostJobPage from "@/pages/postJobPage.tsx";
 import JobDescPage from "@/pages/jobDescPage.tsx";
+import ApplyJobPage from "@/pages/applyJobPage.tsx";
 
 function App() {
 
@@ -54,17 +55,20 @@ function App() {
     return (
         <MantineProvider defaultColorScheme={"dark"} theme={theme}>
             <BrowserRouter>
-                <Header/>
-                <Divider size={'xs'}/>
-                <Routes>
-                    <Route path={'/find-jobs'} element={<FindJobs/>}/>
-                    <Route path={'/find-talent'} element={<FindTalent/>}/>
-                    <Route path={'/jobs'} element={<JobDescPage/>}/>
-                    <Route path={'/post-job'} element={<PostJobPage/>}/>
-                    <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
-                    <Route path={'*'} element={<HomePage/>}/>
-                </Routes>
-                <Footer/>
+                <div className={'relative'}>
+                    <Header/>
+                    <Divider size={'xs'}/>
+                    <Routes>
+                        <Route path={'/find-jobs'} element={<FindJobs/>}/>
+                        <Route path={'/find-talent'} element={<FindTalent/>}/>
+                        <Route path={'/jobs'} element={<JobDescPage/>}/>
+                        <Route path={'/apply-job'} element={<ApplyJobPage/>}/>
+                        <Route path={'/post-job'} element={<PostJobPage/>}/>
+                        <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
+                        <Route path={'*'} element={<HomePage/>}/>
+                    </Routes>
+                    <Footer/>
+                </div>
             </BrowserRouter>
         </MantineProvider>
     )
