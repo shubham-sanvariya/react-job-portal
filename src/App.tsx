@@ -12,6 +12,7 @@ import FindJobs from "@/pages/findJobs.tsx";
 import FindTalent from "@/pages/findTalent.tsx";
 import TalentProfilePage from "@/pages/talentProfilePage.tsx";
 import PostJobPage from "@/pages/postJobPage.tsx";
+import JobDescPage from "@/pages/jobDescPage.tsx";
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
                 <Routes>
                     <Route path={'/find-jobs'} element={<FindJobs/>}/>
                     <Route path={'/find-talent'} element={<FindTalent/>}/>
+                    <Route path={'/jobs'} element={<JobDescPage/>}/>
                     <Route path={'/post-job'} element={<PostJobPage/>}/>
                     <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
                     <Route path={'*'} element={<HomePage/>}/>

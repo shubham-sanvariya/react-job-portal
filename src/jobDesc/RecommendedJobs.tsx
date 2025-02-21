@@ -8,9 +8,9 @@ const RecommendedJobs = () => {
             <div className={'text-xl font-semibold mb-5'}>
                 Recommended Jobs
             </div>
-            <div className={'flex flex-col flex-wrap gap-5 '}>
+            <div className={'flex flex-col flex-wrap justify-between gap-5 '}>
                 {
-                    jobList.map((job,index) => index < 4 && (
+                    jobList.map((job,index) => index < 6 && (
                         <JobCard key={index} {...job}/>
                     ))
                 }
