@@ -14,6 +14,7 @@ import TalentProfilePage from "@/pages/talentProfilePage.tsx";
 import PostJobPage from "@/pages/postJobPage.tsx";
 import JobDescPage from "@/pages/jobDescPage.tsx";
 import ApplyJobPage from "@/pages/applyJobPage.tsx";
+import CompanyPage from "@/pages/companyPage.tsx";
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
                         <Route path={'/find-talent'} element={<FindTalent/>}/>
                         <Route path={'/jobs'} element={<JobDescPage/>}/>
                         <Route path={'/apply-job'} element={<ApplyJobPage/>}/>
+                        <Route path={'/company'} element={<CompanyPage/>}/>
                         <Route path={'/post-job'} element={<PostJobPage/>}/>
                         <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
                         <Route path={'*'} element={<HomePage/>}/>
