@@ -17,7 +17,7 @@ const Header = () => {
                     <div>
                         Marshal
                     </div>
-                    <Avatar src={'avatar.png'} alt={"it's me"}/>
+                    <Avatar src={'/src/assets/avatar.png'} alt={"it's me"}/>
                 </div>
                 <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
                     <IconSettings stroke={'1.5'}/>
