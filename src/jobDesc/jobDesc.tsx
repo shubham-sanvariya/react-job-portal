@@ -5,7 +5,7 @@ import {card, desc, skills} from "@/Data/JobDescData.tsx";
 
 import DOMPurify from "dompurify";
 
-const JobDesc = () => {
+const JobDesc = ( props : any ) => {
 
     return (
         <div className={'w-2/3'}>
@@ -27,7 +27,13 @@ const JobDesc = () => {
                             Apply
                         </Button>
                     </Link>
-                    <IconBookmark className={'text-bright-sun-400 cursor-pointer'}/>
+                    { props.edit ?
+                        <Button size={"sm"} color={'red.5'} variant={"outline"}>
+                            Delete
+                        </Button>
+                        :
+                        <IconBookmark className={'text-bright-sun-400 cursor-pointer'}/>
+                    }
                 </div>
             </div>
             <Divider my={'xl'}/>
@@ -76,9 +82,7 @@ const JobDesc = () => {
 
                     <div className={'flex justify-between mb-3'}>
                         <div className={'flex items-center gap-2'}>
-                            <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-8'}
-                                                                                     src={`/src/assets/Icons/Google.png`}
-                                                                                     alt="microsoft"/></div>
+                            <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-8'} src={`/src/assets/Icons/Google.png`} alt="microsoft"/></div>
                             <div>
                                 <div className={'font-medium text-lg'}>jobTitle</div>
                                 <div
