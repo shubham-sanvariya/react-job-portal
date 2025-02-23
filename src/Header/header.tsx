@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 
 const Header = () => {
     const location = useLocation();
-    return location.pathname != '/signup' ?(
+    return location.pathname != '/signup' && location.pathname != '/login' ?(
         <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20 font-[poppins]'}>
             <div className={'flex gap-3 items-center text-bright-sun-400'}>
                 <img src="src/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-12 h-12"/>
