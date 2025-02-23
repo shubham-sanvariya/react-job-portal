@@ -1,9 +1,11 @@
 import {IconBell, IconSettings} from "@tabler/icons-react";
 import {Avatar, Indicator} from "@mantine/core";
 import NavLinks from "@/Header/navLinks.tsx";
+import {useLocation} from "react-router-dom";
 
 const Header = () => {
-    return (
+    const location = useLocation();
+    return location.pathname != '/signup' ?(
         <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20 font-[poppins]'}>
             <div className={'flex gap-3 items-center text-bright-sun-400'}>
                 <img src="src/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-12 h-12"/>
@@ -29,6 +31,6 @@ const Header = () => {
                 </div>
             </div>
         </div>
-    )
+    ) : <></>
 }
 export default Header
