@@ -19,6 +19,7 @@ import CompanyPage from "@/pages/companyPage.tsx";
 import PostedJobPage from "@/pages/postedJobPage.tsx";
 import JobHistoryPage from "@/pages/jobHistoryPage.tsx";
 import SignUpPage from "@/pages/signUpPage.tsx";
+import ProfilePage from "@/pages/profilePage.tsx";
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
                         <Route path={'/post-job'} element={<PostJobPage/>}/>
                         <Route path={'/signup'} element={<SignUpPage/>}/>
                         <Route path={'/login'} element={<SignUpPage/>}/>
+                        <Route path={'/profile'} element={<ProfilePage/>}/>
                         <Route path={'/posted-job'} element={<PostedJobPage/>}/>
                         <Route path={'/job-history'} element={<JobHistoryPage/>}/>
                         <Route path={'/talent-profile'} element={<TalentProfilePage/>}/>
