@@ -3,6 +3,7 @@ import {IconAt, IconLock} from "@tabler/icons-react";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import {registerUser} from "@/services/userService.tsx";
+import * as React from "react";
 
 const form = {
     name: "",
@@ -16,7 +17,7 @@ const SignUp = () => {
 
     const [data, setData] = useState(form);
 
-    const handleChange = (event) => {
+    const handleChange = (event : React.ChangeEvent<HTMLInputElement> | string) => {
         if (typeof event == "string") setData({...data, accountType: event})
         else setData({...data, [event.target.name]:event.target.value})
     }
