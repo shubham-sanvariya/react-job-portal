@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import * as React from "react";
 import {loginUser} from "@/services/userService.tsx";
+import axios from "axios";
 
 const form = {
     email: "",
@@ -21,8 +22,12 @@ const Login = () => {
         try{
             const res = await loginUser(data);
             console.log(res);
-        }catch (e : any) {
-            console.log(e.response.data);
+        }catch (e : unknown) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response?.data);  // '?.' to avoid undefined errors
+            } else {
+                console.log("An unexpected error occurred", e);
+            }
         }
     }
     return (
