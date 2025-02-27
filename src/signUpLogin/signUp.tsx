@@ -5,6 +5,7 @@ import {useState} from "react";
 import {registerUser} from "@/services/userService.tsx";
 import * as React from "react";
 import axios from "axios";
+import {signUpValidation} from "@/services/fromValidation.tsx";
 
 const form = {
     name: "",
@@ -16,17 +17,50 @@ const form = {
 
 const SignUp = () => {
 
-    const [data, setData] = useState(form);
-
+    const [data, setData] = useState<{ [key : string] : string }>(form);
+    const [formError, setFormError] = useState(form);
     const handleChange = (event : React.ChangeEvent<HTMLInputElement> | string) => {
         if (typeof event == "string") setData({...data, accountType: event})
-        else setData({...data, [event.target.name]:event.target.value})
+        else{
+            const name = event.target.name, value = event.target.value;
+            setData({...data, [name]:value})
+            setFormError({...formError, [name]:signUpValidation(name,value)})
+            if (name === "password" && data.confirmPassword !== ""){
+                let err = "";
+                if (data.confirmPassword !== value){
+                    err = "Password do not match"
+                }
+                setFormError({...formError, [name]:signUpValidation(name,value), confirmPassword: err})
+
+            }
+            if (name === "confirmPassword" ){
+                if (data.password !== value){
+                    setFormError({...formError, [name]:"Confirm Password do not match the Password" })
+                }else {
+                    setFormError({...formError, confirmPassword:"" })
+                }
+            }
+        }
     }
 
     const handleSubmit = async () => {
         try{
-            const res = await registerUser(data);
-            console.log(res);
+            let valid = true
+            const newFormError : { [key : string] : string } = {};
+            for (const key in data){
+                if (key === 'accountType')continue;
+                if (key !== "confirmPassword") {
+                    newFormError[key] =  signUpValidation(key, data[key]) || "";
+                }else if (data[key] !== data["password"]){
+                    newFormError[key] = "Passwords do not match";
+                }
+                if (newFormError[key]) valid = false;
+            }
+            setFormError(newFormError);
+            if (valid){
+                const res = await registerUser(data);
+                console.log(res);
+            }
         }catch (e : unknown) {
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.data);  // '?.' to avoid undefined errors
@@ -45,6 +79,7 @@ const SignUp = () => {
                 name={"name"}
                 value={data.name}
                 onChange={handleChange}
+                error={formError.name}
                 withAsterisk
                 label={"Full Name"}
                 placeholder={'Your Name'}
@@ -52,6 +87,7 @@ const SignUp = () => {
             name={"email"}
             value={data.email}
             onChange={handleChange}
+            error={formError.email}
             withAsterisk
             leftSectionPointerEvents={'none'}
             leftSection={<IconAt style={{width: rem(16), height: rem(16)}}/>}
@@ -62,6 +98,7 @@ const SignUp = () => {
                 name={"password"}
                 value={data.password}
                 onChange={handleChange}
+                error={formError.password}
                 withAsterisk
                 leftSection={<IconLock style={{width: rem(18), height: rem(18)}} stroke={1.5}/>}
                 label={'Password'}
@@ -71,6 +108,7 @@ const SignUp = () => {
                 name={"confirmPassword"}
                 value={data.confirmPassword}
                 onChange={handleChange}
+                error={formError.confirmPassword}
                 withAsterisk
                 leftSection={<IconLock style={{width: rem(18), height: rem(18)}} stroke={1.5}/>}
                 label={'Confirm Password'}
