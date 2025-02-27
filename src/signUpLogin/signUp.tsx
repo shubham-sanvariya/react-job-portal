@@ -76,9 +76,9 @@ const SignUp = () => {
                 },3000)
             }
         }catch (e : unknown) {
-            let errMsg = "";
+            let errMsg: string;
             if (axios.isAxiosError(e)) {
-                errMsg = e.response?.data
+                errMsg = e.response?.data?.errorMessage
                 console.log(errMsg);
             } else {
                 errMsg = "An unexpected error occurred"

@@ -1,33 +1,81 @@
 import {Button, PasswordInput, rem, TextInput} from "@mantine/core";
-import {IconAt, IconLock} from "@tabler/icons-react";
-import {Link} from "react-router-dom";
+import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
+import { useNavigate} from "react-router-dom";
 import {useState} from "react";
 import * as React from "react";
 import {loginUser} from "@/services/userService.tsx";
 import axios from "axios";
+import {loginValidation} from "@/services/fromValidation.tsx";
+import {notifications} from "@mantine/notifications";
 
-const form = {
+type FormType = {
+    email: string;
+    password: string;
+};
+
+const form : FormType = {
     email: "",
-    password : "",
+    password: "",
 }
 
 const Login = () => {
-    const [data, setData] = useState(form);
+    const navigate = useNavigate();
+    const [data, setData] = useState<FormType>(form);
+    const [formError, setFormError] = useState<FormType>(form);
 
-    const handleChange = (event : React.ChangeEvent<HTMLInputElement>) => {
-         setData({...data, [event.target.name]:event.target.value})
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name, value = event.target.value;
+        setData({...data, [name]: value})
+        setFormError({...formError, [name] : loginValidation(name, value) })
     }
 
     const handleSubmit = async () => {
-        try{
-            const res = await loginUser(data);
-            console.log(res);
-        }catch (e : unknown) {
-            if (axios.isAxiosError(e)) {
-                console.log(e.response?.data);  // '?.' to avoid undefined errors
-            } else {
-                console.log("An unexpected error occurred", e);
+        try {
+            let valid = true
+            const newFormError: Partial<FormType> = {};
+            for (const key in data) {
+                if (Object.prototype.hasOwnProperty.call(data, key)) {
+                    const typedKey = key as keyof FormType; // Ensure key is properly typed
+                    newFormError[typedKey] = loginValidation(typedKey, data[typedKey]) ?? "";
+                    if (newFormError[typedKey]) valid = false;
+                }
             }
+            setFormError(newFormError as FormType);
+            if (valid) {
+                const res = await loginUser(data);
+                console.log(res);
+                notifications.show({
+                    title: 'Login Successfully',
+                    message: 'Redirecting to Home Page',
+                    withCloseButton: true,
+                    icon: <IconCheck style={{width: "90%", height: "90%"}}/>,
+                    color: "teal",
+                    withBorder: true,
+                    className: "!border-green-500"
+                })
+                setData(form);
+                setTimeout(() => {
+                    navigate('/')
+                }, 3000)
+            }
+        } catch (e: unknown) {
+            let errMsg: string;
+            if (axios.isAxiosError(e)) {
+                errMsg = e.response?.data?.errorMessage
+                console.log(errMsg);
+            } else {
+                errMsg = "An unexpected error occurred"
+                console.log(errMsg, e);
+            }
+            notifications.show({
+                title: 'Login Failed',
+                message: errMsg,
+                withCloseButton: true,
+                icon: <IconX style={{width: "90%", height: "90%"}}/>,
+                color: "red",
+                withBorder: true,
+                className: "!border-red-700"
+            })
         }
     }
     return (
@@ -39,6 +87,7 @@ const Login = () => {
                 name={"email"}
                 value={data.email}
                 onChange={handleChange}
+                error={formError.email}
                 withAsterisk
                 leftSectionPointerEvents={'none'}
                 leftSection={<IconAt style={{width: rem(16), height: rem(16)}}/>}
@@ -49,6 +98,7 @@ const Login = () => {
                 name={"password"}
                 value={data.password}
                 onChange={handleChange}
+                error={formError.password}
                 withAsterisk
                 leftSection={<IconLock style={{width: rem(18), height: rem(18)}} stroke={1.5}/>}
                 label={'Password'}
@@ -57,9 +107,13 @@ const Login = () => {
 
             <Button onClick={handleSubmit} autoContrast variant={'filled'}>Login</Button>
             <div className={'mx-auto'}>don't have an Account ? &nbsp;
-                <Link to={'/signup'} className={'text-bright-sun-400 hover:underline'}>
+                <span onClick={() => {
+                    navigate('/signup')
+                    setData(form)
+                    setFormError(form)
+                }} className={'text-bright-sun-400 hover:underline cursor-pointer'}>
                     SignUp
-                </Link>
+                </span>
             </div>
         </div>
     )

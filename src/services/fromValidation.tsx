@@ -5,7 +5,7 @@ const signUpValidation = (key : string, value: string) => {
             if (value.length === 0) return "Name is required"
             break;
         case "email":
-            if (value.length === 0) return "Name is required"
+            if (value.length === 0) return "Email is required"
             if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)){
                 return "Email is invalid";
             }
