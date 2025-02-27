@@ -5,6 +5,7 @@ import '@mantine/tiptap/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css';
 import HomePage from "@/pages/homePage.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "@/Header/header.tsx";
@@ -20,6 +21,7 @@ import PostedJobPage from "@/pages/postedJobPage.tsx";
 import JobHistoryPage from "@/pages/jobHistoryPage.tsx";
 import SignUpPage from "@/pages/signUpPage.tsx";
 import ProfilePage from "@/pages/profilePage.tsx";
+import {Notifications} from "@mantine/notifications";
 
 function App() {
 
@@ -60,6 +62,7 @@ function App() {
 
     return (
         <MantineProvider defaultColorScheme={"dark"} theme={theme}>
+            <Notifications position={"top-center"} zIndex={1000}/>
             <BrowserRouter>
                 <div className={'relative'}>
                     <Header/>
