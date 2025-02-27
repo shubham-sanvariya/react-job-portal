@@ -1,11 +1,12 @@
 import {Anchor, Button, Checkbox, Group, PasswordInput, Radio, rem, TextInput} from "@mantine/core";
-import {IconAt, IconLock} from "@tabler/icons-react";
-import {Link} from "react-router-dom";
+import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
+import { useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {registerUser} from "@/services/userService.tsx";
 import * as React from "react";
 import axios from "axios";
 import {signUpValidation} from "@/services/fromValidation.tsx";
+import {notifications} from "@mantine/notifications";
 
 const form = {
     name: "",
@@ -16,7 +17,7 @@ const form = {
 }
 
 const SignUp = () => {
-
+    const navigate = useNavigate();
     const [data, setData] = useState<{ [key : string] : string }>(form);
     const [formError, setFormError] = useState(form);
     const handleChange = (event : React.ChangeEvent<HTMLInputElement> | string) => {
@@ -50,7 +51,7 @@ const SignUp = () => {
             for (const key in data){
                 if (key === 'accountType')continue;
                 if (key !== "confirmPassword") {
-                    newFormError[key] =  signUpValidation(key, data[key]) || "";
+                    newFormError[key] =  signUpValidation(key, data[key]) ?? "";
                 }else if (data[key] !== data["password"]){
                     newFormError[key] = "Passwords do not match";
                 }
@@ -60,13 +61,38 @@ const SignUp = () => {
             if (valid){
                 const res = await registerUser(data);
                 console.log(res);
+                notifications.show({
+                    title: 'Registered Successfully',
+                    message: 'Redirecting to Login Page',
+                    withCloseButton: true,
+                    icon: <IconCheck style={{ width: "90%", height: "90%"}}/>,
+                    color: "teal",
+                    withBorder: true,
+                    className:"!border-green-500"
+                })
+                setData(form);
+                setTimeout(() => {
+                    navigate('/login')
+                },3000)
             }
         }catch (e : unknown) {
+            let errMsg = "";
             if (axios.isAxiosError(e)) {
-                console.log(e.response?.data);  // '?.' to avoid undefined errors
+                errMsg = e.response?.data
+                console.log(errMsg);
             } else {
-                console.log("An unexpected error occurred", e);
+                errMsg = "An unexpected error occurred"
+                console.log(errMsg, e);
             }
+            notifications.show({
+                title: 'Registration Failed',
+                message: errMsg,
+                withCloseButton: true,
+                icon: <IconX style={{ width: "90%", height: "90%"}}/>,
+                color: "red",
+                withBorder: true,
+                className:"!border-red-700"
+            })
         }
     }
 
@@ -130,16 +156,20 @@ const SignUp = () => {
             <Checkbox
                 autoContrast
                 label={<>
-                    I accept{''}<Anchor>
+                    I accept{' '}<Anchor>
                     terms & conditions
                 </Anchor>
                 </>}
             />
             <Button onClick={handleSubmit} autoContrast variant={'filled'}>Sign Up</Button>
             <div className={'mx-auto'}>Already have an Account ? &nbsp;
-                <Link to={'/login'} className={'text-bright-sun-400 hover:underline'}>
+                <span onClick={() => {
+                    navigate('/login')
+                    setData(form)
+                    setFormError(form)
+                }} className={'text-bright-sun-400 hover:underline cursor-pointer'}>
                     Login
-                </Link>
+                </span>
             </div>
         </div>
     )
