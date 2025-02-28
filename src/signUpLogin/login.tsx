@@ -7,6 +7,8 @@ import {loginUser} from "@/services/userService.tsx";
 import axios from "axios";
 import {loginValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
+import {useDisclosure} from "@mantine/hooks";
+import ResetPassword from "@/signUpLogin/resetPassword.tsx";
 
 type FormType = {
     email: string;
@@ -22,6 +24,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [data, setData] = useState<FormType>(form);
     const [formError, setFormError] = useState<FormType>(form);
+    const [opened, { open, close }] = useDisclosure(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name, value = event.target.value;
@@ -78,7 +81,7 @@ const Login = () => {
             })
         }
     }
-    return (
+    return (<>
         <div className={'flex flex-col justify-center gap-3 w-1/2 px-20'}>
             <div className={'text-2xl font-semibold'}>
                 Login
@@ -115,7 +118,11 @@ const Login = () => {
                     SignUp
                 </span>
             </div>
+            <div onClick={open} className={'text-bright-sun-400 hover:underline cursor-pointer text-center'}>Forgot Password ?</div>
         </div>
+        <ResetPassword opened={opened} close={close}/>
+        </>
+
     )
 }
 export default Login
