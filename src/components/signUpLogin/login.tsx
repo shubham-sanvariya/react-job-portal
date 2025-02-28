@@ -9,6 +9,8 @@ import {loginValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
 import {useDisclosure} from "@mantine/hooks";
 import ResetPassword from "@/components/signUpLogin/resetPassword.tsx";
+import {useDispatch} from "react-redux";
+import {setUser} from "@/slices/userSlice.tsx";
 
 type FormType = {
     email: string;
@@ -21,6 +23,7 @@ const form : FormType = {
 }
 
 const Login = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [data, setData] = useState<FormType>(form);
     const [formError, setFormError] = useState<FormType>(form);
@@ -58,6 +61,7 @@ const Login = () => {
                 })
                 setData(form);
                 setTimeout(() => {
+                    dispatch(setUser(res))
                     navigate('/')
                 }, 3000)
             }
