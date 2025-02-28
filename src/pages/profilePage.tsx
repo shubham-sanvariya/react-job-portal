@@ -1,5 +1,5 @@
 import {Divider} from "@mantine/core";
-import Profile from "@/profile/profile.tsx";
+import Profile from "@/components/profile/profile.tsx";
 
 const ProfilePage = () => {
     return (

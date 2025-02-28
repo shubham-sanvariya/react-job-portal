@@ -1,6 +1,6 @@
-import SearchBar from "@/findjobs/searchBar.tsx";
+import SearchBar from "@/components/findjobs/searchBar.tsx";
 import {Divider} from "@mantine/core";
-import Jobs from "@/findjobs/jobs.tsx";
+import Jobs from "@/components/findjobs/jobs.tsx";
 
 const FindJobs = () => {
     return (

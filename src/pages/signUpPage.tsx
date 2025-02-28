@@ -1,5 +1,5 @@
-import SignUp from "@/signUpLogin/signUp.tsx";
-import Login from "@/signUpLogin/login.tsx";
+import SignUp from "@/components/signUpLogin/signUp.tsx";
+import Login from "@/components/signUpLogin/login.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import {IconArrowLeft} from "@tabler/icons-react";
 import {Button} from "@mantine/core";

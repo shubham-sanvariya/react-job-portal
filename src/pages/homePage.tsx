@@ -1,9 +1,9 @@
-import DreamJob from "@/landingPage/dreamJob.tsx";
-import Companies from "@/landingPage/companies.tsx";
-import JobCategory from "@/landingPage/jobCategory.tsx";
-import Working from "@/landingPage/working.tsx";
-import Testimonials from "@/landingPage/testimonials.tsx";
-import Subscribe from "@/landingPage/subscribe.tsx";
+import DreamJob from "@/components/landingPage/dreamJob.tsx";
+import Companies from "@/components/landingPage/companies.tsx";
+import JobCategory from "@/components/landingPage/jobCategory.tsx";
+import Working from "@/components/landingPage/working.tsx";
+import Testimonials from "@/components/landingPage/testimonials.tsx";
+import Subscribe from "@/components/landingPage/subscribe.tsx";
 
 const HomePage = () => {
     return (

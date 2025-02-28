@@ -1,4 +1,4 @@
-import PostJob from "@/postJob/postJob.tsx";
+import PostJob from "@/components/postJob/postJob.tsx";
 
 
 const PostJobPage = () => {
