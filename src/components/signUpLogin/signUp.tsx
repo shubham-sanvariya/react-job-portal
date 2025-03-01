@@ -1,4 +1,4 @@
-import {Anchor, Button, Checkbox, Group, PasswordInput, Radio, rem, TextInput} from "@mantine/core";
+import {Anchor, Button, Checkbox, Group, LoadingOverlay, PasswordInput, Radio, rem, TextInput} from "@mantine/core";
 import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
 import { useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -20,6 +20,8 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [data, setData] = useState<{ [key : string] : string }>(form);
     const [formError, setFormError] = useState(form);
+    const [loading, setLoading] = useState(false);
+
     const handleChange = (event : React.ChangeEvent<HTMLInputElement> | string) => {
         if (typeof event == "string") setData({...data, accountType: event})
         else{
@@ -59,6 +61,7 @@ const SignUp = () => {
             }
             setFormError(newFormError);
             if (valid){
+                setLoading(true);
                 const res = await registerUser(data);
                 console.log(res);
                 notifications.show({
@@ -72,10 +75,12 @@ const SignUp = () => {
                 })
                 setData(form);
                 setTimeout(() => {
+                    setLoading(false);
                     navigate('/login')
                 },3000)
             }
         }catch (e : unknown) {
+            setLoading(false);
             let errMsg: string;
             if (axios.isAxiosError(e)) {
                 errMsg = e.response?.data?.errorMessage
@@ -97,6 +102,14 @@ const SignUp = () => {
     }
 
     return (
+        <>
+            <LoadingOverlay
+                className="translate-x-1/2"
+                visible={loading}
+                zIndex={1000}
+                overlayProps={{ radius: 'sm', blur: 2 }}
+                loaderProps={{ color: 'pink', type: 'bars' }}
+            />
         <div className={'flex flex-col justify-center gap-3 w-1/2 px-20'}>
             <div className={'text-2xl font-semibold'}>
                 Create Account
@@ -172,6 +185,7 @@ const SignUp = () => {
                 </span>
             </div>
         </div>
+        </>
     )
 }
 export default SignUp
