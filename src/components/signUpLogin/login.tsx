@@ -1,4 +1,4 @@
-import {Button, PasswordInput, rem, TextInput} from "@mantine/core";
+import {Button, LoadingOverlay, PasswordInput, rem, TextInput} from "@mantine/core";
 import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
 import { useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -28,6 +28,7 @@ const Login = () => {
     const [data, setData] = useState<FormType>(form);
     const [formError, setFormError] = useState<FormType>(form);
     const [opened, { open, close }] = useDisclosure(false);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name, value = event.target.value;
@@ -37,6 +38,7 @@ const Login = () => {
 
     const handleSubmit = async () => {
         try {
+            setLoading(true);
             let valid = true
             const newFormError: Partial<FormType> = {};
             for (const key in data) {
@@ -61,11 +63,13 @@ const Login = () => {
                 })
                 setData(form);
                 setTimeout(() => {
+                    setLoading(false);
                     dispatch(setUser(res))
                     navigate('/')
                 }, 3000)
             }
         } catch (e: unknown) {
+            setLoading(false);
             let errMsg: string;
             if (axios.isAxiosError(e)) {
                 errMsg = e.response?.data?.errorMessage
@@ -86,6 +90,12 @@ const Login = () => {
         }
     }
     return (<>
+            <LoadingOverlay
+                visible={loading}
+                zIndex={1000}
+                overlayProps={{ radius: 'sm', blur: 2 }}
+                loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
+            />
         <div className={'flex flex-col justify-center gap-3 w-1/2 px-20'}>
             <div className={'text-2xl font-semibold'}>
                 Login
@@ -112,7 +122,7 @@ const Login = () => {
                 placeholder={'Password'}
             />
 
-            <Button onClick={handleSubmit} autoContrast variant={'filled'}>Login</Button>
+            <Button onClick={handleSubmit} loading={loading} autoContrast variant={'filled'}>Login</Button>
             <div className={'mx-auto'}>don't have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/signup')
