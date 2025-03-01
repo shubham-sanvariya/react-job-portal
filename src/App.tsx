@@ -9,7 +9,7 @@ import '@mantine/notifications/styles.css';
 import {Notifications} from "@mantine/notifications";
 import {Provider} from "react-redux";
 import store from "@/store.tsx";
-import AppRoutes from "@/slices/appRoutes.tsx";
+import AppRoutes from "@/pages/appRoutes.tsx";
 
 function App() {
 
