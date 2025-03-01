@@ -13,9 +13,9 @@ const getProfile = async ( id: number) => {
     }
 }
 
-const updateProfile = async (proifle : any) => {
+const updateProfile = async (profile : any) => {
     try {
-        const res = await axios.get(`${base_URL}/update`,proifle);
+        const res = await axios.get(`${base_URL}/update`,profile);
         return res.data;
     }catch (err : unknown){
         console.log(err);

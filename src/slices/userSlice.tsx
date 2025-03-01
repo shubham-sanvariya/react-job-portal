@@ -6,6 +6,7 @@ interface User {
     name: string;
     email: string;
     accountType: "APPLICANT" | "EMPLOYER";
+    profileId : number;
 }
 
 const initialState : User | null = getItem("user") || null;
@@ -21,7 +22,8 @@ const UserSlice = createSlice({
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                accountType: user.accountType
+                accountType: user.accountType,
+                profileId : user.profileId
             });
             state = getItem("user");
             return state;
