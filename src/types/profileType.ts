@@ -1,4 +1,4 @@
-export interface Profile {
+export interface ProfileType {
     id: number;
     name: string;
     role: string;
@@ -10,7 +10,7 @@ export interface Profile {
     certifications: Certification[];
 }
 
-interface Experience {
+export interface Experience {
     title: string;
     company: string;
     location: string;
@@ -19,7 +19,7 @@ interface Experience {
     description: string;
 }
 
-interface Certification {
+export interface Certification {
     name: string;
     issuer: string;
     issueDate: string;
