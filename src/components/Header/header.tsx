@@ -24,9 +24,9 @@ const Header = () => {
                         Login / Signup
                     </Button>
                 </Link>}
-                <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
-                    <IconSettings stroke={'1.5'}/>
-                </div>
+                {/*<div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>*/}
+                {/*    <IconSettings stroke={'1.5'}/>*/}
+                {/*</div>*/}
                 <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
                     <Indicator color={'bright-sun.4'} offset={6} size={7} processing>
                         <IconBell stroke={'1.5'}/>
