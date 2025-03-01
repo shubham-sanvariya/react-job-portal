@@ -13,4 +13,14 @@ const getProfile = async ( id: number) => {
     }
 }
 
-export { getProfile };
+const updateProfile = async (proifle : any) => {
+    try {
+        const res = await axios.get(`${base_URL}/update`,proifle);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
+export { getProfile, updateProfile };
