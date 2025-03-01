@@ -1,8 +1,9 @@
 
-const setItem = ( key : string, value : string ) => {
-    localStorage.setItem(key,JSON.stringify(value));
-}
+function setItem<T>(key: string, value: T): void {
+    const serializedValue = JSON.stringify(value);
 
+    localStorage.setItem(key, serializedValue);
+}
 const getItem = (key : string) => {
     return JSON.parse(localStorage.getItem(key) as string);
 }

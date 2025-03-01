@@ -1,20 +1,27 @@
 import {Menu, Avatar, Switch, rem} from '@mantine/core';
 import {
-
     IconMessageCircle, IconUserCircle, IconFileText, IconMoon, IconSun, IconMoonStars, IconLogout2,
 } from '@tabler/icons-react';
-import {useState} from "react";
+import { useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {removeUser, selectUser} from "@/slices/userSlice.tsx";
 
 const ProfileMenu = () => {
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
+    const handleLogout = () => {
+        dispatch(removeUser())
+    }
+
     return (
         <Menu opened={opened} onChange={setOpened} shadow="md" width={200}>
             <Menu.Target>
                 <div className={'flex items-center gap-2 cursor-pointer'}>
                     <div>
-                        Marshal
+                        {user.name}
                     </div>
                     <Avatar src={'/src/assets/avatar.png'} alt={"it's me"}/>
                 </div>
@@ -58,6 +65,7 @@ const ProfileMenu = () => {
                 <Menu.Divider/>
 
                 <Menu.Item
+                    onClick={handleLogout}
                     color={'red'}
                     leftSection={<IconLogout2 style={{width: rem(14), height: rem(14)}} size={14}/>}
                 >
