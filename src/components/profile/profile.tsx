@@ -34,7 +34,7 @@ const Profile = () => {
         if (userState.profileId) {
             dispatch(getProfileAsyncThunk(Number(userState.profileId)));
         }
-    }, []);
+    }, [dispatch, userState.profileId]);
 
     useEffect(()=>{
         console.log(profileState)
