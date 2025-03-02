@@ -11,7 +11,7 @@ const CertiCard = (props: any) => {
                                                                          src={`/src/assets/Icons/${props.issuer}.png`}
                                                                          alt="microsoft"/></div>
                 <div className={'flex flex-col'}>
-                    <div className={'font-semibold'}>{props.name}</div>
+                    <div className={'font-semibold'}>{props.title}</div>
                     <div className={'text-sm text-mine-shaft-300'}>{props.company}</div>
                 </div>
             </div>
