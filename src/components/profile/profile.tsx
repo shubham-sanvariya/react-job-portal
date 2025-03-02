@@ -1,5 +1,5 @@
 import {IconDeviceFloppy, IconPencil, IconPlus} from "@tabler/icons-react";
-import {ActionIcon, Divider, TagsInput, Textarea} from "@mantine/core";
+import {ActionIcon, Divider} from "@mantine/core";
 import CertiCard from "@/components/profile/certiCard.tsx";
 import ExpCard from "@/components/profile/expCard.tsx";
 import {useEffect, useState} from "react";
@@ -12,14 +12,13 @@ import {Certification, Experience} from "@/types/profileType.ts";
 import Info from "@/components/profile/info.tsx";
 import {AppDispatch} from "@/store.tsx";
 import About from "@/components/profile/about.tsx";
+import Skills from "@/components/profile/skills.tsx";
 
 
 const Profile = () => {
     const dispatch = useDispatch<AppDispatch>();
     const userState = useSelector(selectUser);
     const profileState = useSelector(selectProfile);
-    const [about, setAbout] = useState("");
-    const [skills, setSkills] = useState([]);
     const [edit, setEdit] = useState<boolean[]>([false, false, false, false, false]);
     const [addExp, setAddExp] = useState(false);
     const [addCerti, setAddCerti] = useState(false);
@@ -58,33 +57,7 @@ const Profile = () => {
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>
-                <div className={'flex justify-between text-2xl font-semibold mb-3'}>Skills
-                    <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
-                                onClick={() => handleEdit(2)}
-                    >
-                        {edit[2] ? <IconDeviceFloppy className={'h-4/5 w-4/5'}/> :
-                            <IconPencil className={'h-4/5 w-4/5'}/>}
-                    </ActionIcon>
-                </div>
-                {
-                    edit[2] ? <TagsInput
-                            value={skills}
-                            // onChange={setSkills}
-                            placeholder={'Enter tag'}
-                            splitChars={[',', ' ', '|']}
-                        />
-                        :
-                        <div className={'flex flex-wrap gap-2'}>
-                            {
-                                profileState?.skills?.map((skill: string, index: number) => (
-                                    <div key={index}
-                                         className={'bg-bright-sun-300 font-medium fow bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1'}>
-                                        {skill}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                }
+                <Skills/>
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>
