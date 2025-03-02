@@ -4,8 +4,8 @@ import {Combobox, InputBase, ScrollArea, useCombobox} from '@mantine/core';
 const SelectInput = (props: any) => {
     useEffect(() => {
         setData(props.options);
-        setValue(props.value);
-        setSearch(props.value);
+        setValue(props.form.getInputProps(props.name).value);
+        setSearch(props.form.getInputProps(props.name).value);
     }, []);
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
@@ -34,9 +34,11 @@ const SelectInput = (props: any) => {
                 if (val === '$create') {
                     setData((current) => [...current, search]);
                     setValue(search);
+                    props.form.setFieldValue(props.name, search)
                 } else {
                     setValue(val);
                     setSearch(val);
+                    props.form.setFieldValue(props.name, val)
                 }
 
                 combobox.closeDropdown();
@@ -44,6 +46,7 @@ const SelectInput = (props: any) => {
         >
             <Combobox.Target>
                 <InputBase
+                    {...props.form.getInputProps(props.name)}
                     withAsterisk
                     label={props.label}
                     leftSection={<props.leftSection stroke={1.5} />}
