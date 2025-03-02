@@ -11,6 +11,7 @@ import {selectUser} from "@/slices/userSlice.tsx";
 import {Certification, Experience} from "@/types/profileType.ts";
 import Info from "@/components/profile/info.tsx";
 import {AppDispatch} from "@/store.tsx";
+import About from "@/components/profile/about.tsx";
 
 
 const Profile = () => {
@@ -53,26 +54,7 @@ const Profile = () => {
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>
-                <div className={'flex justify-between text-2xl font-semibold mb-3'}>About
-                    <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
-                                onClick={() => handleEdit(1)}
-                    >
-                        {edit[1] ? <IconDeviceFloppy className={'h-4/5 w-4/5'}/> :
-                            <IconPencil className={'h-4/5 w-4/5'}/>}
-                    </ActionIcon>
-                </div>
-                {edit[1] ? <Textarea
-                        placeholder={'Enter About YourSelf...'}
-                        minRows={3}
-                        autosize
-                        value={profileState?.about}
-                        onChange={(event) => setAbout(event.currentTarget.value)}
-                    />
-                    :
-                    <div className={'text-sm text-mine-shaft-300 text-justify'}>
-                        {profileState?.about}
-                    </div>
-                }
+                <About/>
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>
