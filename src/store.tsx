@@ -2,9 +2,13 @@ import {configureStore} from "@reduxjs/toolkit";
 import userReducer from './slices/userSlice.tsx'
 import profileReducer from "@/slices/profileSlice.tsx";
 
-export default  configureStore({
+const store = configureStore({
     reducer: {
-        user : userReducer,
-        profile : profileReducer
-    }
-})
+        user: userReducer,
+        profile: profileReducer,
+    },
+});
+
+export default store;
+
+export type AppDispatch = typeof store.dispatch;
