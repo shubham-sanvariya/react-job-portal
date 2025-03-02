@@ -19,7 +19,6 @@ const initialState: ProfileState = {
 export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profileId : number, thunkAPI) => {
     try {
         const res = await getProfile(profileId);
-        console.log(res);
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
@@ -29,10 +28,10 @@ export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profi
         }
     }
 })
+
 export const updateProfileAsyncThunk = createAsyncThunk("updateProfile", async (updatedProfile : ProfileType, thunkAPI) => {
     try {
         const res = await updateProfile(updatedProfile);
-        console.log(res);
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
@@ -78,8 +77,9 @@ const ProfileSlice = createSlice({
 
 // export const {setUser, removeUser} = ProfileSlice.actions;
 
-export const selectProfile = (state : {profile : ProfileType | null}) => state.profile;
-export const selectLoading = (state : {loading : boolean}) => state.loading;
-export const selectError = (state : {error : string | null}) => state.error;
+export const selectProfile = (state: { profile: { profile: ProfileType | null } }) => state.profile.profile;
+
+export const selectLoading = (state : { profile:{loading : boolean}}) => state.profile.loading;
+export const selectError = (state : { profile:{error : string | null}}) => state.profile.error;
 
 export default ProfileSlice.reducer;
