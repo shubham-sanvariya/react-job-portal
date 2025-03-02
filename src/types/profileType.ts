@@ -1,13 +1,12 @@
 export interface ProfileType {
     id: number;
-    name: string;
-    role: string;
+    jobTitle: string;
     company: string;
     location: string;
     about: string;
     skills: string[];
-    experience: Experience[];
-    certifications: Certification[];
+    experiences: Experience[];
+    certificates: Certification[];
 }
 
 export interface Experience {
@@ -20,7 +19,7 @@ export interface Experience {
 }
 
 export interface Certification {
-    name: string;
+    title: string;
     issuer: string;
     issueDate: string;
     certificateId: string;
