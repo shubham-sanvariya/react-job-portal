@@ -1,18 +1,17 @@
 import {IconDeviceFloppy, IconPencil, IconPlus} from "@tabler/icons-react";
 import {ActionIcon, Divider} from "@mantine/core";
 import CertiCard from "@/components/profile/certiCard.tsx";
-import ExpCard from "@/components/profile/expCard.tsx";
 import {useEffect, useState} from "react";
-import ExpInput from "@/components/profile/expInput.tsx";
 import CertiInput from "@/components/profile/certiInput.tsx";
 import {getProfileAsyncThunk, selectProfile} from "@/slices/profileSlice.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUser} from "@/slices/userSlice.tsx";
-import {Certification, Experience} from "@/types/profileType.ts";
+import {Certification} from "@/types/profileType.ts";
 import Info from "@/components/profile/info.tsx";
 import {AppDispatch} from "@/store.tsx";
 import About from "@/components/profile/about.tsx";
 import Skills from "@/components/profile/skills.tsx";
+import Experience from "@/components/profile/experience.tsx";
 
 
 const Profile = () => {
@@ -20,7 +19,6 @@ const Profile = () => {
     const userState = useSelector(selectUser);
     const profileState = useSelector(selectProfile);
     const [edit, setEdit] = useState<boolean[]>([false, false, false, false, false]);
-    const [addExp, setAddExp] = useState(false);
     const [addCerti, setAddCerti] = useState(false);
     // const [profileState, setProfileState] = useState<ProfileType | null>(ps);
 
@@ -61,31 +59,7 @@ const Profile = () => {
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>
-                <div className={'flex justify-between text-2xl font-semibold mb-5'}>Experience
-                    <div className={'flex gap-2'}>
-                        <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
-                                    onClick={() => setAddExp(true)}
-                        >
-                            <IconPlus
-                                className="h-4/5 w-4/5"
-                            />
-                        </ActionIcon>
-                        <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
-                                    onClick={() => handleEdit(3)}
-                        >
-                            {edit[3] ? <IconDeviceFloppy className={'h-4/5 w-4/5'}/> :
-                                <IconPencil className={'h-4/5 w-4/5'}/>}
-                        </ActionIcon>
-                    </div>
-                </div>
-                <div className={'flex flex-col gap-8'}>
-                    {
-                        profileState?.experiences?.map((exp: Experience, index: number) => (
-                            <ExpCard key={index} {...exp} edit={edit[3]}/>
-                        ))
-                    }
-                    {addExp && <ExpInput add setEdit={setAddExp}/>}
-                </div>
+                <Experience/>
             </div>
             <Divider mx={'xs'} my={"xl"}/>
             <div className={'px-3'}>

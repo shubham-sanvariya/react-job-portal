@@ -29,6 +29,6 @@ const ExpCard = (props : any) => {
                     color={'red.8'} variant={"light"}>Delete</Button>
             </div>}
         </div>
-    ) : <ExpInput setEdit={setEdit}/>
+    ) : <ExpInput {...props} setEdit={setEdit}/>
 }
 export default ExpCard
