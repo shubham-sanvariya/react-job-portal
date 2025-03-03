@@ -5,17 +5,18 @@ export interface ProfileType {
     location: string;
     about: string;
     skills: string[];
-    experiences: Experience[];
+    experiences: ExperienceType[];
     certificates: Certification[];
 }
 
-export interface Experience {
+export interface ExperienceType {
     title: string;
     company: string;
     location: string;
     startDate: string;
     endDate: string;
     description: string;
+    working: boolean;
 }
 
 export interface Certification {
