@@ -36,7 +36,7 @@ const CertiInput = ( props : any ) => {
             </div>
             <div className="flex gap-5">
                 <Button onClick={() => props.setEdit(false)}
-                        color={'bright-sun.4'} variant={"outline"}>Save</Button>
+                        color={'green.8'} variant={"light"}>Save</Button>
                 <Button
                     onClick={() => props.setEdit(false)}
                     color={'red.8'} variant={"light"}>Cancel</Button>

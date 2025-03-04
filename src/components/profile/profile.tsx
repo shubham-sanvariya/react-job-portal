@@ -34,10 +34,6 @@ const Profile = () => {
         }
     }, [dispatch, userState.profileId]);
 
-    useEffect(()=>{
-        console.log(profileState)
-    },[profileState])
-
     return (
         <div className={'w-4/5 mx-auto'}>
             <div className={'relative'}>

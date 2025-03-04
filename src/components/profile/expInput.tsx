@@ -1,61 +1,122 @@
 import SelectInput from "@/components/profile/selectInput.tsx";
 import fields from "@/Data/Profile.tsx";
 import {Button, Checkbox, Textarea} from "@mantine/core";
-import {useState} from "react";
-import {profile} from "@/Data/TalentData.tsx";
+import {useEffect} from "react";
 import {MonthPickerInput} from "@mantine/dates";
+import {hasLength, useForm} from "@mantine/form";
+import {useDispatch, useSelector} from "react-redux";
+import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
+import {AppDispatch} from "@/store.tsx";
+import {ProfileType} from "@/types/profileType.ts";
+import {successNotification} from "@/services/notificationServices.tsx";
 
 const ExpInput = (props: any) => {
-    const [desc, setDesc] = useState(profile.about);
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
-    const [endDate, setEndDate] = useState<Date | null>(new Date());
-    const [checked, setChecked] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const profileState = useSelector(selectProfile);
+
+    const form = useForm({
+        mode: "controlled",
+        validateInputOnChange: true,
+        initialValues: {
+            title: "",
+            company: "",
+            location: "",
+            description: "",
+            startDate: new Date(),
+            endDate: new Date(),
+            working: false
+        },
+        validate: {
+            title: hasLength({min: 3}, 'Must be at least 3 Characters')
+            , company: hasLength({min: 3}, 'Must be at least 3 Characters')
+            , location: hasLength({min: 3}, 'Must be at least 3 Characters')
+            , description: hasLength({min: 50}, 'Must be at least 3 Characters'),
+        }
+    })
+
+    useEffect(() => {
+        if (!props.add) {
+            const expObj = {
+                title: props.title,
+                company: props.company,
+                location: props.location,
+                description: props.description,
+                startDate: new Date(props.startDate),
+                endDate: new Date(props.endDate),
+                working: props.working
+            }
+            form.setValues(expObj);
+        }
+    }, []);
+
+    const handleSave = () => {
+        form.validate();
+        if (!form.isValid()) return;
+        const exp = [...(profileState?.experiences || [])];
+        const startDate = form.getInputProps("startDate").value
+        const endDate = form.getInputProps("endDate").value
+        const values = {
+            ...form.getValues(),
+            startDate: new Date(startDate.setHours(12, 0, 0, 0)).toISOString(),
+            endDate: new Date(endDate.setHours(12, 0, 0, 0)).toISOString(),
+        };
+
+        if (props.add) {
+            exp.push(values);
+
+        } else {
+            exp[props.index] = values;
+        }
+        props.setEdit(false);
+        const updatedProfile = {...profileState, experiences: exp};
+        dispatch(updateProfileAsyncThunk(updatedProfile as ProfileType));
+        successNotification("Success", `Experience ${props.add ? "Added" : "Updated"} Successfully`);
+    }
 
     return (
         <div className={'flex flex-col gap-3'}>
-            <div className={'text-lg font-semibold'}>{props.add? "Add " : 'Edit '}Experience</div>
+            <div className={'text-lg font-semibold'}>{props.add ? "Add " : 'Edit '}Experience</div>
             <div className={'flex gap-10 [&>*]:w-1/2'}>
-                <SelectInput {...fields[0]} />
-                <SelectInput {...fields[1]} />
+                <SelectInput form={form} name="title" {...fields[0]} />
+                <SelectInput form={form} name="company" {...fields[1]} />
             </div>
-            <SelectInput {...fields[2]} />
+            <SelectInput form={form} name="location" {...fields[2]} />
             <Textarea
+                {...form.getInputProps("description")}
                 withAsterisk
                 label={'Summary'}
                 placeholder={'Enter Summary...'}
                 minRows={3}
                 autosize
-                value={desc}
-                onChange={(event) => setDesc(event.currentTarget.value)}
+                value={form.getValues().description}
             />
             <div className={'flex gap-10 [&>*]:w-1/2'}>
                 <MonthPickerInput
+                    {...form.getInputProps("startDate")}
                     withAsterisk
-                    maxDate={endDate || undefined}
+                    maxDate={form.getValues().endDate || undefined}
                     label={'Start Date'}
                     placeholder={'Pick Date'}
-                    value={startDate}
-                    onChange={setStartDate}
                 />
                 <MonthPickerInput
-                    disabled={checked}
+                    {...form.getInputProps("endDate")}
+                    disabled={form.getValues().working}
                     withAsterisk
-                    minDate={startDate || undefined}
+                    minDate={form.getValues().startDate || undefined}
                     label={'End Date'}
                     placeholder={'Pick Date'}
-                    value={endDate}
-                    onChange={setEndDate}
                 />
             </div>
-                <Checkbox
-                    label={'Currently working here'}
-                    checked={checked}
-                    onChange={(event) => setChecked(event.currentTarget.checked)}
-                    autoContrast
-                />
+            <Checkbox
+                {...form.getInputProps("working")}
+                label={'Currently working here'}
+                checked={form.getValues().working}
+                onChange={(event) => form.setFieldValue("working", event.currentTarget.checked)}
+                autoContrast
+            />
             <div className="flex gap-5">
-                <Button onClick={() => props.setEdit(false)}
-                        color={'bright-sun.4'} variant={"outline"}>Save</Button>
+                <Button onClick={handleSave}
+                        color={'green.8'} variant={"light"}>Save</Button>
                 <Button
                     onClick={() => props.setEdit(false)}
                     color={'red.8'} variant={"light"}>Cancel</Button>
