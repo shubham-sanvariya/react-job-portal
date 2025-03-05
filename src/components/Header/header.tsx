@@ -1,13 +1,23 @@
-import {IconBell, IconSettings} from "@tabler/icons-react";
+import {IconBell} from "@tabler/icons-react";
 import {Button, Indicator} from "@mantine/core";
 import NavLinks from "@/components/Header/navLinks.tsx";
 import {Link, useLocation} from "react-router-dom";
 import ProfileMenu from "@/components/Header/profileMenu.tsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectUser} from "@/slices/userSlice.tsx";
+import {AppDispatch} from "@/store.tsx";
+import {getProfileAsyncThunk} from "@/slices/profileSlice.tsx";
+import {useEffect} from "react";
 
 const Header = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const user = useSelector(selectUser);
+
+    useEffect(() => {
+        if (user.profileId) {
+            dispatch(getProfileAsyncThunk(Number(user.profileId)));
+        }
+    }, [dispatch, user.profileId]);
     const location = useLocation();
     return location.pathname != '/signup' && location.pathname != '/login' ?(
         <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20 font-[poppins]'}>

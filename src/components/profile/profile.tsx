@@ -19,16 +19,7 @@ import {successNotification} from "@/services/notificationServices.tsx";
 const Profile = () => {
     const dispatch = useDispatch<AppDispatch>();
     const profileState = useSelector(selectProfile);
-    const userState = useSelector(selectUser);
     const { hovered, ref } = useHover();
-
-    useEffect(() => {
-        if (userState.profileId) {
-            dispatch(getProfileAsyncThunk(Number(userState.profileId)));
-            console.log(profileState);
-
-        }
-    }, [dispatch, userState.profileId]);
 
     const handleFileUpload = async (file: File | null) => {
         if (file == null) return;

@@ -6,10 +6,12 @@ import { useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {removeUser, selectUser} from "@/slices/userSlice.tsx";
+import {selectProfile} from "@/slices/profileSlice.tsx";
 
 const ProfileMenu = () => {
-    const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    const profileState = useSelector(selectProfile);
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
     const handleLogout = () => {
@@ -23,7 +25,7 @@ const ProfileMenu = () => {
                     <div>
                         {user.name}
                     </div>
-                    <Avatar src={'/src/assets/avatar.png'} alt={"it's me"}/>
+                    <Avatar src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'src/assets/avatar.png'}/>
                 </div>
             </Menu.Target>
 
