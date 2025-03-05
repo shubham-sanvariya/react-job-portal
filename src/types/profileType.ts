@@ -4,6 +4,7 @@ export interface ProfileType {
     company: string;
     location: string;
     about: string;
+    picture : string;
     skills: string[];
     experiences: ExperienceType[];
     certificates: CertificationType[];
