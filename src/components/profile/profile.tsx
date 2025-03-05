@@ -1,9 +1,7 @@
 
 import {Avatar, Divider, FileInput, Overlay} from "@mantine/core";
-import {useEffect} from "react";
-import {getProfileAsyncThunk, selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
+import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {selectUser} from "@/slices/userSlice.tsx";
 import Info from "@/components/profile/info.tsx";
 import {AppDispatch} from "@/store.tsx";
 import About from "@/components/profile/about.tsx";
