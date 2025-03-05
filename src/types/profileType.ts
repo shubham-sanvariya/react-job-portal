@@ -6,7 +6,7 @@ export interface ProfileType {
     about: string;
     skills: string[];
     experiences: ExperienceType[];
-    certificates: Certification[];
+    certificates: CertificationType[];
 }
 
 export interface ExperienceType {
@@ -19,7 +19,7 @@ export interface ExperienceType {
     working: boolean;
 }
 
-export interface Certification {
+export interface CertificationType {
     title: string;
     issuer: string;
     issueDate: string;
