@@ -8,7 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {AppDispatch} from "@/store.tsx";
 import {ProfileType} from "@/types/profileType.ts";
-import {successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import axios from "axios";
 
 const ExpInput = (props: any) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -49,7 +50,7 @@ const ExpInput = (props: any) => {
         }
     }, []);
 
-    const handleSave = () => {
+    const validateFormBeforeSave = () => {
         form.validate();
         if (!form.isValid()) return;
         const exp = [...(profileState?.experiences || [])];
@@ -67,10 +68,29 @@ const ExpInput = (props: any) => {
         } else {
             exp[props.index] = values;
         }
+
+        return exp;
+    }
+
+    const handleSave = () => {
+        const exp = validateFormBeforeSave();
+
         props.setEdit(false);
         const updatedProfile = {...profileState, experiences: exp};
-        dispatch(updateProfileAsyncThunk(updatedProfile as ProfileType));
-        successNotification("Success", `Experience ${props.add ? "Added" : "Updated"} Successfully`);
+        try {
+            dispatch(updateProfileAsyncThunk(updatedProfile as ProfileType));
+            successNotification("Success", `Experience ${props.add ? "Added" : "Updated"} Successfully`);
+        }catch (err: unknown) {
+            let errMsg: string;
+            if (axios.isAxiosError(err)) {
+                errMsg = err.response?.data?.errorMessage
+                console.log(errMsg);
+            } else {
+                errMsg = "An unexpected error occurred"
+                console.log(errMsg, err);
+            }
+            errorNotification(props.add?"Failed to add Experience":"Failed to update Experience", errMsg);
+        }
     }
 
     return (

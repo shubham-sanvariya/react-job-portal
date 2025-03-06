@@ -3,8 +3,34 @@ import {content, fields} from "@/Data/PostJob.tsx";
 import {Button, NumberInput, TagsInput, Textarea} from "@mantine/core";
 import TextEditor from "@/components/postJob/textEditor.tsx";
 import {hasLength, isNotEmpty, useForm} from "@mantine/form";
+import {postJob} from "@/services/jobService.tsx";
+import {errorNotification} from "@/services/notificationServices.tsx";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const PostJob = () => {
+    const navigate = useNavigate();
+    const handlePost = async () => {
+        form.validate();
+        if (!form.isValid()) return;
+
+        try {
+            const res = await postJob(form.getValues());
+            console.log(res);
+            navigate("/posted-jobs")
+        }catch (err: unknown) {
+            let errMsg: string;
+            if (axios.isAxiosError(err)) {
+                errMsg = err.response?.data?.errorMessage
+                console.log(errMsg);
+            } else {
+                errMsg = "An unexpected error occurred"
+                console.log(errMsg, err);
+            }
+            errorNotification("OTP sending failed.", errMsg);
+        }
+    }
+
     const form = useForm({
         mode: "controlled",
         validateInputOnChange: true,
@@ -19,7 +45,6 @@ const PostJob = () => {
             skillRequired : [],
             about : "",
             description : content,
-            // postTime : "",
             // jobStatus : "",
         },
         validate:{
@@ -71,7 +96,7 @@ const PostJob = () => {
                     <TextEditor form={form}/>
                 </div>
                 <div className={'flex gap-4'}>
-                    <Button color={'bright-sun.4'} variant={"light"}>
+                    <Button onClick={handlePost} color={'bright-sun.4'} variant={"light"}>
                         Publish Job
                     </Button>
                     <Button color={'bright-sun.4'} variant={"outline"}>
