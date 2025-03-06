@@ -11,9 +11,20 @@ export const postJob = async ( job : any ) => {
         throw err;
     }
 }
+
 export const getAllJobs = async () => {
     try {
         const res = await axios.get(base_URL);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
+export const getJobById = async ( id : number ) => {
+    try {
+        const res = await axios.get(`${base_URL}/${id}`);
         return res.data;
     }catch (err : unknown){
         console.log(err);
