@@ -2,10 +2,11 @@ import {IconBookmark, IconClockHour3} from "@tabler/icons-react";
 import {Divider, Text} from "@mantine/core";
 import {Link} from "react-router-dom";
 import {JobType} from "@/types/jobType.ts";
+import {timeAgo} from "@/services/utilService.tsx";
 
 const JobCard = (props : JobType) => {
     return (
-        <Link to={'/jobs'} className={'flex flex-col gap-3 rounded-xl bg-mine-shaft-900 p-4 w-72 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400'}>
+        <Link to={`/jobs/${props.id}`} className={'flex flex-col gap-3 rounded-xl bg-mine-shaft-900 p-4 w-72 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400'}>
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-md'}><img className={'h-7'} src={`/src/assets/Icons/${props.company}.png`} alt="microsoft"/></div>
@@ -31,8 +32,9 @@ const JobCard = (props : JobType) => {
                     &#8377; {props.packageOffered}
                 </div>
                 <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
-                    <IconClockHour3 className={'h-5 w-5'} stroke={1.5}/>
-                    {props.postTime}
+                    <IconClockHour3 className={'h-5 w-5'} stroke={1.5}/> Posted
+                    &nbsp;
+                    {timeAgo(props.postTime)}
                 </div>
             </div>
         </Link>
