@@ -8,27 +8,14 @@ import {timeAgo} from "@/services/utilService.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectJobs} from "@/slices/jobSlice.ts";
-import {JobType} from "@/types/jobType.ts";
+import {JobInitialValues, JobType} from "@/types/jobType.ts";
 import {getJobById} from "@/services/jobService.tsx";
 import {formatJobValue} from "@/services/jobUtils.ts";
 
 const JobDesc = () => {
     const {id} = useParams();
     const jobsState = useSelector(selectJobs);
-    const [job, setJob] = useState<JobType>({
-        about: "",
-        applicants: [],
-        company: "",
-        description: "",
-        experience: "",
-        id: 0,
-        jobTitle: "",
-        jobType: "",
-        location: "",
-        packageOffered: 0,
-        postTime: "",
-        skillRequired: []
-    });
+    const [job, setJob] = useState<JobType>(JobInitialValues);
     const [edit, setEdit] = useState(false);
 
     const hasFetched = useRef(false);
@@ -40,7 +27,6 @@ const JobDesc = () => {
             setJob(cj);
         } else {
             if (!hasFetched.current) {
-
                 (async () => {
                     const res = await getJobById(Number(id));
                     setJob(res);
