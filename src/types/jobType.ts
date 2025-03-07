@@ -1,4 +1,3 @@
-
 export interface JobType {
     id: number;
     jobTitle: string;
@@ -15,6 +14,20 @@ export interface JobType {
     // jobStatus: string;
 }
 
+export const JobInitialValues : JobType = {
+    about: "",
+    applicants: [],
+    company: "",
+    description: "",
+    experience: "",
+    id: 0,
+    jobTitle: "",
+    jobType: "",
+    location: "",
+    packageOffered: 0,
+    postTime: "",
+    skillRequired: []
+}
 
 export interface ApplicantType {
     applicantId: number;
