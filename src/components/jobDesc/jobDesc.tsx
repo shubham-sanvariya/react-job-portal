@@ -40,17 +40,17 @@ const JobDesc = () => {
             setJob(cj);
         } else {
             if (!hasFetched.current) {
-                getJobDescById();
+
+                (async () => {
+                    const res = await getJobById(Number(id));
+                    setJob(res);
+                })()
+
                 hasFetched.current = true;
             }
         }
-    }, [id]);
+    }, [id, jobsState]);
 
-    const getJobDescById = async () => {
-        const res = await getJobById(Number(id));
-        setJob(res);
-
-    }
 
     return (
         <div className={'w-2/3'}>
@@ -94,7 +94,7 @@ const JobDesc = () => {
                             </ActionIcon>
                             <div className={'text-sm text-mine-shaft-300'}>{item.name}</div>
                             <div
-                                className={'font-semibold'}>{formatJobValue(item.id,job)} {item.id === "packageOffered" && <>LPA</>}</div>
+                                className={'font-semibold'}>{formatJobValue(item.id, job)} {item.id === "packageOffered" && <>LPA</>}</div>
                         </div>
                     ))
                 }
@@ -106,7 +106,7 @@ const JobDesc = () => {
                 </div>
                 <div className={'flex flex-wrap gap-2'}>
                     {
-                        job?.skillRequired?.map((skill : string, index: number) => (
+                        job?.skillRequired?.map((skill: string, index: number) => (
                             <ActionIcon key={index} color={'bright-sun.4'}
                                         className="!text-sm !h-fit !w-fit font-medium" variant="light"
                                         radius="xl" p={"xs"}
