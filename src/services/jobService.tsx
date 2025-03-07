@@ -1,10 +1,21 @@
 import axios from "axios";
+import {ApplicantType, JobType} from "@/types/jobType.ts";
 
 const base_URL = "http://localhost:8080/jobs"
 
-export const postJob = async ( job : any ) => {
+export const postJob = async ( job : JobType ) => {
     try {
         const res = await axios.post(`${base_URL}/post`, job);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
+export const applyJob = async ( id : number ,job : Omit<ApplicantType, "applicantId" | "applicationStatus" | "timeStamp"> ) => {
+    try {
+        const res = await axios.post(`${base_URL}/apply/${id}`, job);
         return res.data;
     }catch (err : unknown){
         console.log(err);
