@@ -12,6 +12,7 @@ import {useHover} from "@mantine/hooks";
 import {IconEdit} from "@tabler/icons-react";
 import {ProfileType} from "@/types/profileType.ts";
 import {successNotification} from "@/services/notificationServices.tsx";
+import {getBase64} from "@/services/utilService.tsx";
 
 
 const Profile = () => {
@@ -30,21 +31,6 @@ const Profile = () => {
         } catch (error) {
             console.error('Error reading file:', error);
         }
-    };
-
-    const getBase64 = async (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                if (typeof reader.result === 'string') {
-                    resolve(reader.result); // Resolve with the base64 string
-                } else {
-                    reject(new Error('Failed to read file as base64.'));
-                }
-            };
-            reader.onerror = (error) => reject(error); // Reject on error
-        });
     };
 
     return (

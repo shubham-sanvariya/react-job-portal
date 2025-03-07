@@ -5,6 +5,22 @@ export const formatDate = ( dateString : string) => {
     return date.toLocaleString('en-US',options)
 }
 
+export const getBase64 = async (file: File | null): Promise<string> => {
+    if (file === null) return "";
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            if (typeof reader.result === 'string') {
+                resolve(reader.result); // Resolve with the base64 string
+            } else {
+                reject(new Error('Failed to read file as base64.'));
+            }
+        };
+        reader.onerror = (error) => reject(error); // Reject on error
+    });
+};
+
 function timeAgo(time: string | Date): string {
     const now = new Date();
     const past = new Date(time);
