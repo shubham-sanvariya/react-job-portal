@@ -15,7 +15,7 @@ const PostJob = () => {
         if (!form.isValid()) return;
 
         try {
-            const res = await postJob(form.getValues());
+            const res = await postJob({...form.getValues(), packageOffered: Number(form.getValues().packageOffered)});
             console.log(res);
             navigate("/posted-jobs")
         }catch (err: unknown) {

@@ -3,7 +3,7 @@ import {ApplicantType, JobType} from "@/types/jobType.ts";
 
 const base_URL = "http://localhost:8080/jobs"
 
-export const postJob = async ( job : JobType ) => {
+export const postJob = async ( job : Omit<JobType, "id" | "applicants" | "postTime"> ) => {
     try {
         const res = await axios.post(`${base_URL}/post`, job);
         return res.data;

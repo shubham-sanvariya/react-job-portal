@@ -63,7 +63,7 @@ const ApplicationForm = () => {
         validate:{
             name: hasLength({min: 4}, 'Must be at least 4 Characters')
             , email: isEmail("Enter a valid email"),
-            phone: (value) =>
+            phone: value =>
                 /^\d{10}$/.test(value) ? null : "Enter a valid 10-digit phone number",
             website: isNotEmpty("website is required.")
             , resume: isNotEmpty("resume is required."),
