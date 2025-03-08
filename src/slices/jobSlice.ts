@@ -17,9 +17,7 @@ const initialState : JobState = {
 
 export const postJobAsyncThunk = createAsyncThunk("postJob", async (job: any, thunkAPI) => {
     try {
-        const res = await postJob(job);
-        console.log(res);
-        return res;
+        return await postJob(job);
     } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
             thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
@@ -31,9 +29,7 @@ export const postJobAsyncThunk = createAsyncThunk("postJob", async (job: any, th
 
 export const getJobsAsyncThunk = createAsyncThunk("getJobs", async (_, thunkAPI) => {
     try {
-        const res = await getAllJobs();
-        console.log(res);
-        return res;
+        return await getAllJobs();
     } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
             thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
