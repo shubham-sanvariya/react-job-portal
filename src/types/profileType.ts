@@ -8,6 +8,7 @@ export interface ProfileType {
     skills: string[];
     experiences: ExperienceType[];
     certificates: CertificationType[];
+    savedJobs : number[];
 }
 
 export interface ExperienceType {
