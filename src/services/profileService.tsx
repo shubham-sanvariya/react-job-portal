@@ -4,7 +4,7 @@ import {ProfileType} from "@/types/profileType.ts";
 
 const base_URL = "http://localhost:8080/profiles"
 
-const getProfile = async ( id: number) => {
+export const getProfile = async ( id: number) => {
     try {
         const res = await axios.get(`${base_URL}/${id}`);
         return res.data;
@@ -14,7 +14,7 @@ const getProfile = async ( id: number) => {
     }
 }
 
-const updateProfile = async (profile : ProfileType) => {
+export const updateProfile = async (profile : ProfileType) => {
     try {
         const res = await axios.put(`${base_URL}/update`,profile);
         return res.data;
@@ -24,4 +24,12 @@ const updateProfile = async (profile : ProfileType) => {
     }
 }
 
-export { getProfile, updateProfile };
+export const updateProfileSavedJobs = async (profileId : number, jobIds : number[]) => {
+    try {
+        const res = await axios.patch(`${base_URL}/update/saved-jobs/${profileId}`,jobIds);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
