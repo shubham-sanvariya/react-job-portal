@@ -1,4 +1,4 @@
-import {IconBookmark} from "@tabler/icons-react";
+import {IconBookmark, IconBookmarkFilled} from "@tabler/icons-react";
 import {ActionIcon, Button, Divider} from "@mantine/core";
 import {Link, useParams} from "react-router-dom";
 import {card} from "@/Data/JobDescData.tsx";
@@ -11,11 +11,18 @@ import {selectJobs} from "@/slices/jobSlice.ts";
 import {JobInitialValues, JobType} from "@/types/jobType.ts";
 import {getJobById} from "@/services/jobService.tsx";
 import {formatJobValue} from "@/services/jobUtils.ts";
+import {selectProfile} from "@/slices/profileSlice.tsx";
+import useJob from "@/hooks/useJob.tsx";
+import {selectUser} from "@/slices/userSlice.tsx";
 
 const JobDesc = () => {
     const {id} = useParams();
     const jobsState = useSelector(selectJobs);
+    const profileState = useSelector(selectProfile);
+    const userState = useSelector(selectUser);
     const [job, setJob] = useState<JobType>(JobInitialValues);
+    const [applied, setApplied] = useState<boolean>(false);
+    const { handleSaveJobs } = useJob();
     const [edit, setEdit] = useState(false);
 
     const hasFetched = useRef(false);
@@ -35,8 +42,11 @@ const JobDesc = () => {
                 hasFetched.current = true;
             }
         }
-    }, [id, jobsState]);
 
+        if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))){
+            setApplied(true);
+        }else setApplied(false);
+    }, [id, job.applicants, jobsState, profileState, userState.id]);
 
     return (
         <div className={'w-2/3'}>
@@ -55,17 +65,25 @@ const JobDesc = () => {
                     </div>
                 </div>
                 <div className={'flex flex-col items-center gap-2'}>
-                    <Link to={`/apply-job/${job?.id}`}>
+                    {(edit || !applied )&& <Link to={`/apply-job/${job?.id}`}>
                         <Button size={"sm"} color={'bright-sun.4'} variant={"light"}>
                             Apply
                         </Button>
-                    </Link>
+                    </Link>}
+                    { applied &&
+                        <Button onClick={() => setEdit(true)} size={"sm"} color={'green.8'} variant={"light"}>
+                            Applied
+                        </Button>
+                    }
                     {edit ?
                         <Button onClick={() => setEdit(true)} size={"sm"} color={'red.5'} variant={"outline"}>
                             Delete
                         </Button>
                         :
-                        <IconBookmark className={'text-bright-sun-400 cursor-pointer'}/>
+                        profileState?.savedJobs?.includes(Number(id)) ? <IconBookmarkFilled onClick={(e) => handleSaveJobs(e, Number(id))} className={'text-bright-sun-400 cursor-pointer'}
+                                                                                          stroke={1.5}/>
+                            :<IconBookmark onClick={(e) => handleSaveJobs(e, Number(id))} className={'text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer'}
+                                           stroke={1.5}/>
                     }
                 </div>
             </div>
