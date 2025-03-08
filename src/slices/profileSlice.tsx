@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getProfile, updateProfile} from "@/services/profileService.tsx";
+import {getProfile, updateProfile, updateProfileSavedJobs} from "@/services/profileService.tsx";
 import axios from "axios";
 import {ProfileType} from "@/types/profileType.ts";
 
@@ -32,6 +32,19 @@ export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profi
 export const updateProfileAsyncThunk = createAsyncThunk("updateProfile", async (updatedProfile : ProfileType, thunkAPI) => {
     try {
         const res = await updateProfile(updatedProfile);
+        return res as ProfileType;
+    }catch (err : unknown) {
+        if (axios.isAxiosError(err)) {
+            thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+        } else {
+            thunkAPI.rejectWithValue("An unexpected error occurred");
+        }
+    }
+})
+
+export const updateProfileSavedJobsAsyncThunk = createAsyncThunk("updateProfile", async ( {profileId, jobIds} : {profileId: number, jobIds : number[]}, thunkAPI) => {
+    try {
+        const res = await updateProfileSavedJobs(profileId, jobIds);
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
