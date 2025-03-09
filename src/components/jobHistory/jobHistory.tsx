@@ -16,11 +16,11 @@ const JobHistory = () => {
     const userState = useSelector(selectUser);
     const profileState = useSelector(selectProfile);
     const [filteredJobs, setFilteredJobs] = useState<JobType[]>();
-    const refconst = useRef(false);
+    const refConst = useRef(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (!refconst.current){
+        if (!refConst.current){
             if (!jobsState || jobsState.length === 0) {
                 dispatch(getJobsAsyncThunk());
             }
@@ -29,7 +29,7 @@ const JobHistory = () => {
         else if (activeTab === "SAVED") {
             handleSavedTab();
         }
-         refconst.current = true;
+         refConst.current = true;
     }, [dispatch, jobsState, activeTab,profileState]);
 
     const handleActiveTab = (value: string | null) => {

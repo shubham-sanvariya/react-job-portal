@@ -11,7 +11,7 @@ export interface JobType {
     postTime: string;
     description: string;
     skillRequired: string[];
-    // jobStatus: string;
+    postedBy : number;
 }
 
 export const JobInitialValues : JobType = {
@@ -26,7 +26,8 @@ export const JobInitialValues : JobType = {
     location: "",
     packageOffered: 0,
     postTime: "",
-    skillRequired: []
+    skillRequired: [],
+    postedBy: 0
 }
 
 export interface ApplicantType {
