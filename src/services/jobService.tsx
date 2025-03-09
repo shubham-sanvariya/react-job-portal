@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ApplicantType, JobType} from "@/types/jobType.ts";
+import {ApplicantType, ApplicationType, JobType} from "@/types/jobType.ts";
 
 const base_URL = "http://localhost:8080/jobs"
 
@@ -36,6 +36,16 @@ export const getAllJobs = async () => {
 export const getJobById = async ( id : number ) => {
     try {
         const res = await axios.get(`${base_URL}/${id}`);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
+export const updateApplicantStatus = async ( application :  ApplicationType) => {
+    try {
+        const res = await axios.put(`${base_URL}/applicant/update`, application);
         return res.data;
     }catch (err : unknown){
         console.log(err);
