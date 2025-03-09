@@ -34,3 +34,9 @@ export interface ApplicantType {
     timeStamp: string; // LocalDateTime is usually serialized as an ISO string
     applicationStatus: string;
 }
+export interface ApplicationType {
+    id : number;
+    applicantId: number;
+    interviewTime?: string; // LocalDateTime is usually serialized as an ISO string
+    applicationStatus: string;
+}
