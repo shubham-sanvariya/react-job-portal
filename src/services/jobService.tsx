@@ -13,9 +13,9 @@ export const postJob = async ( job : Omit<JobType, "id" | "applicants" | "postTi
     }
 }
 
-export const applyJob = async ( id : number ,job : Omit<ApplicantType, "applicantId" | "applicationStatus" | "timeStamp" | "interviewTime"> ) => {
+export const applyJob = async ( id : number ,applicant : Omit<ApplicantType, "applicantId" | "applicationStatus" | "timeStamp" | "interviewTime"> ) => {
     try {
-        const res = await axios.post(`${base_URL}/apply/${id}`, job);
+        const res = await axios.post(`${base_URL}/apply/${id}`, applicant);
         return res.data;
     }catch (err : unknown){
         console.log(err);
