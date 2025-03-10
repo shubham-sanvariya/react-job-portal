@@ -11,22 +11,24 @@ export interface JobType {
     postTime: string;
     description: string;
     skillRequired: string[];
-    postedBy : number;
+    jobStatus: string;
+    postedBy: number;
 }
 
 export const JobInitialValues : JobType = {
-    about: "",
-    applicants: [],
-    company: "",
-    description: "",
-    experience: "",
     id: 0,
     jobTitle: "",
+    company: "",
+    applicants: [],
+    about: "",
+    experience: "",
     jobType: "",
     location: "",
     packageOffered: 0,
     postTime: "",
+    description: "",
     skillRequired: [],
+    jobStatus : "ACTIVE",
     postedBy: 0
 }
 

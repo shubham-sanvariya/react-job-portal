@@ -1,5 +1,5 @@
 import SelectInput from "@/components/postJob/selectInput.tsx";
-import {content, fields} from "@/Data/PostJob.tsx";
+import {fields} from "@/Data/PostJob.tsx";
 import {Button, NumberInput, TagsInput, Textarea} from "@mantine/core";
 import TextEditor from "@/components/postJob/textEditor.tsx";
 import {hasLength, isNotEmpty, useForm} from "@mantine/form";
@@ -7,17 +7,20 @@ import {postJob} from "@/services/jobService.tsx";
 import {errorNotification} from "@/services/notificationServices.tsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {selectUser} from "@/slices/userSlice.tsx";
+import {JobInitialValues} from "@/types/jobType.ts";
 
 const PostJob = () => {
     const navigate = useNavigate();
-    const handlePost = async () => {
-        form.validate();
-        if (!form.isValid()) return;
+    const userState = useSelector(selectUser);
+    const { applicants, ...jobInitialValuesWithoutApplicants } = JobInitialValues;
 
+    const handleSave = async () => {
         try {
-            const res = await postJob({...form.getValues(), packageOffered: Number(form.getValues().packageOffered)});
+            const res = await postJob({...form.getValues(), postedBy : Number(userState.id)});
             console.log(res);
-            navigate("/posted-jobs")
+            navigate(`/posted-jobs/${res.id}`)
         }catch (err: unknown) {
             let errMsg: string;
             if (axios.isAxiosError(err)) {
@@ -31,22 +34,21 @@ const PostJob = () => {
         }
     }
 
+    const handlePost = async () => {
+        form.validate();
+        if (!form.isValid()) return;
+
+        await handleSave();
+    }
+
+    const handleDraft = async () => {
+        await handleSave();
+    }
+
     const form = useForm({
         mode: "controlled",
         validateInputOnChange: true,
-        initialValues: {
-            jobTitle : "",
-            company : "",
-            // applicants : [],
-            experience : "",
-            jobType : "",
-            location : "",
-            packageOffered : "",
-            skillRequired : [],
-            about : "",
-            description : content,
-            // jobStatus : "",
-        },
+        initialValues: { applicants, ...jobInitialValuesWithoutApplicants } ,
         validate:{
             jobTitle: hasLength({min: 4}, 'Must be at least 4 Characters')
             , company: hasLength({min: 4}, 'Must be at least 4 Characters'),
@@ -99,7 +101,7 @@ const PostJob = () => {
                     <Button onClick={handlePost} color={'bright-sun.4'} variant={"light"}>
                         Publish Job
                     </Button>
-                    <Button color={'bright-sun.4'} variant={"outline"}>
+                    <Button onClick={handleDraft} color={'bright-sun.4'} variant={"outline"}>
                         Save as Draft
                     </Button>
                 </div>
