@@ -16,9 +16,9 @@ const PostJob = () => {
     const userState = useSelector(selectUser);
     const { applicants, ...jobInitialValuesWithoutApplicants } = JobInitialValues;
 
-    const handleSave = async () => {
+    const handleSave = async (jobStatus : string) => {
         try {
-            const res = await postJob({...form.getValues(), postedBy : Number(userState.id)});
+            const res = await postJob({...form.getValues(), postedBy : Number(userState.id), jobStatus});
             console.log(res);
             navigate(`/posted-jobs/${res.id}`)
         }catch (err: unknown) {
@@ -38,11 +38,11 @@ const PostJob = () => {
         form.validate();
         if (!form.isValid()) return;
 
-        await handleSave();
+        await handleSave("ACTIVE");
     }
 
     const handleDraft = async () => {
-        await handleSave();
+        await handleSave("DRAFT");
     }
 
     const form = useForm({

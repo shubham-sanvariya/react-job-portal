@@ -28,7 +28,7 @@ export const JobInitialValues : JobType = {
     postTime: "",
     description: "",
     skillRequired: [],
-    jobStatus : "ACTIVE",
+    jobStatus : "",
     postedBy: 0
 }
 
