@@ -13,7 +13,7 @@ export const postJob = async ( job : Omit<JobType, "id" | "applicants" | "postTi
     }
 }
 
-export const applyJob = async ( id : number ,job : Omit<ApplicantType, "applicantId" | "applicationStatus" | "timeStamp"> ) => {
+export const applyJob = async ( id : number ,job : Omit<ApplicantType, "applicantId" | "applicationStatus" | "timeStamp" | "interviewTime"> ) => {
     try {
         const res = await axios.post(`${base_URL}/apply/${id}`, job);
         return res.data;
@@ -36,6 +36,16 @@ export const getAllJobs = async () => {
 export const getJobById = async ( id : number ) => {
     try {
         const res = await axios.get(`${base_URL}/${id}`);
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
+export const getPostedByJobs= async ( id : number ) => {
+    try {
+        const res = await axios.get(`${base_URL}/posted-by/${id}`);
         return res.data;
     }catch (err : unknown){
         console.log(err);
