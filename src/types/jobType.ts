@@ -34,12 +34,26 @@ export const JobInitialValues : JobType = {
 
 export interface ApplicantType {
     applicantId: number;
-    timeStamp: string; // LocalDateTime is usually serialized as an ISO string
-    applicationStatus: string;
+    name: string;
+    email: string;
+    phone: number;
+    website: string;
+    resume: string;
+    coverLetter: string;
+    timeStamp: string; // LocalDateTime can be represented as an ISO string
+    applicationStatus: JobStatusEnum;
+    interviewTime: string;
 }
 export interface ApplicationType {
     id : number;
     applicantId: number;
     interviewTime?: string; // LocalDateTime is usually serialized as an ISO string
     applicationStatus: string;
+}
+
+export enum JobStatusEnum {
+    APPLIED = "APPLIED",
+    INTERVIEWING = "INTERVIEWING",
+    OFFERED = "OFFERED",
+    REJECTED = "REJECTED"
 }
