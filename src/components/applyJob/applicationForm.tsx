@@ -1,4 +1,3 @@
-
 import {Button, FileInput, LoadingOverlay, NumberInput, Textarea, TextInput} from "@mantine/core";
 import {IconPaperclip} from "@tabler/icons-react";
 import {useState} from "react";
@@ -9,17 +8,17 @@ import {applyJob} from "@/services/jobService.tsx";
 import axios from "axios";
 import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
 import {useSelector} from "react-redux";
-import {selectUser} from "@/slices/userSlice.tsx";
+import {selectProfile} from "@/slices/profileSlice.tsx";
 
 const ApplicationForm = () => {
-    const {id} = useParams();
-    const userState = useSelector(selectUser);
+    const {id: jobId} = useParams();
+    const profileState = useSelector(selectProfile);
     const navigate = useNavigate();
     const [preview, setPreview] = useState(false);
     const [submit, setSubmit] = useState(false);
 
     const handlePreview = () => {
-        window.scrollTo({ top : 0, behavior : "smooth"});
+        window.scrollTo({top: 0, behavior: "smooth"});
         form.validate();
         if (!form.isValid()) return;
         setPreview(!preview);
@@ -29,12 +28,20 @@ const ApplicationForm = () => {
     const handleSubmit = async () => {
         setSubmit(true);
         const resume = form.getValues().resume ? await getBase64(form.getValues().resume) : null;
-        const applicant = {...form.getValues(), applicantId : userState.id, resume : resume?.split(',')[1]};
+        let applicant;
+        if (resume && profileState) {
+             applicant = {
+                ...form.getValues(),
+                applicantId: profileState?.id,
+                phone: Number(form.getValues().phone),
+                resume: resume.split(',')[1]
+            };
+        }
         try {
-             await applyJob(Number(id), applicant);
+           if (applicant) await applyJob(Number(jobId), applicant);
             successNotification("Success", "Application Submitted Successfully.");
             navigate("/job-history");
-        }catch (err : unknown){
+        } catch (err: unknown) {
             let errMsg: string;
             if (axios.isAxiosError(err)) {
                 errMsg = err.response?.data?.errorMessage
@@ -44,7 +51,7 @@ const ApplicationForm = () => {
                 console.log(errMsg, err);
             }
             errorNotification("Failed Submission", errMsg);
-        }finally {
+        } finally {
             setSubmit(false);
         }
     }
@@ -53,14 +60,14 @@ const ApplicationForm = () => {
         mode: "controlled",
         validateInputOnChange: true,
         initialValues: {
-            name : "",
-            email : "",
-            phone : "",
-            website : "",
-            resume : null,
-            coverLetter : "",
+            name: "",
+            email: "",
+            phone: "",
+            website: "",
+            resume: null,
+            coverLetter: "",
         },
-        validate:{
+        validate: {
             name: hasLength({min: 4}, 'Must be at least 4 Characters')
             , email: isEmail("Enter a valid email"),
             phone: value =>
@@ -83,11 +90,13 @@ const ApplicationForm = () => {
             </div>
             <div className="flex flex-col gap-5">
                 <div className={'flex gap-10 [&>*]:w-1/2'}>
-                    <TextInput {...form.getInputProps("name")} className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
+                    <TextInput {...form.getInputProps("name")}
+                               className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
                                readOnly={preview}
                                variant={preview ? 'unstyled' : 'default'} label={'Full Name'} withAsterisk
                                placeholder={'Enter Name'}/>
-                    <TextInput {...form.getInputProps("email")}  className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
+                    <TextInput {...form.getInputProps("email")}
+                               className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
                                readOnly={preview}
                                variant={preview ? 'unstyled' : 'default'} label={'Email'} withAsterisk
                                placeholder={'Enter Email'}/>
