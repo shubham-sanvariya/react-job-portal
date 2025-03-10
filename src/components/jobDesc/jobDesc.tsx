@@ -15,7 +15,7 @@ import {selectProfile} from "@/slices/profileSlice.tsx";
 import useJob from "@/hooks/useJob.tsx";
 import {selectUser} from "@/slices/userSlice.tsx";
 
-const JobDesc = () => {
+const JobDesc = ( { edit }: { edit: boolean } ) => {
     const {id} = useParams();
     const jobsState = useSelector(selectJobs);
     const profileState = useSelector(selectProfile);
@@ -23,7 +23,6 @@ const JobDesc = () => {
     const [job, setJob] = useState<JobType>(JobInitialValues);
     const [applied, setApplied] = useState<boolean>(false);
     const { handleSaveJobs } = useJob();
-    const [edit, setEdit] = useState(false);
 
     const hasFetched = useRef(false);
 
@@ -67,16 +66,16 @@ const JobDesc = () => {
                 <div className={'flex flex-col items-center gap-2'}>
                     {(edit || !applied )&& <Link to={`/apply-job/${job?.id}`}>
                         <Button size={"sm"} color={'bright-sun.4'} variant={"light"}>
-                            Apply
+                            {edit ? "Edit" : "Apply"}
                         </Button>
                     </Link>}
-                    { applied &&
-                        <Button onClick={() => setEdit(true)} size={"sm"} color={'green.8'} variant={"light"}>
+                    {(!edit && applied) &&
+                        <Button size={"sm"} color={'green.8'} variant={"light"}>
                             Applied
                         </Button>
                     }
                     {edit ?
-                        <Button onClick={() => setEdit(true)} size={"sm"} color={'red.5'} variant={"outline"}>
+                        <Button size={"sm"} color={'red.5'} variant={"outline"}>
                             Delete
                         </Button>
                         :
