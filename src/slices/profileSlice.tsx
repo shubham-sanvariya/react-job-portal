@@ -22,10 +22,11 @@ export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profi
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
-            thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
-        } else {
-            thunkAPI.rejectWithValue("An unexpected error occurred");
+            if (err.response?.data?.errorMessage)
+                return thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+            return  thunkAPI.rejectWithValue(err.message);
         }
+        return thunkAPI.rejectWithValue("An unexpected error occurred");
     }
 })
 
@@ -35,23 +36,26 @@ export const updateProfileAsyncThunk = createAsyncThunk("updateProfile", async (
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
-            thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
-        } else {
-            thunkAPI.rejectWithValue("An unexpected error occurred");
+            if (err.response?.data?.errorMessage)
+                return thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+            return  thunkAPI.rejectWithValue(err.message);
         }
+        return thunkAPI.rejectWithValue("An unexpected error occurred");
     }
 })
 
-export const updateProfileSavedJobsAsyncThunk = createAsyncThunk("updateProfile", async ( {profileId, jobIds} : {profileId: number, jobIds : number[]}, thunkAPI) => {
+export const updateProfileSavedJobsAsyncThunk = createAsyncThunk("updateProfileSavedJobs", async ( {profileId, jobIds} : {profileId: number, jobIds : number[]}, thunkAPI) => {
     try {
         const res = await updateProfileSavedJobs(profileId, jobIds);
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
-            thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
-        } else {
-            thunkAPI.rejectWithValue("An unexpected error occurred");
+            if (err.response?.data?.errorMessage)
+              return thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+            return  thunkAPI.rejectWithValue(err.message);
         }
+          return thunkAPI.rejectWithValue("An unexpected error occurred");
+
     }
 })
 
@@ -59,7 +63,11 @@ export const updateProfileSavedJobsAsyncThunk = createAsyncThunk("updateProfile"
 const ProfileSlice = createSlice({
     initialState,
     name: "profile",
-    reducers: {},
+    reducers: {
+        clearProfileError : (state) => {
+            state.error = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getProfileAsyncThunk.pending, (state) => {
@@ -84,6 +92,17 @@ const ProfileSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
+            .addCase(updateProfileSavedJobsAsyncThunk.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateProfileSavedJobsAsyncThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.profile = action.payload as ProfileType;
+            })
+            .addCase(updateProfileSavedJobsAsyncThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
     },
 
 })
@@ -93,6 +112,8 @@ const ProfileSlice = createSlice({
 export const selectProfile = (state: { profile: { profile: ProfileType | null } }) => state.profile.profile;
 
 export const selectLoading = (state : { profile:{loading : boolean}}) => state.profile.loading;
-export const selectError = (state : { profile:{error : string | null}}) => state.profile.error;
+export const selectProfileError = (state : { profile:{error : string | null}}) => state.profile.error;
+
+export const { clearProfileError } = ProfileSlice.actions;
 
 export default ProfileSlice.reducer;
