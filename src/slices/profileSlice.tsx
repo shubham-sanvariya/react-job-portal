@@ -18,7 +18,7 @@ const initialState: ProfileState = {
 
 export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profileId : number, thunkAPI) => {
     try {
-        const res = await getProfile(profileId);
+        const res = await getProfile(profileId, "Failed to fetch user profile");
         return res as ProfileType;
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
