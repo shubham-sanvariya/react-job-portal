@@ -21,6 +21,28 @@ export const getBase64 = async (file: File | null): Promise<string> => {
     });
 };
 
+export const openResumeInNewTab = (base64String : string) => {
+    // Convert Base64 to a Blob
+    const byteCharacters = atob(base64String); // Decode Base64
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Determine MIME type (PDF example)
+    const blob = new Blob([byteArray], { type: "application/pdf" });
+
+    // Create a Blob URL
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Open in a new tab
+    window.open(blobUrl, "_blank");
+
+    // Optional: Revoke Blob URL after some time to free memory
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+};
+
 function timeAgo(time: string | Date): string {
     const now = new Date();
     const past = new Date(time);
