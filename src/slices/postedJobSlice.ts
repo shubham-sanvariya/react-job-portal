@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {JobType} from "@/types/jobType.ts";
-import {getPostedByJobs} from "@/services/jobService.tsx";
+import {ApplicationType, JobType} from "@/types/jobType.ts";
+import {getPostedByJobs, updateApplicantStatus} from "@/services/jobService.tsx";
 import axios from "axios";
 
 interface JobState {
@@ -19,10 +19,24 @@ export const getPostedByJobsAsyncThunk = createAsyncThunk("getPostedByJobs", asy
     try {
         return await getPostedByJobs(id);
     } catch (err: unknown) {
-        if (axios.isAxiosError(err)) {
-            thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+        if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
+           return  thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
         } else {
-            thunkAPI.rejectWithValue("An unexpected error occurred");
+           return  thunkAPI.rejectWithValue("An unexpected error occurred");
+        }
+    }
+})
+
+export const updateApplicantStatusAsyncThunk = createAsyncThunk("updateApplicantStatus", async ({ application, postedById}: {application: ApplicationType, postedById : number}, thunkAPI) => {
+    try {
+         await updateApplicantStatus(application);
+
+         thunkAPI.dispatch(getPostedByJobsAsyncThunk(postedById))
+    } catch (err: unknown) {
+        if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
+           return  thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+        } else {
+           return  thunkAPI.rejectWithValue("An unexpected error occurred");
         }
     }
 })
@@ -41,6 +55,16 @@ const postedJobSlice = createSlice({
                 state.jobs = action.payload;
             })
             .addCase(getPostedByJobsAsyncThunk.rejected,(state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(updateApplicantStatusAsyncThunk.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateApplicantStatusAsyncThunk.fulfilled,(state) => {
+                state.loading = false;
+            })
+            .addCase(updateApplicantStatusAsyncThunk.rejected,(state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
