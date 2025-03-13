@@ -52,7 +52,7 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
         if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))){
             setApplied(true);
         }else setApplied(false);
-    }, [id, job.applicants, jobs, profileState, userState.id]);
+    }, [edit, id, job.applicants, jobs, jobsState, postedJobsState, profileState, userState.id]);
 
     return (
         <div className={'w-2/3'}>
@@ -141,7 +141,7 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
                     <div className={'flex justify-between mb-3'}>
                         <div className={'flex items-center gap-2'}>
                             <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-8'}
-                                                                                     src={`/src/assets/Icons/Google.png`}
+                                                                                     src={`/src/assets/Icons/${job.company}.png`}
                                                                                      alt="microsoft"/></div>
                             <div>
                                 <div className={'font-medium text-lg'}>{job.company}</div>
