@@ -7,20 +7,23 @@ import DOMPurify from "dompurify";
 import {timeAgo} from "@/services/utilService.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {selectJobs} from "@/slices/jobSlice.ts";
 import {JobInitialValues, JobType} from "@/types/jobType.ts";
 import {getJobById} from "@/services/jobService.tsx";
 import {formatJobValue} from "@/services/jobUtils.ts";
 import {selectProfile} from "@/slices/profileSlice.tsx";
 import useJob from "@/hooks/useJob.tsx";
 import {selectUser} from "@/slices/userSlice.tsx";
+import {selectJobs} from "@/slices/jobSlice.ts";
+import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
 
 const JobDesc = ( { edit }: { edit: boolean } ) => {
     const {id} = useParams();
     const jobsState = useSelector(selectJobs);
     const profileState = useSelector(selectProfile);
+    const postedJobsState = useSelector(selectPostedJobs);
     const userState = useSelector(selectUser);
     const [job, setJob] = useState<JobType>(JobInitialValues);
+    const [jobs, setJobs] = useState<JobType[]>([JobInitialValues]);
     const [applied, setApplied] = useState<boolean>(false);
     const { handleSaveJobs } = useJob();
 
@@ -28,7 +31,11 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const cj = jobsState?.find((item) => item.id === Number(id));
+        if (!id) return;
+        if (postedJobsState && jobsState) {
+            setJobs(edit ? postedJobsState : jobsState);
+        }
+        const cj = jobs?.find((item) => item.id === Number(id));
         if (cj) {
             setJob(cj);
         } else {
@@ -45,7 +52,7 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
         if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))){
             setApplied(true);
         }else setApplied(false);
-    }, [id, job.applicants, jobsState, profileState, userState.id]);
+    }, [id, job.applicants, jobs, profileState, userState.id]);
 
     return (
         <div className={'w-2/3'}>
@@ -53,7 +60,7 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-14'}
                                                                              src={`/src/assets/Icons/${job?.company}.png`}
-                                                                             alt="microsoft"/></div>
+                                                                             alt="company"/></div>
                     <div>
                         <div className={'font-semibold text-2xl'}>{job?.jobTitle}</div>
                         <div
