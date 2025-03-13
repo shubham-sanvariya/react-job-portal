@@ -5,7 +5,7 @@ import {card} from "@/Data/JobDescData.tsx";
 
 import DOMPurify from "dompurify";
 import {timeAgo} from "@/services/utilService.tsx";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState, useCallback} from "react";
 import {useSelector} from "react-redux";
 import {JobInitialValues, JobType} from "@/types/jobType.ts";
 import {getJobById} from "@/services/jobService.tsx";
@@ -29,30 +29,37 @@ const JobDesc = ( { edit }: { edit: boolean } ) => {
 
     const hasFetched = useRef(false);
 
+    const fetchJobById = useCallback(async (jobId: number) => {
+        const res = await getJobById(jobId);
+        setJob(res);
+    }, []);
+
+    const checkIfApplied = useCallback(() => {
+        if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))) {
+            setApplied(true);
+        } else {
+            setApplied(false);
+        }
+    }, [profileState, job.applicants, userState.id]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!id) return;
+
         if (postedJobsState && jobsState) {
             setJobs(edit ? postedJobsState : jobsState);
         }
+
         const cj = jobs?.find((item) => item.id === Number(id));
         if (cj) {
             setJob(cj);
-        } else {
-            if (!hasFetched.current) {
-                (async () => {
-                    const res = await getJobById(Number(id));
-                    setJob(res);
-                })()
-
-                hasFetched.current = true;
-            }
+        } else if (!hasFetched.current) {
+            fetchJobById(Number(id)).then();
+            hasFetched.current = true;
         }
 
-        if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))){
-            setApplied(true);
-        }else setApplied(false);
-    }, [edit, id, job.applicants, jobs, jobsState, postedJobsState, profileState, userState.id]);
+        checkIfApplied();
+    }, [id, jobs, jobsState, postedJobsState, edit, fetchJobById, checkIfApplied]);
 
     return (
         <div className={'w-2/3'}>
