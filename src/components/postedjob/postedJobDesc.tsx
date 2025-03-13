@@ -1,7 +1,7 @@
 import {Badge, Tabs} from "@mantine/core";
 import JobDesc from "@/components/jobDesc/jobDesc.tsx";
 import TalentCard from "@/components/findTalent/talentCard.tsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
 import {useEffect, useState} from "react";
@@ -10,14 +10,30 @@ import {JobInitialValues, JobStatusEnum} from "@/types/jobType.ts";
 
 const PostedJobDesc = () => {
     const {id} = useParams();
+    const navigate = useNavigate();
     const postedJobsState = useSelector(selectPostedJobs);
     const [job, setJob] = useState(JobInitialValues);
     const [activeTab, setActiveTab] = useState<string | null>("overview");
 
     useEffect(() => {
-        const fj = postedJobsState?.find(job => job.id === Number(id));
-        setJob(fj ?? job);
-    }, [id, job, postedJobsState]);
+        let firstJobId: number | undefined;
+
+        if (postedJobsState && postedJobsState.length > 0) {
+            firstJobId = postedJobsState[0].id;
+        }
+
+        // Navigate only if ID is undefined and we have a first job
+        if (!id && firstJobId) {
+            navigate(`/posted-jobs/${firstJobId}`, { replace: true });
+            return; // Prevent further execution in this effect
+        }
+
+        const foundJob = postedJobsState?.find(job => job.id === Number(id));
+
+        if (foundJob) {
+            setJob(foundJob);
+        }
+    }, [id, navigate, postedJobsState]);
 
     const handleJobStatus = () => {
         if (activeTab === "applicants"){
@@ -53,7 +69,7 @@ const PostedJobDesc = () => {
                     </Tabs.List>
 
                     <Tabs.Panel className="[&>div]:w-full" value={'overview'}><JobDesc edit={true}/></Tabs.Panel>
-                    {activeTab !== "overview" && <Tabs.Panel value={'applicants'}>
+                    {activeTab !== "overview" && <Tabs.Panel value={activeTab ?? ""}>
                         <div className={'flex justify-around flex-wrap mt-10 gap-5'}>
                             {
                                 filteredTalents?.map((talent, index) => (
