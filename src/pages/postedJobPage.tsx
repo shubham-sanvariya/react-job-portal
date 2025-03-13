@@ -5,16 +5,17 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "@/store.tsx";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {useEffect} from "react";
-import {getPostedByJobsAsyncThunk} from "@/slices/postedJobSlice.ts";
+import {getPostedByJobsAsyncThunk, selectPostedJobs} from "@/slices/postedJobSlice.ts";
 
 
 const PostedJobPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const userState = useSelector(selectUser);
+    const postedJobsState = useSelector(selectPostedJobs);
 
     useEffect(() => {
         getJobsPostedByUser()
-    }, [userState]);
+    }, [postedJobsState]);
 
     const getJobsPostedByUser = () => {
         dispatch(getPostedByJobsAsyncThunk(Number(userState.id)));
