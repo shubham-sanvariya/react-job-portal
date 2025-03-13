@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {ApplicationType, JobType} from "@/types/jobType.ts";
+import {ApplicationType, JobStatusEnum, JobType} from "@/types/jobType.ts";
 import {getPostedByJobs, updateApplicantStatus} from "@/services/jobService.tsx";
 import axios from "axios";
+import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
 
 interface JobState {
     jobs : JobType[];
@@ -27,12 +28,24 @@ export const getPostedByJobsAsyncThunk = createAsyncThunk("getPostedByJobs", asy
     }
 })
 
+const checkStatus = (status : string) => {
+    if (status === JobStatusEnum.INTERVIEWING){
+        return { title : "Interview Scheduled", message : "Interview Scheduled Successfully" }
+    }else if (status === JobStatusEnum.OFFERED){
+        return { title : "Offered Accepted", message : "Interview Accepted Successfully" }
+    }
+     return { title : "Rejected Application", message : "Rejected Application Successfully" }
+}
+
 export const updateApplicantStatusAsyncThunk = createAsyncThunk("updateApplicantStatus", async ({ application, postedById}: {application: ApplicationType, postedById : number}, thunkAPI) => {
     try {
          await updateApplicantStatus(application);
 
          thunkAPI.dispatch(getPostedByJobsAsyncThunk(postedById))
+        const { title, message } = checkStatus(application.applicationStatus);
+        successNotification(title, message);
     } catch (err: unknown) {
+        errorNotification("Failed To Update Application Status","Please try again after some time.");
         if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
            return  thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
         } else {
