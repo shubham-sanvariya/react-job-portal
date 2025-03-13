@@ -152,7 +152,7 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
                             variant={"light"} fullWidth>Schedule</Button>
                 </div>
             </Modal>
-            <Modal opened={openedApp} onClose={closeApp} title={'Schedule Interview'} centered>
+            <Modal opened={openedApp} onClose={closeApp} title={'View Application'} centered>
                 <div className={'flex flex-col gap-4'}>
                     <div>
                         Email: &emsp; <a href={`mailto:${applicant.email}`}

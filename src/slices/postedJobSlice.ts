@@ -32,9 +32,9 @@ const checkStatus = (status : string) => {
     if (status === JobStatusEnum.INTERVIEWING){
         return { title : "Interview Scheduled", message : "Interview Scheduled Successfully" }
     }else if (status === JobStatusEnum.OFFERED){
-        return { title : "Offered Accepted", message : "Interview Accepted Successfully" }
+        return { title : "Offer Send", message : "Offer has been send successfully." }
     }
-     return { title : "Rejected Application", message : "Rejected Application Successfully" }
+     return { title : "Rejected Applicant", message : "Rejected Applicant Successfully" }
 }
 
 export const updateApplicantStatusAsyncThunk = createAsyncThunk("updateApplicantStatus", async ({ application, postedById}: {application: ApplicationType, postedById : number}, thunkAPI) => {

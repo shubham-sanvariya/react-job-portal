@@ -47,39 +47,43 @@ const PostedJobDesc = () => {
 
     return (
         <div className={'mt-5 w-3/4 px-5'}>
-            <div className={'flex items-center text-2xl font-semibold mb-5'}>
-                {job.jobTitle}
-                <Badge variant={'light'} ml={'sm'} size={"sm"} color={'bright-sun.4'}
-                >
-                    {job.jobStatus}
-                </Badge>
-            </div>
-            <div className={'font-medium text-mine-shaft-300 mb-5'}>
-                {job.location}
-            </div>
-            <div>
-                <Tabs variant={"outline"} radius={"lg"} onChange={setActiveTab} value={activeTab}>
-                    <Tabs.List
-                        className={'[&_button]:!text-lg mb-5 font-semibold [&_button[data-active="true"]]:text-bright-sun-400'}>
-                        <Tabs.Tab value={'overview'}>Overview</Tabs.Tab>
-                        <Tabs.Tab value={'applicants'}>Applicants</Tabs.Tab>
-                        <Tabs.Tab value={'invited'}>Invited</Tabs.Tab>
-                        <Tabs.Tab value={'offered'}>Offered</Tabs.Tab>
-                        <Tabs.Tab value={'rejected'}>Rejected</Tabs.Tab>
-                    </Tabs.List>
+            {job.jobTitle? <>
+                <div className={'flex items-center text-2xl font-semibold mb-5'}>
+                    {job.jobTitle}
+                    <Badge variant={'light'} ml={'sm'} size={"sm"} color={'bright-sun.4'}
+                    >
+                        {job.jobStatus}
+                    </Badge>
+                </div>
+                <div className={'font-medium text-mine-shaft-300 mb-5'}>
+                    {job.location}
+                </div>
+                <div>
+                    <Tabs variant={"outline"} radius={"lg"} onChange={setActiveTab} value={activeTab}>
+                        <Tabs.List
+                            className={'[&_button]:!text-lg mb-5 font-semibold [&_button[data-active="true"]]:text-bright-sun-400'}>
+                            <Tabs.Tab value={'overview'}>Overview</Tabs.Tab>
+                            <Tabs.Tab value={'applicants'}>Applicants</Tabs.Tab>
+                            <Tabs.Tab value={'invited'}>Invited</Tabs.Tab>
+                            <Tabs.Tab value={'offered'}>Offered</Tabs.Tab>
+                            <Tabs.Tab value={'rejected'}>Rejected</Tabs.Tab>
+                        </Tabs.List>
 
-                    <Tabs.Panel className="[&>div]:w-full" value={'overview'}><JobDesc edit={true}/></Tabs.Panel>
-                    {activeTab !== "overview" && <Tabs.Panel value={activeTab ?? ""}>
-                        <div className={'flex justify-around flex-wrap mt-10 gap-5'}>
-                            {
-                                filteredTalents?.map((talent, index) => (
-                                    <TalentCard key={index} applicant={talent} jobStatus={handleJobStatus()}/>
-                                ))
-                            }
-                        </div>
-                    </Tabs.Panel>}
-                </Tabs>
-            </div>
+                        <Tabs.Panel className="[&>div]:w-full" value={'overview'}><JobDesc edit={true}/></Tabs.Panel>
+                        {activeTab !== "overview" && <Tabs.Panel value={activeTab ?? ""}>
+                            <div className={'flex justify-around flex-wrap mt-10 gap-5'}>
+                                {
+                                    filteredTalents?.map((talent, index) => (
+                                        <TalentCard key={index} applicant={talent} jobStatus={handleJobStatus()}/>
+                                    ))
+                                }
+                            </div>
+                        </Tabs.Panel>}
+                    </Tabs>
+                </div>
+            </> : <div className="flex justify-center items-center font-semibold text-2xl min-h-[70vh]">
+                Job Not Found
+            </div>}
         </div>
     )
 }
