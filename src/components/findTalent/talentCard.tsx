@@ -3,7 +3,7 @@ import {Avatar, Button, Divider, Modal, Text} from "@mantine/core";
 import {Link, useParams} from "react-router-dom";
 import {useDisclosure} from "@mantine/hooks";
 import {DateInput, TimeInput} from "@mantine/dates";
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {ApplicantType, ApplicationType, JobStatusEnum} from "@/types/jobType.ts";
 import {getProfile} from "@/services/profileService.tsx";
 import {ProfileType} from "@/types/profileType.ts";
@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateApplicantStatusAsyncThunk} from "@/slices/postedJobSlice.ts";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {format} from 'date-fns';
+import {openResumeInNewTab} from "@/services/utilService.tsx";
 
 const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatus: JobStatusEnum }) => {
     const {id} = useParams();
@@ -21,22 +22,19 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
     const [time, setTime] = useState("");
     const [applicantProfile, setApplicantProfile] = useState<ProfileType>();
     const [opened, {open, close}] = useDisclosure(false);
+    const [openedApp, {open: openApp, close: closeApp}] = useDisclosure(false);
     const ref = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-
-        getApplicantProfileByApplicantId().then();
-    }, []);
-
-
-
-    const getApplicantProfileByApplicantId = async () => {
+    const getApplicantProfileByApplicantId = useCallback(async () => {
         if (applicant) {
             const profile = await getProfile(applicant.applicantId, "Failed to fetch applicant Profile");
             setApplicantProfile(profile);
         }
+    }, [applicant]);
 
-    }
+    useEffect(() => {
+        getApplicantProfileByApplicantId().then();
+    }, [getApplicantProfileByApplicantId]);
 
     const handleOffer = (jobStatus: JobStatusEnum) => {
         const [hours, minutes] = time.split(":").map(Number);
@@ -129,6 +127,11 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
                     </>
                 }
             </div>
+            {(applicant.applicationStatus === JobStatusEnum.INTERVIEWING || applicant.applicationStatus === JobStatusEnum.APPLIED) && (
+                <Button onClick={openApp} color={'bright-sun.4'} variant={"filled"} autoContrast={true} fullWidth>
+                    View Application
+                </Button>
+            )}
             <Modal opened={opened} onClose={close} title={'Schedule Interview'} centered>
                 <div className={'flex flex-col gap-4'}>
                     <DateInput
@@ -147,6 +150,22 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
                     />
                     <Button onClick={() => handleOffer(JobStatusEnum.INTERVIEWING)} color={'bright-sun.4'}
                             variant={"light"} fullWidth>Schedule</Button>
+                </div>
+            </Modal>
+            <Modal opened={openedApp} onClose={closeApp} title={'Schedule Interview'} centered>
+                <div className={'flex flex-col gap-4'}>
+                    <div>
+                        Email: &emsp; <a href={`mailto:${applicant.email}`}
+                                         className="text-bright-sun-400 hover:underline cursor-pointer text-center">{applicant.email}</a>
+                    </div>
+                    <div>
+                        Website: &emsp; <a target={"_blank"} href={`${applicant.website}`}
+                                           className="text-bright-sun-400 hover:underline cursor-pointer text-center">{applicant.website}</a>
+                    </div>
+                    <div>
+                        Email: &emsp; <span onClick={() => openResumeInNewTab(applicant.resume)}
+                                            className="text-bright-sun-400 hover:underline cursor-pointer text-center">{applicant.name}</span>
+                    </div>
                 </div>
             </Modal>
         </div>
