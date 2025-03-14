@@ -103,7 +103,7 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             <div className={'flex [&>*]:w-1/2 [&>*]:p-1'}>
                 {jobStatus !== JobStatusEnum.INTERVIEWING && <>
-                    <Link to={'/talent-profile'}>
+                    <Link to={`/talent-profile/${applicantProfile?.id}`}>
                         <Button color={'bright-sun.4'} variant={"outline"} fullWidth>Profile</Button>
                     </Link>
                     <div>
