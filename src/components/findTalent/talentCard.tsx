@@ -5,36 +5,34 @@ import {useDisclosure} from "@mantine/hooks";
 import {DateInput, TimeInput} from "@mantine/dates";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {ApplicantType, ApplicationType, JobStatusEnum} from "@/types/jobType.ts";
-import {getProfile} from "@/services/profileService.tsx";
-import {ProfileType} from "@/types/profileType.ts";
 import {AppDispatch} from "@/store.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {updateApplicantStatusAsyncThunk} from "@/slices/postedJobSlice.ts";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {format} from 'date-fns';
 import {openResumeInNewTab} from "@/services/utilService.tsx";
+import {getApplicantProfileAsyncThunk, selectApplicantProfile} from "@/slices/applicantProfile.ts";
 
 const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatus: JobStatusEnum }) => {
     const {id} = useParams();
     const dispatch = useDispatch<AppDispatch>();
     const userState = useSelector(selectUser);
+    const profileApplicantState = useSelector(selectApplicantProfile);
     const [date, setDate] = useState<Date | null>(null);
     const [time, setTime] = useState("");
-    const [applicantProfile, setApplicantProfile] = useState<ProfileType>();
     const [opened, {open, close}] = useDisclosure(false);
     const [openedApp, {open: openApp, close: closeApp}] = useDisclosure(false);
     const ref = useRef<HTMLInputElement>(null);
 
     const getApplicantProfileByApplicantId = useCallback(async () => {
         if (applicant) {
-            const profile = await getProfile(applicant.applicantId, "Failed to fetch applicant Profile");
-            setApplicantProfile(profile);
+            dispatch(getApplicantProfileAsyncThunk(applicant.applicantId));
         }
-    }, [applicant]);
+    }, [applicant, dispatch]);
 
     useEffect(() => {
         getApplicantProfileByApplicantId().then();
-    }, [getApplicantProfileByApplicantId]);
+    }, []);
 
     const handleOffer = (jobStatus: JobStatusEnum) => {
         const [hours, minutes] = time.split(":").map(Number);
@@ -53,18 +51,18 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
         close();
     }
 
-    return (
+    return (applicant &&
         <div
             className={'flex flex-col gap-3 rounded-xl bg-mine-shaft-900 p-4 w-96 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400'}>
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-full'}><Avatar size={"lg"}
-                                                                                  src={applicantProfile?.picture ? `data:image/jpeg;base64,${applicantProfile.picture}` : 'src/assets/avatar.png'}
+                                                                                  src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : 'src/assets/avatar.png'}
                                                                                   alt="profile"/></div>
                     <div className={'flex flex-col gap-1'}>
                         <div className={'font-semibold text-lg'}>{applicant.name}</div>
                         <div
-                            className={'text-sm text-mine-shaft-300'}>{applicantProfile?.jobTitle} &bull; {applicantProfile?.company}
+                            className={'text-sm text-mine-shaft-300'}>{profileApplicantState?.jobTitle} &bull; {profileApplicantState?.company}
                         </div>
                     </div>
                 </div>
@@ -73,14 +71,14 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
             <div
                 className={'flex flex-wrap gap-2 '}>
                 {
-                    applicantProfile?.skills?.map((skill: string, index: number) => index < 10 && (
+                    profileApplicantState?.skills?.map((skill: string, index: number) => index < 10 && (
                         <div key={index}
                              className={'p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs'}>{skill}</div>
                     ))
                 }
             </div>
             <Text className="!text-xs text-justify !text-mine-shaft-300" lineClamp={3}>
-                {applicantProfile?.about}
+                {profileApplicantState?.about}
             </Text>
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             {
@@ -92,18 +90,18 @@ const TalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatu
                     :
                     <div className={'flex justify-between'}>
                         <div className={'font-semibold text-mine-shaft-200'}>
-                            {applicantProfile?.expectedCtc ?? "12 LPA"}
+                            {profileApplicantState?.expectedCtc ?? "12 LPA"}
                         </div>
                         <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
                             <IconMapPin className={'h-5 w-5'} stroke={1.5}/>
-                            {applicantProfile?.location}
+                            {profileApplicantState?.location}
                         </div>
                     </div>
             }
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             <div className={'flex [&>*]:w-1/2 [&>*]:p-1'}>
                 {jobStatus !== JobStatusEnum.INTERVIEWING && <>
-                    <Link to={`/talent-profile/${applicantProfile?.id}`}>
+                    <Link to={`/talent-profile/${profileApplicantState?.id}`}>
                         <Button color={'bright-sun.4'} variant={"outline"} fullWidth>Profile</Button>
                     </Link>
                     <div>
