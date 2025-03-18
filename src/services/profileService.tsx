@@ -25,7 +25,7 @@ export const getProfile = async ( id: number, notificationMessage : string) => {
 export const getAllProfiles = async () => {
     try {
         const res = await axios.get(base_URL);
-        return res.data;
+        return res.data as ProfileType[];
     }catch (err : unknown){
         let errMsg: string;
         if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
