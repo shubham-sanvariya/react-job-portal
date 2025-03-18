@@ -1,13 +1,14 @@
+import {CertificationType} from "@/types/profileType.ts";
 
-const CertiCard = (props:any) => {
+const CertiCard = (props:CertificationType) => {
     return (
 
         <div className={'flex justify-between'}>
             <div className={'flex items-center gap-2'}>
                 <div className={'p-2 bg-mine-shaft-800 rounded-md'}><img className={'h-7'} src={`/src/assets/Icons/${props.issuer}.png`} alt="microsoft"/></div>
                 <div className={'flex flex-col'}>
-                    <div className={'font-semibold'}>{props.name}</div>
-                    <div className={'text-sm text-mine-shaft-300'}>{props.company}</div>
+                    <div className={'font-semibold'}>{props.title}</div>
+                    <div className={'text-sm text-mine-shaft-300'}>{props.issuer}</div>
                 </div>
             </div>
             <div className={'flex flex-col items-end'}>
