@@ -1,5 +1,6 @@
 export interface ProfileType {
     id: number;
+    name : string;
     jobTitle: string;
     company: string;
     location: string;
