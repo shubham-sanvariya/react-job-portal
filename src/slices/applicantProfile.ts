@@ -4,13 +4,13 @@ import {getProfile} from "@/services/profileService.tsx";
 import axios from "axios";
 
 interface ProfileState {
-    Profile: ProfileType | null;
+    profile: ProfileType | null;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: ProfileState = {
-    Profile: null,
+    profile: null,
     loading: false,
     error: null,
 };
@@ -44,7 +44,7 @@ const ApplicantProfile = createSlice({
             })
             .addCase(getApplicantProfileAsyncThunk.fulfilled, (state, action) => {
                 state.loading = false;
-                state.Profile = action.payload as ProfileType;
+                state.profile = action.payload as ProfileType;
             })
             .addCase(getApplicantProfileAsyncThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -55,6 +55,7 @@ const ApplicantProfile = createSlice({
 
 export const { clearProfileApplicantError } = ApplicantProfile.actions;
 
-export const selectApplicantProfile = (state: { applicantProfile: { profile: ProfileType | null } }) => state.applicantProfile.profile;
+export const selectApplicantProfile = (state: { applicantProfileReducer : { profile : ProfileType | null } }) => state.applicantProfileReducer.profile;
+
 
 export default ApplicantProfile.reducer;
