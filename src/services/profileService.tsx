@@ -22,6 +22,23 @@ export const getProfile = async ( id: number, notificationMessage : string) => {
     }
 }
 
+export const getAllProfiles = async () => {
+    try {
+        const res = await axios.get(base_URL);
+        return res.data;
+    }catch (err : unknown){
+        let errMsg: string;
+        if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
+            errMsg = err.response?.data?.errorMessage
+            console.log(errMsg);
+        } else {
+            errMsg = "An unexpected error occurred"
+            console.log(errMsg, err);
+        }
+        errorNotification("Failed to fetch all Talents", errMsg);
+    }
+}
+
 export const updateProfile = async (profile : ProfileType) => {
     try {
         const res = await axios.put(`${base_URL}/update`,profile);
