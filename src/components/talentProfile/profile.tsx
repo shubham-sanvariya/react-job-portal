@@ -8,6 +8,7 @@ import {AppDispatch} from "@/store.tsx";
 import {getApplicantProfileAsyncThunk, selectApplicantProfile} from "@/slices/applicantProfile.ts";
 import {useCallback, useEffect} from "react";
 import {CertificationType} from "@/types/profileType.ts";
+import banner from '@/assets/Profile/banner.jpg';
 
 const Profile = () => {
     const {id} = useParams();
@@ -30,7 +31,7 @@ const Profile = () => {
     return (profileApplicantState &&
         <div className={'w-2/3 mx-auto'}>
             <div className={'relative'}>
-                <img className={'rounded-t-2xl'} src={`https://i0.wp.com/mahala.co.uk/wp-content/uploads/2014/12/img_banner-thin_mountains.jpg?fit=800%2C258&ssl=1`} alt={"banner"}/>
+                <img className={'rounded-t-2xl'} src={banner} alt={"banner"}/>
                 <div className={'absolute flex items-center justify-center -bottom-1/4 left-3'}>
                     <Avatar className="!w-48 !h-48  border-mine-shaft-950 border-8 rounded-full"
                             src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : 'src/assets/avatar.png'}/>
