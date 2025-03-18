@@ -18,7 +18,7 @@ const SelectInput = (props: any) => {
     const exactOptionMatch = data.some((item) => item === search);
     const filteredOptions = exactOptionMatch
         ? data
-        : data.filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()));
+        : data.filter((item) => item.toLowerCase().includes(search?.toLowerCase().trim()));
 
     const options = filteredOptions.map((item) => (
         <Combobox.Option value={item} key={item}>
@@ -72,7 +72,7 @@ const SelectInput = (props: any) => {
                 <Combobox.Options>
                     <ScrollArea.Autosize mah={200} type={"scroll"}>
                         {options}
-                        {!exactOptionMatch && search.trim().length > 0 && (
+                        {!exactOptionMatch && search?.trim().length > 0 && (
                             <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
                         )}
                     </ScrollArea.Autosize>
