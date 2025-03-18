@@ -1,11 +1,11 @@
 import {Badge, Tabs} from "@mantine/core";
 import JobDesc from "@/components/jobDesc/jobDesc.tsx";
-import TalentCard from "@/components/findTalent/talentCard.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
 import {useEffect, useState} from "react";
 import {JobInitialValues, JobStatusEnum} from "@/types/jobType.ts";
+import ApplicantTalentCard from "@/components/findTalent/applicantTalentCard.tsx";
 
 
 const PostedJobDesc = () => {
@@ -74,7 +74,7 @@ const PostedJobDesc = () => {
                             <div className={'flex justify-around flex-wrap mt-10 gap-5'}>
                                 {
                                     filteredTalents?.map((talent, index) => (
-                                        <TalentCard key={index} applicant={talent} jobStatus={handleJobStatus()}/>
+                                        <ApplicantTalentCard key={index} applicant={talent} jobStatus={handleJobStatus()}/>
                                     ))
                                 }
                             </div>
