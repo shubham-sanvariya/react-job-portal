@@ -18,14 +18,12 @@ const Profile = () => {
         if (id) {
             dispatch(getApplicantProfileAsyncThunk(Number(id)));
         }
-    }, [id]);
+    }, [dispatch, id]);
 
     useEffect(() => {
-        if (profileApplicantState === null) {
-            getApplicantProfileByApplicantId().then();
-        }
+        getApplicantProfileByApplicantId().then();
         console.log(profileApplicantState);
-    }, [profileApplicantState]);
+    }, [id]);
 
 
     return (profileApplicantState &&
