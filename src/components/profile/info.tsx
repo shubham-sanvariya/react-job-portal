@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {useMemo, useState} from "react";
 import {hasLength, useForm} from "@mantine/form";
-import {selectUser} from "@/slices/userSlice.tsx";
+import {selectUser, updateUserNameAsyncThunk} from "@/slices/userSlice.tsx";
 import {ProfileType} from "@/types/profileType.ts";
 import {successNotification} from "@/services/notificationServices.tsx";
 import {AppDispatch} from "@/store.tsx";
@@ -22,7 +22,7 @@ const Info = () => {
         if (!edit) {
             setEdit(true)
             form.setValues({
-                name: userState.name,
+                name: profileState?.name,
                 jobTitle: profileState?.jobTitle,
                 company: profileState?.company,
                 location: profileState?.location
@@ -34,6 +34,9 @@ const Info = () => {
         if (isFormValid){
             console.log("Form values before dispatch:", form.getValues());
             const updatedProfile = {...profileState, ...form.getValues()};
+            if (userState.name !== updatedProfile.name) {
+                dispatch(updateUserNameAsyncThunk({ id : Number(userState.id), userName: updatedProfile.name}));
+            }
             dispatch(updateProfileAsyncThunk(updatedProfile as ProfileType));
             successNotification("Success", "Profile Updated Successfully.")
             setEdit(false);
