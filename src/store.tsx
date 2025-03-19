@@ -7,7 +7,7 @@ import applicantProfileReducer from '@/slices/applicantProfile.ts'
 
 const store = configureStore({
     reducer: {
-        user: userReducer,
+        userReducer,
         profile: profileReducer,
         jobsReducer,
         postedJobsReducer,
