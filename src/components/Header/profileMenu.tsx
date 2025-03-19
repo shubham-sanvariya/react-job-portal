@@ -5,15 +5,15 @@ import {
 import { useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {removeUser, selectUser} from "@/slices/userSlice.tsx";
+import {removeUser} from "@/slices/userSlice.tsx";
 import {selectProfile} from "@/slices/profileSlice.tsx";
 
 const ProfileMenu = () => {
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
     const profileState = useSelector(selectProfile);
     const [checked, setChecked] = useState(false);
     const [opened, setOpened] = useState(false);
+
     const handleLogout = () => {
         dispatch(removeUser())
     }
@@ -23,7 +23,7 @@ const ProfileMenu = () => {
             <Menu.Target>
                 <div className={'flex items-center gap-2 cursor-pointer'}>
                     <div>
-                        {user.name}
+                        {profileState?.name}
                     </div>
                     <Avatar src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'src/assets/avatar.png'}/>
                 </div>
