@@ -1,8 +1,9 @@
 import {IconHeart, IconMapPin} from "@tabler/icons-react";
-import {Avatar, Divider, Text} from "@mantine/core";
+import {Avatar, Button, Divider, Text} from "@mantine/core";
 import {ProfileType} from "@/types/profileType.ts";
+import {Link} from "react-router-dom";
 
-const TalentCard = ({ applicantProfile } : { applicantProfile : ProfileType }) => {
+const TalentCard = ({applicantProfile}: { applicantProfile: ProfileType }) => {
 
     return (applicantProfile &&
         <div
@@ -24,7 +25,7 @@ const TalentCard = ({ applicantProfile } : { applicantProfile : ProfileType }) =
             <div
                 className={'flex flex-wrap gap-2 '}>
                 {
-                    applicantProfile?.skills?.map((skill: string, index: number) => index < 10 && (
+                    applicantProfile?.skills?.map((skill: string, index: number) => index < 5 && (
                         <div key={index}
                              className={'p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs'}>{skill}</div>
                     ))
@@ -34,15 +35,26 @@ const TalentCard = ({ applicantProfile } : { applicantProfile : ProfileType }) =
                 {applicantProfile?.about}
             </Text>
             <Divider color={'mine-shaft.7'} size={'xs'}/>
-                    <div className={'flex justify-between'}>
-                        <div className={'font-semibold text-mine-shaft-200'}>
-                            {applicantProfile?.expectedCtc ?? "12 LPA"}
-                        </div>
-                        <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
-                            <IconMapPin className={'h-5 w-5'} stroke={1.5}/>
-                            {applicantProfile?.location}
-                        </div>
+            <div className={'flex justify-between'}>
+                <div className={'font-semibold text-mine-shaft-200'}>
+                    {applicantProfile?.expectedCtc ?? "12 LPA"}
+                </div>
+                <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
+                    <IconMapPin className={'h-5 w-5'} stroke={1.5}/>
+                    {applicantProfile?.location}
+                </div>
+            </div>
+            <Divider color={'mine-shaft.7'} size={'xs'}/>
+            <div className={'flex [&>*]:w-1/2 [&>*]:p-1'}>
+                <>
+                    <Link to={`/talent-profile/${applicantProfile.id}`}>
+                        <Button color={'bright-sun.4'} variant={"outline"} fullWidth>Profile</Button>
+                    </Link>
+                    <div>
+                        <Button color={'bright-sun.4'} variant={"light"} fullWidth>Message</Button>
                     </div>
+                </>
+            </div>
         </div>
     )
 }
