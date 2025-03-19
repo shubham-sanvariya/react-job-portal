@@ -1,25 +1,12 @@
 import TalentCard from "@/components/findTalent/talentCard.tsx";
 import {useParams} from "react-router-dom";
-import {useCallback, useEffect, useState} from "react";
-import {ProfileType} from "@/types/profileType.ts";
-import {getAllProfiles} from "@/services/profileService.tsx";
+import useProfiles from "@/hooks/useProfiles.tsx";
+
 
 const RecommendTalent = () => {
     const {id} = useParams();
-    const [profiles, setProfiles] = useState<ProfileType[]>();
 
-    const getAllApplicantProfiles = useCallback(
-        async () => {
-            const profilesData = await getAllProfiles();
-            const filteredProfiles = profilesData?.filter(pro => pro.id !== Number(id));
-            setProfiles(filteredProfiles);
-        },
-        [id],
-    );
-
-    useEffect(() => {
-        getAllApplicantProfiles().then()
-    }, []);
+    const { profiles} = useProfiles();
 
     return (
         <div>
@@ -28,7 +15,8 @@ const RecommendTalent = () => {
             </div>
             <div className={'flex flex-col flex-wrap justify-between gap-5 '}>
                 {
-                    profiles?.map((talent,index) => index < 4 && (
+                    profiles?.filter(pro => pro.id !== Number(id))
+                        .map((talent,index) => index < 4 && (
                         <TalentCard key={index} applicantProfile={talent} />
                     ))
                 }
