@@ -70,15 +70,19 @@ const PostedJobDesc = () => {
                         </Tabs.List>
 
                         <Tabs.Panel className="[&>div]:w-full" value={'overview'}>
-                            <JobDesc edit={true} closed={job.jobStatus==="CLOSED"}/>
+                            <JobDesc edit={true} closed={job.jobStatus === "CLOSED"}/>
                         </Tabs.Panel>
 
                         {activeTab !== "overview" && <Tabs.Panel value={activeTab ?? ""}>
                             <div className={'flex justify-around flex-wrap mt-10 gap-5'}>
                                 {
-                                    filteredTalents?.map((talent, index) => (
-                                        <ApplicantTalentCard key={index} applicant={talent} jobStatus={handleJobStatus()}/>
-                                    ))
+                                    filteredTalents?.length === 0 ? <div className={'text-2xl font-semibold'}>
+                                            No {activeTab} Candidates
+                                        </div> :
+                                        filteredTalents?.map((talent, index) => (
+                                            <ApplicantTalentCard key={index} applicant={talent}
+                                                                 jobStatus={handleJobStatus()}/>
+                                        ))
                                 }
                             </div>
                         </Tabs.Panel>}
