@@ -15,7 +15,7 @@ interface UserStateType {
     loading : boolean;
     error : string | null;
 }
- 
+
 const initialState: UserStateType = {
     user: getItem("user") ? getItem("user") : null,
     loading: false,
