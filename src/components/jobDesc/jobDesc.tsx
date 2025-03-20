@@ -52,7 +52,7 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
     }, [profileState, job.applicants, userState.id]);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         if (!id) return;
 
         if (postedJobsState && jobsState) {
@@ -68,7 +68,7 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
         }
 
         checkIfApplied();
-    }, [id, jobs, jobsState, postedJobsState, edit, fetchJobById, checkIfApplied]);
+    }, [id]);
 
     return (
         <div className={'w-2/3'}>
@@ -87,9 +87,9 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
                     </div>
                 </div>
                 <div className={'flex flex-col items-center gap-2'}>
-                    {(edit || !applied) && <Link to={`/apply-job/${job?.id}`}>
-                        <Button size={"sm"} color={'bright-sun.4'} variant={"light"}>
-                            {edit ? "Edit" : "Apply"}
+                    {(edit || !applied) && <Link to={edit ? `/post-job/${job.id}` :  `/apply-job/${job?.id}`} >
+                        <Button onClick={closed ? () => handleJobStatusChange("active") : () => {}} size={"sm"} color={'bright-sun.4'} variant={"light"}>
+                            {closed ? "Reopen" : edit ? "Edit" : "Apply"}
                         </Button>
                     </Link>}
                     {(!edit && applied) &&
