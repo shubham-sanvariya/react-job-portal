@@ -1,7 +1,7 @@
 import {IconBell} from "@tabler/icons-react";
 import {Button, Indicator} from "@mantine/core";
 import NavLinks from "@/components/Header/navLinks.tsx";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import ProfileMenu from "@/components/Header/profileMenu.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUser} from "@/slices/userSlice.tsx";
@@ -11,6 +11,7 @@ import {useEffect} from "react";
 
 const Header = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const user = useSelector(selectUser);
 
     useEffect(() => {
@@ -21,7 +22,7 @@ const Header = () => {
     const location = useLocation();
     return location.pathname != '/signup' && location.pathname != '/login' ?(
         <div className={'w-full text-white flex justify-between items-center p-6 bg-mine-shaft-950 h-20 font-[poppins]'}>
-            <div className={'flex gap-3 items-center text-bright-sun-400'}>
+            <div className={'flex gap-3 items-center text-bright-sun-400 cursor-pointer'} onClick={() => navigate("/")}>
                 <img src="src/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-12 h-12"/>
                 <div className={'text-3xl font-bold'}>
                     JobFetch
