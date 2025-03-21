@@ -3,7 +3,7 @@ import JobDesc from "@/components/jobDesc/jobDesc.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo, useCallback} from "react";
 import {JobInitialValues, JobStatusEnum} from "@/types/jobType.ts";
 import ApplicantTalentCard from "@/components/findTalent/applicantTalentCard.tsx";
 
@@ -27,23 +27,28 @@ const PostedJobDesc = () => {
             navigate(`/posted-jobs/${firstJobId}`, { replace: true });
             return; // Prevent further execution in this effect
         }
+    }, [id]);
 
+    useEffect(() => {
         const foundJob = postedJobsState?.find(job => job.id === Number(id));
 
         if (foundJob) {
             setJob(foundJob);
         }
-    }, [id, navigate, postedJobsState]);
+        return () => {}
+    }, [id, postedJobsState]);
 
-    const handleJobStatus = () => {
+    const handleJobStatus = useCallback(() => {
         if (activeTab === "applicants"){
             return JobStatusEnum.APPLIED;
         }else if (activeTab === "invited"){
             return JobStatusEnum.INTERVIEWING;
         }else return JobStatusEnum.OFFERED;
-    }
+    },[activeTab])
 
-    const filteredTalents = job?.applicants?.filter(job => job.applicationStatus === handleJobStatus());
+    const filteredTalents = useMemo(() => {
+        return job?.applicants?.filter(applicant => applicant.applicationStatus === handleJobStatus()) ?? [];
+    }, [job?.applicants, handleJobStatus]);
 
     return (
         <div className={'mt-5 w-3/4 px-5'}>
