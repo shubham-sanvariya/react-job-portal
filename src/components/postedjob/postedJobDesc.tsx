@@ -16,18 +16,20 @@ const PostedJobDesc = () => {
     const [activeTab, setActiveTab] = useState<string | null>("overview");
 
     useEffect(() => {
-        let firstJobId: number | undefined;
+        if (!id){
+            let firstJobId: number | undefined;
 
-        if (postedJobsState && postedJobsState.length > 0) {
-            firstJobId = postedJobsState[0].id;
-        }
+            if (postedJobsState && postedJobsState.length > 0) {
+                firstJobId = postedJobsState[0].id;
+            }
 
-        // Navigate only if ID is undefined and we have a first job
-        if (!id && firstJobId) {
-            navigate(`/posted-jobs/${firstJobId}`, { replace: true });
-            return; // Prevent further execution in this effect
+            // Navigate only if ID is undefined and we have a first job
+            if (firstJobId) {
+                navigate(`/posted-jobs/${firstJobId}`, { replace: true });
+                return; // Prevent further execution in this effect
+            }
         }
-    }, [id]);
+    }, [id,postedJobsState]);
 
     useEffect(() => {
         const foundJob = postedJobsState?.find(job => job.id === Number(id));
