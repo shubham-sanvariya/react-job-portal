@@ -1,13 +1,19 @@
 import {Tabs} from "@mantine/core";
 import PostedJobCard from "@/components/postedjob/postedJobCard.tsx";
 import {useSelector} from "react-redux";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
+import {useNavigate} from "react-router-dom";
 
 const PostedJob = () => {
-
+    const navigate = useNavigate();
     const [activeJob, setActiveJob] = useState<string | null>("ACTIVE");
+
     const postedJobsState = useSelector(selectPostedJobs);
+
+    useEffect(() => {
+        navigate(`/posted-jobs/${filteredJobs[0].id}`)
+    }, [activeJob]);
 
     const activeJobs = useMemo(() => {
         return postedJobsState?.filter(job => job.jobStatus === "ACTIVE") ?? [];
