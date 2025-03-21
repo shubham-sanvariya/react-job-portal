@@ -6,7 +6,7 @@ import {card} from "@/Data/JobDescData.tsx";
 import DOMPurify from "dompurify";
 import {timeAgo} from "@/services/utilService.tsx";
 import {useEffect, useRef, useState, useCallback} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {JobInitialValues, JobType} from "@/types/jobType.ts";
 import {getJobById, updateJobStatus} from "@/services/jobService.tsx";
 import {formatJobValue} from "@/services/jobUtils.ts";
@@ -14,10 +14,12 @@ import {selectProfile} from "@/slices/profileSlice.tsx";
 import useJob from "@/hooks/useJob.tsx";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {selectJobs} from "@/slices/jobSlice.ts";
-import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
+import {selectPostedJobs, setPostedJobs} from "@/slices/postedJobSlice.ts";
+import {AppDispatch} from "@/store.tsx";
 
 const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
     const {id} = useParams();
+    const dispatch = useDispatch<AppDispatch>();
     const jobsState = useSelector(selectJobs);
     const profileState = useSelector(selectProfile);
     const postedJobsState = useSelector(selectPostedJobs);
@@ -31,17 +33,20 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
 
     const fetchJobById = useCallback(async (jobId: number) => {
         const res = await getJobById(jobId);
-        setJob(res);
-    }, []);
+        if (res) setJob(res);
+    }, [id]);
 
     const handleJobStatusChange = useCallback(async (jobStatus: string) => {
         try {
             const res = await updateJobStatus(job.id, jobStatus);
-            if (res) setJob({...job, jobStatus : jobStatus.toUpperCase()})
+            if (res) {
+                setJob({...job, jobStatus: jobStatus.toUpperCase()})
+                dispatch(setPostedJobs({...job, jobStatus: jobStatus.toUpperCase()}));
+            }
         }catch (err : unknown) {
             console.log(err);
         }
-    }, [])
+    }, [job])
 
     const checkIfApplied = useCallback(() => {
         if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))) {
