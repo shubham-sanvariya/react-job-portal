@@ -57,7 +57,12 @@ export const updateApplicantStatusAsyncThunk = createAsyncThunk("updateApplicant
 const postedJobSlice = createSlice({
     initialState,
     name: "postedJobsReducer",
-    reducers: {},
+    reducers: {
+        setPostedJobs : (state, action) => {
+            const  updatedPostedJob = action.payload as JobType;
+            state.jobs = state.jobs.map(job => job.id === updatedPostedJob.id ? updatedPostedJob : job);
+        }
+    },
     extraReducers: (builder) =>{
         builder
             .addCase(getPostedByJobsAsyncThunk.pending, (state) => {
@@ -85,5 +90,7 @@ const postedJobSlice = createSlice({
 })
 
 export const selectPostedJobs = (state : { postedJobsReducer : { jobs : JobType[] | null} }) => state.postedJobsReducer.jobs;
+
+export const { setPostedJobs } = postedJobSlice.actions;
 
 export default postedJobSlice.reducer;
