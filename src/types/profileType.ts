@@ -5,6 +5,7 @@ export interface ProfileType {
     company: string;
     location: string;
     about: string;
+    totalExperience : number;
     picture : string;
     skills: string[];
     experiences: ExperienceType[];
