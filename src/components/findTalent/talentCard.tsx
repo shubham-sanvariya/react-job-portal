@@ -37,7 +37,7 @@ const TalentCard = ({applicantProfile}: { applicantProfile: ProfileType }) => {
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             <div className={'flex justify-between'}>
                 <div className={'font-semibold text-mine-shaft-200'}>
-                    {applicantProfile?.expectedCtc ?? "12 LPA"}
+                    Exp: {applicantProfile?.totalExperience} {applicantProfile?.totalExperience ?? 0 > 1 ? "years" : "year"}
                 </div>
                 <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
                     <IconMapPin className={'h-5 w-5'} stroke={1.5}/>
