@@ -4,7 +4,7 @@ import {errorNotification} from "@/services/notificationServices.tsx";
 
 const base_URL = "http://localhost:8080/jobs"
 
-export const postJob = async ( job : Omit<JobType, "id" | "applicants" | "postTime"> ) => {
+export const postJob = async ( job : Omit<JobType, "applicants" | "postTime"> ) => {
     try {
         const res = await axios.post(`${base_URL}/post`, job);
         return res.data;
