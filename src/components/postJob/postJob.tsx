@@ -1,26 +1,45 @@
 import SelectInput from "@/components/postJob/selectInput.tsx";
-import {fields} from "@/Data/PostJob.tsx";
+import {content, fields} from "@/Data/PostJob.tsx";
 import {Button, NumberInput, TagsInput, Textarea} from "@mantine/core";
 import TextEditor from "@/components/postJob/textEditor.tsx";
 import {hasLength, isNotEmpty, useForm} from "@mantine/form";
-import {postJob} from "@/services/jobService.tsx";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {getJobById, postJob} from "@/services/jobService.tsx";
+import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {JobInitialValues} from "@/types/jobType.ts";
+import {useCallback, useEffect, useState} from "react";
 
 const PostJob = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const userState = useSelector(selectUser);
+    const [editorData, setEditorData] = useState(content);
     const { applicants, ...jobInitialValuesWithoutApplicants } = JobInitialValues;
+
+    useEffect(() => {
+        if (id) fetchJobById(Number(id)).then();
+    }, [id]);
+
+    const fetchJobById = useCallback(async (jobId: number) => {
+        const res = await getJobById(jobId);
+        if (res) {
+            console.log(res);
+            const { applicants , ...jobWithoutApplicants} = res;
+            form.setValues({applicants, ...jobWithoutApplicants});
+            setEditorData(res.description);
+        }
+    }, [id]);
 
     const handleSave = async (jobStatus : string) => {
         try {
-            const res = await postJob({...form.getValues(), postedBy : Number(userState.id), jobStatus});
-            console.log(res);
+            const jobId = id ? id : 0;
+            const res = await postJob({...form.getValues(), id : Number(jobId) , postedBy : Number(userState.id), jobStatus});
             navigate(`/posted-jobs/${res.id}`)
+            const pass = jobStatus === "ACTIVE" ? "Published" : "Drafted";
+            successNotification(pass, `Job ${pass} Successfully`);
         }catch (err: unknown) {
             let errMsg: string;
             if (axios.isAxiosError(err)) {
@@ -30,7 +49,8 @@ const PostJob = () => {
                 errMsg = "An unexpected error occurred"
                 console.log(errMsg, err);
             }
-            errorNotification("OTP sending failed.", errMsg);
+            const fail = jobStatus === "ACTIVE" ? "Publish" : "Draft";
+            errorNotification(`Failed to ${fail} Job`, errMsg);
         }
     }
 
@@ -95,7 +115,7 @@ const PostJob = () => {
                         Job Description
                         <span className="text-red-500">*</span>
                     </div>
-                    <TextEditor form={form}/>
+                    <TextEditor form={form} data={editorData}/>
                 </div>
                 <div className={'flex gap-4'}>
                     <Button onClick={handlePost} color={'bright-sun.4'} variant={"light"}>
