@@ -12,7 +12,7 @@ const PostedJob = () => {
     const postedJobsState = useSelector(selectPostedJobs);
 
     useEffect(() => {
-        navigate(`/posted-jobs/${filteredJobs[0].id}`)
+       if (filteredJobs[0]) navigate(`/posted-jobs/${filteredJobs[0].id}`)
     }, [activeJob]);
 
     const activeJobs = useMemo(() => {
