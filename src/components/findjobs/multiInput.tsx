@@ -1,12 +1,18 @@
 import {useEffect, useState} from 'react';
 import {Checkbox, Combobox, Group, Input, Pill, PillsInput, useCombobox} from '@mantine/core';
 import {IconSelector} from "@tabler/icons-react";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store.tsx";
+import {updateFieldFilter} from "@/slices/filterSlice.ts";
 
 
 const MultiInput = (props:any) =>  {
+    const dispatch = useDispatch<AppDispatch>();
+
     useEffect(() => {
         setData(props.options);
     }, []);
+
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
@@ -25,14 +31,18 @@ const MultiInput = (props:any) =>  {
             setData((current) => [...current, search]);
             setValue((current) => [...current, search]);
         } else {
+
+            dispatch(updateFieldFilter({ key : [props.title].toString(), value : val } ))
             setValue((current) =>
                 current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
             );
         }
     };
 
-    const handleValueRemove = (val: string) =>
+    const handleValueRemove = (val: string) => {
+        dispatch(updateFieldFilter({ key : [props.title].toString(), value : val }))
         setValue((current) => current.filter((v) => v !== val));
+    }
 
     const values = value
         .slice(
