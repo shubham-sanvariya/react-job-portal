@@ -19,7 +19,7 @@ const SearchBar = () => {
     },500)
 
     const debounceValue = useDebouncedCallback((expRange : [number,number]) => {
-        dispatch(updateFieldFilter({ key: "exp", value: expRange }));
+        dispatch(updateFieldFilter({ key: "totalExperience", value: expRange }));
     },500)
 
     const handleFieldChange = (e: RangeSliderValue | ChangeEvent<HTMLInputElement>, field: string) => {
