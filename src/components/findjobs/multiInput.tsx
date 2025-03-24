@@ -31,8 +31,8 @@ const MultiInput = (props:any) =>  {
             setData((current) => [...current, search]);
             setValue((current) => [...current, search]);
         } else {
-
-            dispatch(updateFieldFilter({ key : [props.title].toString(), value : val } ))
+            const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
+            dispatch(updateFieldFilter({ key, value : val } ))
             setValue((current) =>
                 current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
             );
@@ -40,7 +40,8 @@ const MultiInput = (props:any) =>  {
     };
 
     const handleValueRemove = (val: string) => {
-        dispatch(updateFieldFilter({ key : [props.title].toString(), value : val }))
+        const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
+        dispatch(updateFieldFilter({ key, value : val }))
         setValue((current) => current.filter((v) => v !== val));
     }
 
