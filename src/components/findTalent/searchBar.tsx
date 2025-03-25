@@ -59,7 +59,7 @@ const SearchBar = () => {
                     <div>Experience (years)</div>
                     <div>&#8377;{value[0]} - {value[1]} </div>
                 </div>
-                <RangeSlider size={'xs'} color={'bright-sun.4'} min={0} max={50} value={value}
+                <RangeSlider size={'xs'} color={'bright-sun.4'} minRange={1} min={0} max={50} value={value}
                              onChange={(e) => handleFieldChange(e, "exp")} labelTransitionProps={{
                     transition: "skew-down",
                     duration: 150,
