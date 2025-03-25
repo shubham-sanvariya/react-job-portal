@@ -4,7 +4,7 @@ import profileReducer from "@/slices/profileSlice.tsx";
 import jobsReducer from "@/slices/jobSlice.ts";
 import postedJobsReducer from '@/slices/postedJobSlice.ts'
 import applicantProfileReducer from '@/slices/applicantProfile.ts'
-import filterFieldSlice from '@/slices/filterSlice.ts'
+import filterFieldsReducer from '@/slices/filterSlice.ts'
 
 const store = configureStore({
     reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
         jobsReducer,
         postedJobsReducer,
         applicantProfileReducer,
-        filterFieldSlice
+        filterFieldsReducer
     },
 });
 
