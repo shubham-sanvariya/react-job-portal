@@ -36,13 +36,23 @@ const MultiInput = (props: any) => {
                 current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
             );
         }
-        const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
+        const key = props.title === "Job Title"
+            ? "jobTitle"
+            : props.title === "Job Type"
+                ? "jobType"
+                : props.title.toLowerCase();
+
         dispatch(updateFieldFilter({key, value: val === '$create' && value.length > 0 ?
                 value : val}))
     };
 
     const handleValueRemove = (val: string) => {
-        const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
+        const key = props.title === "Job Title"
+            ? "jobTitle"
+            : props.title === "Job Type"
+                ? "jobType"
+                : props.title.toLowerCase();
+
         dispatch(updateFieldFilter({key, value: val}))
         setValue((current) => current.filter((v) => v !== val));
     }
