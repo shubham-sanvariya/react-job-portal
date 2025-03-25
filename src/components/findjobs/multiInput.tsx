@@ -6,7 +6,7 @@ import {AppDispatch} from "@/store.tsx";
 import {updateFieldFilter} from "@/slices/filterSlice.ts";
 
 
-const MultiInput = (props:any) =>  {
+const MultiInput = (props: any) => {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -26,22 +26,24 @@ const MultiInput = (props:any) =>  {
 
     const handleValueSelect = (val: string) => {
         setSearch('');
-
+        let value = "";
         if (val === '$create') {
             setData((current) => [...current, search]);
             setValue((current) => [...current, search]);
+            value = search;
         } else {
-            const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
-            dispatch(updateFieldFilter({ key, value : val } ))
             setValue((current) =>
                 current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
             );
         }
+        const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
+        dispatch(updateFieldFilter({key, value: val === '$create' && value.length > 0 ?
+                value : val}))
     };
 
     const handleValueRemove = (val: string) => {
         const key = props.title === "Job Title" ? "jobTitle" : [props.title].toString().toLowerCase();
-        dispatch(updateFieldFilter({ key, value : val }))
+        dispatch(updateFieldFilter({key, value: val}))
         setValue((current) => current.filter((v) => v !== val));
     }
 
@@ -58,19 +60,20 @@ const MultiInput = (props:any) =>  {
     const options = data
         .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
         .map((item) => (
-        <Combobox.Option value={item} key={item} active={value.includes(item)}>
-            <Group gap="sm">
-                <Checkbox size={'xs'} color={'bright-sun.4'}
-                    checked={value.includes(item)}
-                    onChange={() => {}}
-                    aria-hidden
-                    tabIndex={-1}
-                    style={{ pointerEvents: 'none' }}
-                />
-                <span className={'text-mine-shaft-300'}>{item}</span>
-            </Group>
-        </Combobox.Option>
-    ));
+            <Combobox.Option value={item} key={item} active={value.includes(item)}>
+                <Group gap="sm">
+                    <Checkbox size={'xs'} color={'bright-sun.4'}
+                              checked={value.includes(item)}
+                              onChange={() => {
+                              }}
+                              aria-hidden
+                              tabIndex={-1}
+                              style={{pointerEvents: 'none'}}
+                    />
+                    <span className={'text-mine-shaft-300'}>{item}</span>
+                </Group>
+            </Combobox.Option>
+        ));
 
     return (
         <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
@@ -85,7 +88,7 @@ const MultiInput = (props:any) =>  {
                             <>
                                 {values}
                                 {value.length > 1 && (
-                                    <Pill>+{value.length -1} more</Pill>
+                                    <Pill>+{value.length - 1} more</Pill>
                                 )}
                             </>
                         ) : (
