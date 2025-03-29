@@ -4,7 +4,7 @@ import {Link, useParams} from "react-router-dom";
 import {useDisclosure} from "@mantine/hooks";
 import {DateInput, TimeInput} from "@mantine/dates";
 import {useCallback, useEffect, useRef, useState} from "react";
-import {ApplicantType, ApplicationType, JobStatusEnum} from "@/types/jobType.ts";
+import {ApplicantType, ApplicationType, ApplicationStatusEnum} from "@/types/jobType.ts";
 import {AppDispatch} from "@/store.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {updateApplicantStatusAsyncThunk} from "@/slices/postedJobSlice.ts";
@@ -13,7 +13,7 @@ import {format} from 'date-fns';
 import {openResumeInNewTab} from "@/services/utilService.tsx";
 import {getApplicantProfileAsyncThunk, selectApplicantProfile} from "@/slices/applicantProfile.ts";
 
-const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatus?: JobStatusEnum }) => {
+const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType, jobStatus?: ApplicationStatusEnum }) => {
     const {id} = useParams();
     const dispatch = useDispatch<AppDispatch>();
     const userState = useSelector(selectUser);
@@ -34,7 +34,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
         getApplicantProfileByApplicantId().then();
     }, []);
 
-    const handleOffer = (jobStatus: JobStatusEnum) => {
+    const handleOffer = (jobStatus: ApplicationStatusEnum) => {
         const [hours, minutes] = time.split(":").map(Number);
         date?.setHours(hours, minutes);
 
@@ -82,7 +82,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
             </Text>
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             {
-                jobStatus === JobStatusEnum.INTERVIEWING ?
+                jobStatus === ApplicationStatusEnum.INTERVIEWING ?
                     <div className={'flex items-center text-mine-shaft-200 text-sm gap-1'}>
                         <IconCalendarMonth className={'w-5 h-5'}/>
                         {format(new Date(applicant.interviewTime + "Z").toISOString(), 'MMMM d, yyyy h:mm a')}
@@ -100,12 +100,12 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
             }
             <Divider color={'mine-shaft.7'} size={'xs'}/>
             <div className={'flex [&>*]:w-1/2 [&>*]:p-1'}>
-                {jobStatus !== JobStatusEnum.INTERVIEWING && <>
+                {jobStatus !== ApplicationStatusEnum.INTERVIEWING && <>
                     <Link to={`/talent-profile/${profileApplicantState?.id}`}>
                         <Button color={'bright-sun.4'} variant={"outline"} fullWidth>Profile</Button>
                     </Link>
                     <div>
-                        {jobStatus === JobStatusEnum.APPLIED ?
+                        {jobStatus === ApplicationStatusEnum.APPLIED ?
                             <Button onClick={open} rightSection={<IconCalendarMonth className={'w-5 h-5'}/>}
                                     color={'bright-sun.4'} variant={"light"} fullWidth>Schedule
                             </Button>
@@ -114,7 +114,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
                 </>
                 }
                 {
-                    jobStatus === JobStatusEnum.INTERVIEWING &&
+                    jobStatus === ApplicationStatusEnum.INTERVIEWING &&
                     <>
                         <div>
                             <Button color={'bright-sun.4'} variant={"outline"} fullWidth>Accept</Button>
@@ -125,7 +125,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
                     </>
                 }
             </div>
-            {(applicant.applicationStatus === JobStatusEnum.INTERVIEWING || applicant.applicationStatus === JobStatusEnum.APPLIED) && (
+            {(applicant.applicationStatus === ApplicationStatusEnum.INTERVIEWING || applicant.applicationStatus === ApplicationStatusEnum.APPLIED) && (
                 <Button onClick={openApp} color={'bright-sun.4'} variant={"filled"} autoContrast={true} fullWidth>
                     View Application
                 </Button>
@@ -146,7 +146,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
                         onClick={() => ref.current?.showPicker()}
                         label={'Time'}
                     />
-                    <Button onClick={() => handleOffer(JobStatusEnum.INTERVIEWING)} color={'bright-sun.4'}
+                    <Button onClick={() => handleOffer(ApplicationStatusEnum.INTERVIEWING)} color={'bright-sun.4'}
                             variant={"light"} fullWidth>Schedule</Button>
                 </div>
             </Modal>

@@ -41,7 +41,7 @@ export interface ApplicantType {
     resume: string;
     coverLetter: string;
     timeStamp: string; // LocalDateTime can be represented as an ISO string
-    applicationStatus: JobStatusEnum;
+    applicationStatus: ApplicationStatusEnum;
     interviewTime: string;
 }
 export interface ApplicationType {
@@ -51,7 +51,7 @@ export interface ApplicationType {
     applicationStatus: string;
 }
 
-export enum JobStatusEnum {
+export enum ApplicationStatusEnum {
     APPLIED = "APPLIED",
     INTERVIEWING = "INTERVIEWING",
     OFFERED = "OFFERED",

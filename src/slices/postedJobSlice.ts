@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {ApplicationType, JobStatusEnum, JobType} from "@/types/jobType.ts";
+import {ApplicationType, ApplicationStatusEnum, JobType} from "@/types/jobType.ts";
 import {getPostedByJobs, updateApplicantStatus} from "@/services/jobService.tsx";
 import axios from "axios";
 import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
@@ -29,9 +29,9 @@ export const getPostedByJobsAsyncThunk = createAsyncThunk("getPostedByJobs", asy
 })
 
 const checkStatus = (status : string) => {
-    if (status === JobStatusEnum.INTERVIEWING){
+    if (status === ApplicationStatusEnum.INTERVIEWING){
         return { title : "Interview Scheduled", message : "Interview Scheduled Successfully" }
-    }else if (status === JobStatusEnum.OFFERED){
+    }else if (status === ApplicationStatusEnum.OFFERED){
         return { title : "Offer Send", message : "Offer has been send successfully." }
     }
      return { title : "Rejected Applicant", message : "Rejected Applicant Successfully" }

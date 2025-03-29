@@ -4,7 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectPostedJobs} from "@/slices/postedJobSlice.ts";
 import {useEffect, useState, useMemo, useCallback} from "react";
-import {JobInitialValues, JobStatusEnum} from "@/types/jobType.ts";
+import {JobInitialValues, ApplicationStatusEnum} from "@/types/jobType.ts";
 import ApplicantTalentCard from "@/components/findTalent/applicantTalentCard.tsx";
 
 
@@ -42,10 +42,10 @@ const PostedJobDesc = () => {
 
     const handleJobStatus = useCallback(() => {
         if (activeTab === "applicants"){
-            return JobStatusEnum.APPLIED;
+            return ApplicationStatusEnum.APPLIED;
         }else if (activeTab === "invited"){
-            return JobStatusEnum.INTERVIEWING;
-        }else return JobStatusEnum.OFFERED;
+            return ApplicationStatusEnum.INTERVIEWING;
+        }else return ApplicationStatusEnum.OFFERED;
     },[activeTab])
 
     const filteredTalents = useMemo(() => {
