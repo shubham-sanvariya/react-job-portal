@@ -24,19 +24,11 @@ export const applyJob = async ( id : number ,applicant : Omit<ApplicantType, "ap
     }
 }
 
-export const getAllJobs = async () => {
+export const getJobs = async (jobStatus? : string, page = 0, size = 5, sort? :string) => {
     try {
-        const res = await axios.get(base_URL);
-        return res.data;
-    }catch (err : unknown){
-        console.log(err);
-        throw err;
-    }
-}
-
-export const getJobsByJobStatus = async (jobStatus : string) => {
-    try {
-        const res = await axios.get(`${base_URL}/status`,{ params : {jobStatus} });
+        let params : Record<string, number | string> = { page, size };
+         params = jobStatus !== undefined ? {...params, jobStatus} : sort !== undefined ? {...params, sort} : params;
+        const res = await axios.get(base_URL,{ params });
         return res.data;
     }catch (err : unknown){
         console.log(err);
