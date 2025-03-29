@@ -34,6 +34,16 @@ export const getAllJobs = async () => {
     }
 }
 
+export const getJobsByJobStatus = async (jobStatus : string) => {
+    try {
+        const res = await axios.get(`${base_URL}/status`,{ params : {jobStatus} });
+        return res.data;
+    }catch (err : unknown){
+        console.log(err);
+        throw err;
+    }
+}
+
 export const getJobById = async ( id : number ) => {
     try {
         const res = await axios.get(`${base_URL}/${id}`);
