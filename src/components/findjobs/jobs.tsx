@@ -2,7 +2,7 @@ import Sort from "@/components/findjobs/sort.tsx";
 import JobCard from "@/components/findjobs/jobCard.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "@/store.tsx";
-import {getJobsByJobStatusAsyncThunk, selectJobs} from "@/slices/jobSlice.ts";
+import {getJobsAsyncThunk, selectJobs} from "@/slices/jobSlice.ts";
 import {useEffect, useMemo, useRef} from "react";
 import {resetFieldFilter, selectFilteredFieldState} from "@/slices/filterSlice.ts";
 import {JobType} from "@/types/jobType.ts";
@@ -15,7 +15,7 @@ const Jobs = () => {
 
     useEffect(() => {
         if (jobsState?.length === 0 && !oneRef.current) {
-            dispatch(getJobsByJobStatusAsyncThunk("ACTIVE"));
+            dispatch(getJobsAsyncThunk({jobStatus : "ACTIVE"}));
             oneRef.current = true;
         }
         return () => {
