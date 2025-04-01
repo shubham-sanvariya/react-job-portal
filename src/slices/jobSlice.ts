@@ -30,7 +30,10 @@ export const postJobAsyncThunk = createAsyncThunk("postJob", async (job: any, th
 export const getJobsAsyncThunk = createAsyncThunk("getJobs", async ({ jobStatus, page = 0, size = 5, sort }:
                                                                     { jobStatus?: string; page?: number; size?: number; sort?: string }, thunkAPI) => {
     try {
-        return await getJobs(jobStatus,page,size,sort);
+        const res = await getJobs(jobStatus,page,size,sort);
+        const { content } = res;
+
+        return content;
     } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
             thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
