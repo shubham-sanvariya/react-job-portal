@@ -22,10 +22,15 @@ export const getProfile = async ( id: number, notificationMessage : string) => {
     }
 }
 
-export const getAllProfiles = async () => {
+export const getAllProfiles = async (page = 0, size = 5, sort? :string) => {
     try {
-        const res = await axios.get(base_URL);
-        return res.data as ProfileType[];
+        let params : Record<string, number | string> = { page, size };
+
+        if (sort !== undefined){
+            params = {...params,sort}
+        }
+        const res = await axios.get(base_URL, { params });
+        return res.data;
     }catch (err : unknown){
         let errMsg: string;
         if (axios.isAxiosError(err) && err.response?.data?.errorMessage) {
