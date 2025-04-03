@@ -9,7 +9,7 @@ import filterFieldsReducer from '@/slices/filterSlice.ts'
 const store = configureStore({
     reducer: {
         userReducer,
-        profile: profileReducer,
+        profileReducer,
         jobsReducer,
         postedJobsReducer,
         applicantProfileReducer,
@@ -20,3 +20,4 @@ const store = configureStore({
 export default store;
 
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
