@@ -41,8 +41,11 @@ const Profile = () => {
                 <div className={'text-xl flex gap-1 items-center'}><IconBriefcase
                     className={'h-5 w-5'}/> {profileApplicantState.jobTitle} &bull; {profileApplicantState.company}
                 </div>
-                <div className={'flex gap-1 text-xs text-mine-shaft-400 items-center'}>
+                <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center'}>
                     <IconMapPin className={'h-5 w-5'} stroke={1.5}/> {profileApplicantState.location}
+                </div>
+                <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center'}>
+                    <IconBriefcase className={'h-5 w-5'} stroke={1.5}/> Experience: {profileApplicantState.totalExperience} {profileApplicantState.totalExperience > 1 ? "years" : "year"}
                 </div>
             </div>
             <Divider mx={'xs'} my={"xl"}/>
