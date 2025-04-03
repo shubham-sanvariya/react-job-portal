@@ -4,7 +4,6 @@ import TalentCard from "@/components/findTalent/talentCard.tsx";
 
 import useProfiles from "@/hooks/useProfiles.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {selectUser} from "@/slices/userSlice.tsx";
 import {useEffect, useMemo} from "react";
 import {resetFieldFilter, selectFilteredFieldState} from "@/slices/filterSlice.ts";
 import {ProfileType} from "@/types/profileType.ts";
@@ -12,8 +11,7 @@ import {AppDispatch} from "@/store.tsx";
 
 const Talents = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {profiles} = useProfiles();
-    const userState = useSelector(selectUser);
+    const { allProfileState } = useProfiles();
     const filteredFields = useSelector(selectFilteredFieldState);
 
     useEffect(() => {
@@ -23,11 +21,10 @@ const Talents = () => {
     }, [dispatch]);
 
     const filteredProfiles = useMemo(() => {
-        if (!filteredFields && typeof filteredFields !== "object") return profiles;
+        if (!filteredFields && typeof filteredFields !== "object") return allProfileState;
         const keys = Object.keys(filteredFields);
         const check = new Array(keys.length).fill(false);
-        return profiles.filter(profile => {
-            if (profile.id === userState.profileId) return;
+        return allProfileState.filter(profile => {
             keys.forEach((key, index) => {
                 if (typeof profile[key as keyof ProfileType] === "string") {
                     check[index] = key === "name" ? profile[key].includes(filteredFields[key].toString()) : (filteredFields[key] as string[]).some((val: string) => val === profile[key as keyof ProfileType] as string);
@@ -45,13 +42,13 @@ const Talents = () => {
 
             return check.every(val => val === true);
         })
-    }, [filteredFields, profiles])
+    }, [filteredFields, allProfileState])
 
     return (
         <div className={'p-5'}>
             <div className={'flex justify-between'}>
                 <div className={'text-2xl font-semibold'}>Talents</div>
-                <Sort/>
+                <Sort sortFor={"talents"} />
             </div>
             <div className={'flex flex-wrap mt-10 gap-5 justify-between'}>
                 {
