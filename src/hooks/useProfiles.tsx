@@ -1,27 +1,27 @@
-import {useCallback, useEffect, useState} from "react";
-import {getAllProfiles} from "@/services/profileService.tsx";
-import {ProfileType} from "@/types/profileType.ts";
+import {useCallback, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/store";
+import { clearProfileError, getAllProfilesAsyncThunk, selectAllProfiles, selectProfileError } from "@/slices/profileSlice";
+import { errorNotification } from "@/services/notificationServices";
 
 const UseProfiles = () => {
-    const [profiles, setProfiles] = useState<ProfileType[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const allProfileState = useSelector(selectAllProfiles);
+    const errorState = useSelector(selectProfileError);
+
+    if (errorState) {
+        errorNotification("Failed to update Saved Jobs", errorState);
+        dispatch(clearProfileError());
+    }
 
     const getAllApplicantProfiles = useCallback(async () => {
-        try {
-            const data = await getAllProfiles();
-            if (data) setProfiles(data);
-        } catch {
-            setError("Failed to load profiles");
-        } finally {
-            setLoading(false);
-        }
+        dispatch(getAllProfilesAsyncThunk({}))
     },[]);
 
     useEffect(() => {
         getAllApplicantProfiles().then();
     }, [getAllApplicantProfiles]);
 
-    return { profiles, loading, error, refetch: getAllApplicantProfiles }
+    return { allProfileState, errorState }
 }
 export default UseProfiles
