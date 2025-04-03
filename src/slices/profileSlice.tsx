@@ -1,17 +1,20 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getProfile, updateProfile, updateProfileSavedJobs} from "@/services/profileService.tsx";
+import {getAllProfiles, getProfile, updateProfile, updateProfileSavedJobs} from "@/services/profileService.tsx";
 import axios from "axios";
 import {ProfileType} from "@/types/profileType.ts";
+import { RootState } from "@/store";
 
 
 interface ProfileState {
     profile : ProfileType | null;
+    profiles : ProfileType[];
     loading : boolean;
     error : string | null;
 }
 
 const initialState: ProfileState = {
     profile: null,
+    profiles: [],
     loading: false,
     error: null,
 };
@@ -20,6 +23,32 @@ export const getProfileAsyncThunk = createAsyncThunk("getProfile", async ( profi
     try {
         const res = await getProfile(profileId, "Failed to fetch user profile");
         return res as ProfileType;
+    }catch (err : unknown) {
+        if (axios.isAxiosError(err)) {
+            if (err.response?.data?.errorMessage)
+                return thunkAPI.rejectWithValue(err.response?.data?.errorMessage);
+            return  thunkAPI.rejectWithValue(err.message);
+        }
+        return thunkAPI.rejectWithValue("An unexpected error occurred");
+    }
+})
+
+export const getAllProfilesAsyncThunk = createAsyncThunk("getAllProfiles", async ({ page = 0, size = 5, sort} : {page? : number, size? : number, sort?: string}, thunkAPI) => {
+    try {
+        const state = thunkAPI.getState() as RootState;
+
+        const userProfileId = state.profileReducer.profile?.id ?? 0;
+        const res = await getAllProfiles(page,size,sort);
+        if (!res) {
+            return thunkAPI.rejectWithValue("Profiles not found");
+        }
+        if (!res?.content) {
+            return thunkAPI.rejectWithValue("Content is missing in the response");
+        }
+        const { content } : { content : ProfileType[]} = res;
+
+        const fileteredProfiles = content.filter(pro => pro.id !== userProfileId)
+        return fileteredProfiles as ProfileType[];
     }catch (err : unknown) {
         if (axios.isAxiosError(err)) {
             if (err.response?.data?.errorMessage)
@@ -81,6 +110,17 @@ const ProfileSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
+            .addCase(getAllProfilesAsyncThunk.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getAllProfilesAsyncThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.profiles = action.payload as ProfileType[];
+            })
+            .addCase(getAllProfilesAsyncThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
             .addCase(updateProfileAsyncThunk.pending, (state) => {
                 state.loading = true;
             })
@@ -109,10 +149,12 @@ const ProfileSlice = createSlice({
 
 // export const {setUser, removeUser} = ProfileSlice.actions;
 
-export const selectProfile = (state: { profile: { profile: ProfileType | null } }) => state.profile.profile;
+export const selectProfile = (state: { profileReducer: { profile: ProfileType | null } }) => state.profileReducer.profile;
 
-export const selectLoading = (state : { profile:{loading : boolean}}) => state.profile.loading;
-export const selectProfileError = (state : { profile:{error : string | null}}) => state.profile.error;
+export const selectAllProfiles = (state: { profileReducer: { profiles: ProfileType[] } }) => state.profileReducer.profiles;
+
+export const selectLoading = (state: { profileReducer: { loading: boolean } }) => state.profileReducer.loading;
+export const selectProfileError = (state: { profileReducer: { error: string | null } }) => state.profileReducer.error;
 
 export const { clearProfileError } = ProfileSlice.actions;
 
