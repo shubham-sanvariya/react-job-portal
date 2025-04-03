@@ -1,12 +1,10 @@
 import TalentCard from "@/components/findTalent/talentCard.tsx";
-import {useParams} from "react-router-dom";
 import useProfiles from "@/hooks/useProfiles.tsx";
 
 
 const RecommendTalent = () => {
-    const {id} = useParams();
 
-    const { profiles} = useProfiles();
+    const { allProfileState } = useProfiles();
 
     return (
         <div>
@@ -15,7 +13,7 @@ const RecommendTalent = () => {
             </div>
             <div className={'flex flex-col flex-wrap justify-between gap-5 '}>
                 {
-                    profiles?.filter(pro => pro.id !== Number(id))
+                    allProfileState
                         .map((talent,index) => index < 4 && (
                         <TalentCard key={index} applicantProfile={talent} />
                     ))
