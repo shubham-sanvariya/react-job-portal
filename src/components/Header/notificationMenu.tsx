@@ -3,7 +3,7 @@ import {
     IconBell, IconCheck
 } from "@tabler/icons-react";
 import {useEffect, useRef, useState} from "react";
-import {getAllNotificationByUserId} from "@/services/notificationService.ts";
+import {getAllNotificationByUserId, readNotificationById} from "@/services/notificationService.ts";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {useSelector} from "react-redux";
 import {NotificationType} from "@/types/notificationType.ts";
@@ -26,13 +26,19 @@ const NotificationMenu = () => {
         }
     }, [userState.id]);
 
-    const unRead = (removeIndex : number) => {
-        setNotifications((values) => {
-            const res= values.filter((_,index) => index !== removeIndex);
-            console.log(res);
-            return res;
-        })
-    }
+    const unRead = async (removeIndex: number) => {
+        try {
+            await readNotificationById(removeIndex);
+            setNotifications((values) => {
+                const res = values.filter((_, index) => index !== removeIndex);
+                console.log(res);
+                return res;
+            })
+        }catch (err : unknown){
+            console.log(err);
+        }
+    };
+
 
     return (
         <Menu opened={opened} onChange={setOpened} shadow="md" width={400}>
@@ -47,8 +53,9 @@ const NotificationMenu = () => {
             <Menu.Dropdown onChange={() => setOpened(true)}>
                 <div className={'flex flex-col gap-1'}>
                     {
-                        notifications.map((item : NotificationType, index : number) => (
-                            <Notification tabIndex={index} onClose={() => unRead(index)} className={'cursor-pointer hover:bg-mine-shaft-900'}
+                        notifications.map((item: NotificationType, index: number) => (
+                            <Notification tabIndex={index} onClose={() => unRead(index)}
+                                          className={'cursor-pointer hover:bg-mine-shaft-900'}
                                           icon={<IconCheck style={{width: rem(20), height: rem(20)}}/>} color="teal"
                                           title={item.action} mt="md">
                                 {item.message}
