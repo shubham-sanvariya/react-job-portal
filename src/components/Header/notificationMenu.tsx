@@ -7,8 +7,10 @@ import {getAllNotificationByUserId, readNotificationById} from "@/services/notif
 import {selectUser} from "@/slices/userSlice.tsx";
 import {useSelector} from "react-redux";
 import {NotificationType} from "@/types/notificationType.ts";
+import {useNavigate} from "react-router-dom";
 
 const NotificationMenu = () => {
+    const navigate = useNavigate();
     const userState = useSelector(selectUser);
     const [opened, setOpened] = useState(false);
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
@@ -44,7 +46,7 @@ const NotificationMenu = () => {
         <Menu opened={opened} onChange={setOpened} shadow="md" width={400}>
             <Menu.Target>
                 <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
-                    <Indicator color={'bright-sun.4'} offset={6} size={7} processing>
+                    <Indicator disabled={notifications.length===0} color={'bright-sun.4'} offset={6} size={7} processing>
                         <IconBell stroke={'1.5'}/>
                     </Indicator>
                 </div>
@@ -54,7 +56,11 @@ const NotificationMenu = () => {
                 <div className={'flex flex-col gap-1'}>
                     {
                         notifications.map((item: NotificationType, index: number) => (
-                            <Notification tabIndex={index} onClose={() => unRead(index)}
+                            <Notification onClick={() => {
+                                navigate(item.route);
+                                setOpened(false);
+                                unRead(index).then();
+                            }} tabIndex={index} onClose={() => unRead(index)}
                                           className={'cursor-pointer hover:bg-mine-shaft-900'}
                                           icon={<IconCheck style={{width: rem(20), height: rem(20)}}/>} color="teal"
                                           title={item.action} mt="md">
