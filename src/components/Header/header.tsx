@@ -1,5 +1,4 @@
-import {IconBell} from "@tabler/icons-react";
-import {Button, Indicator} from "@mantine/core";
+import {Button} from "@mantine/core";
 import NavLinks from "@/components/Header/navLinks.tsx";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import ProfileMenu from "@/components/Header/profileMenu.tsx";
@@ -8,6 +7,7 @@ import {selectUser} from "@/slices/userSlice.tsx";
 import {AppDispatch} from "@/store.tsx";
 import {getProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {useEffect} from "react";
+import NotificationMenu from "@/components/Header/notificationMenu.tsx";
 
 const Header = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -35,14 +35,10 @@ const Header = () => {
                         Login / Signup
                     </Button>
                 </Link>}
+                {user ? <NotificationMenu/> : null}
                 {/*<div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>*/}
                 {/*    <IconSettings stroke={'1.5'}/>*/}
                 {/*</div>*/}
-                <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
-                    <Indicator color={'bright-sun.4'} offset={6} size={7} processing>
-                        <IconBell stroke={'1.5'}/>
-                    </Indicator>
-                </div>
             </div>
         </div>
     ) : <></>
