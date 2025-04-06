@@ -8,8 +8,8 @@ import {loginValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
 import {useDisclosure} from "@mantine/hooks";
 import ResetPassword from "@/components/signUpLogin/resetPassword.tsx";
-import {useDispatch} from "react-redux";
-import {setUser} from "@/slices/userSlice.tsx";
+import {useDispatch, useSelector} from "react-redux";
+import {selectUserLoading, setUser, setUserLoading} from "@/slices/userSlice.tsx";
 import { loginUser } from "@/services/authService";
 
 type FormType = {
@@ -28,7 +28,8 @@ const Login = () => {
     const [data, setData] = useState<FormType>(form);
     const [formError, setFormError] = useState<FormType>(form);
     const [opened, { open, close }] = useDisclosure(false);
-    const [loading, setLoading] = useState(false);
+
+    const loadingState = useSelector(selectUserLoading);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name, value = event.target.value;
@@ -38,7 +39,7 @@ const Login = () => {
 
     const handleSubmit = async () => {
         try {
-            setLoading(true);
+            dispatch(setUserLoading(true))
             let valid = true
             const newFormError: Partial<FormType> = {};
             for (const key in data) {
@@ -63,13 +64,13 @@ const Login = () => {
                 })
                 setData(form);
                 setTimeout(() => {
-                    setLoading(false);
+                    dispatch(setUserLoading(false))
                     dispatch(setUser(res))
                     navigate('/')
                 }, 3000)
             }
         } catch (e: unknown) {
-            setLoading(false);
+            dispatch(setUserLoading(false));
             let errMsg: string;
             if (axios.isAxiosError(e)) {
                 errMsg = e.response?.data?.errorMessage
@@ -91,7 +92,7 @@ const Login = () => {
     }
     return (<>
             <LoadingOverlay
-                visible={loading}
+                visible={loadingState}
                 zIndex={1000}
                 overlayProps={{ radius: 'sm', blur: 2 }}
                 loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
@@ -122,7 +123,7 @@ const Login = () => {
                 placeholder={'Password'}
             />
 
-            <Button onClick={handleSubmit} loading={loading} autoContrast variant={'filled'}>Login</Button>
+            <Button onClick={handleSubmit} loading={loadingState} autoContrast variant={'filled'}>Login</Button>
             <div className={'mx-auto'}>don't have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/signup')
