@@ -1,11 +1,12 @@
 import {Button, Modal, PasswordInput, PinInput, rem, TextInput} from "@mantine/core";
 import {useState} from "react";
 import {IconAt, IconLock} from "@tabler/icons-react";
-import {changePassword, sendOtp, verifyOtp} from "@/services/userService.tsx";
+import {changePassword} from "@/services/userService.tsx";
 import axios from "axios";
 import {signUpValidation} from "@/services/fromValidation.tsx";
 import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
 import {useInterval} from "@mantine/hooks";
+import { sendOtp, verifyOtp } from "@/services/authService";
 
 const ResetPassword = (props: any) => {
 

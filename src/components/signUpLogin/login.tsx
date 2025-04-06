@@ -3,7 +3,6 @@ import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
 import { useNavigate} from "react-router-dom";
 import {useState} from "react";
 import * as React from "react";
-import {loginUser} from "@/services/userService.tsx";
 import axios from "axios";
 import {loginValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
@@ -11,6 +10,7 @@ import {useDisclosure} from "@mantine/hooks";
 import ResetPassword from "@/components/signUpLogin/resetPassword.tsx";
 import {useDispatch} from "react-redux";
 import {setUser} from "@/slices/userSlice.tsx";
+import { loginUser } from "@/services/authService";
 
 type FormType = {
     email: string;

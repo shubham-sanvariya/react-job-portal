@@ -2,11 +2,11 @@ import {Anchor, Button, Checkbox, Group, LoadingOverlay, PasswordInput, Radio, r
 import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
 import { useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {registerUser} from "@/services/userService.tsx";
 import * as React from "react";
 import axios from "axios";
 import {signUpValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
+import { registerUser } from "@/services/authService";
 
 const form = {
     name: "",
@@ -33,7 +33,7 @@ const SignUp = () => {
                 if (data.confirmPassword !== value){
                     err = "Password do not match"
                 }
-                setFormError({...formError, [name]:signUpValidation(name,value), confirmPassword: err})
+                setFormError({...formError, [name as string] :signUpValidation(name,value), confirmPassword: err})
 
             }
             if (name === "confirmPassword" ){
