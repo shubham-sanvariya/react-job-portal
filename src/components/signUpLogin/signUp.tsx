@@ -1,12 +1,19 @@
 import {Anchor, Button, Checkbox, Group, LoadingOverlay, PasswordInput, Radio, rem, TextInput} from "@mantine/core";
 import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
 import { useNavigate} from "react-router-dom";
-import {useState} from "react";
+import { useState} from "react";
 import * as React from "react";
 import axios from "axios";
 import {signUpValidation} from "@/services/fromValidation.tsx";
 import {notifications} from "@mantine/notifications";
-import { registerUser } from "@/services/authService";
+import { registerUser, sendOtp } from "@/services/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserLoading, selectUserVerified, setUserLoading } from "@/slices/userSlice";
+import { AppDispatch } from "@/store";
+import OtpBox from "./otpBox";
+import { useDisclosure, useInterval } from "@mantine/hooks";
+import { errorNotification, successNotification } from "@/services/notificationServices";
+import { removeItem, setItem } from "@/services/localStorageService";
 
 const form = {
     name: "",
@@ -18,9 +25,54 @@ const form = {
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const [data, setData] = useState<{ [key : string] : string }>(form);
     const [formError, setFormError] = useState(form);
-    const [loading, setLoading] = useState(false);
+   
+    const loadingState = useSelector(selectUserLoading);
+    const [opened, { open, close }] = useDisclosure(false);
+
+    const isVerifiedState = useSelector(selectUserVerified);
+
+    const [otpSent, setOtpSent] = useState(false);
+    const [otpSending, setOtpSending] = useState(false);
+    const [resendLoader, setResendLoader] = useState(false);
+    const [seconds, setSeconds] = useState(60);
+
+    const interval = useInterval(() => {
+            if (seconds === 0) {
+                setResendLoader(false);
+                setSeconds(60);
+                interval.stop();
+            }
+            else setSeconds((s) => s - 1)
+        }, 1000);
+
+    const handleSendOtp = async () => {
+        try {
+            open();
+            setOtpSending(true);
+            const res = await sendOtp(data.email);
+            console.log(res);
+            setOtpSent(true);
+            setResendLoader(true);
+            interval.start();
+            successNotification("OTP send Successfully", "Enter OTP to Verify Email.");
+            setItem("verified",true);
+        } catch (err: unknown) {
+            let errMsg: string;
+            if (axios.isAxiosError(err)) {
+                errMsg = err.response?.data?.errorMessage
+                console.log(errMsg);
+            } else {
+                errMsg = "An unexpected error occurred"
+                console.log(errMsg, err);
+            }
+            errorNotification("OTP sending failed.", errMsg);
+        } finally {
+            setOtpSending(false);
+        }
+    }
 
     const handleChange = (event : React.ChangeEvent<HTMLInputElement> | string) => {
         if (typeof event == "string") setData({...data, accountType: event})
@@ -59,9 +111,11 @@ const SignUp = () => {
                 }
                 if (newFormError[key]) valid = false;
             }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             setFormError(newFormError);
             if (valid){
-                setLoading(true);
+                dispatch(setUserLoading(false));
                 const res = await registerUser(data);
                 console.log(res);
                 notifications.show({
@@ -75,12 +129,14 @@ const SignUp = () => {
                 })
                 setData(form);
                 setTimeout(() => {
-                    setLoading(false);
+                    dispatch(setUserLoading(false));
                     navigate('/login')
                 },3000)
+
+                removeItem("verified");
             }
         }catch (e : unknown) {
-            setLoading(false);
+            dispatch(setUserLoading(false));
             let errMsg: string;
             if (axios.isAxiosError(e)) {
                 errMsg = e.response?.data?.errorMessage
@@ -105,7 +161,7 @@ const SignUp = () => {
         <>
             <LoadingOverlay
                 className="translate-x-1/2"
-                visible={loading}
+                visible={loadingState}
                 zIndex={1000}
                 overlayProps={{ radius: 'sm', blur: 2 }}
                 loaderProps={{ color: 'pink', type: 'bars' }}
@@ -133,6 +189,22 @@ const SignUp = () => {
             label={"Your Email"}
             placeholder={'Your Email'}
         />
+                <div>
+                    <Button
+                    disabled={formError.email?.length > 0 || data.email?.length === 0}
+                        className={
+                            !isVerifiedState
+                                ? `!bg-blue-500 !text-white py-2 px-4 rounded hover:!bg-blue-600`
+                                : `!bg-green-500 text-white py-2 px-4 rounded hover:!bg-green-600`
+                        }
+                        onClick={handleSendOtp}
+                        variant={'filled'}
+                    >
+                        {!isVerifiedState ? "Verify Email" : "Verified"}
+                    </Button>
+
+                </div>
+
             <PasswordInput
                 name={"password"}
                 value={data.password}
@@ -174,7 +246,7 @@ const SignUp = () => {
                 </Anchor>
                 </>}
             />
-            <Button onClick={handleSubmit} autoContrast variant={'filled'}>Sign Up</Button>
+                <Button disabled={!isVerifiedState} className={isVerifiedState ? `` : "!bg-red-500 !text-white"} onClick={handleSubmit} autoContrast variant={'filled'}>Sign Up</Button>
             <div className={'mx-auto'}>Already have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/login')
@@ -185,6 +257,7 @@ const SignUp = () => {
                 </span>
             </div>
         </div>
+        <OtpBox opened={opened} closeFn={close} email={form.email} otpSent={otpSent} otpSending={otpSending} resendLoader={resendLoader} seconds={seconds} resendOtp={handleSendOtp}/>
         </>
     )
 }
