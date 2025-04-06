@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getItem, removeItem, setItem} from "@/services/localStorageService.tsx";
 import {updateUserName} from "@/services/userService.tsx";
 
@@ -14,12 +14,14 @@ interface UserStateType {
     user : User | null;
     loading : boolean;
     error : string | null;
+    isVerified : boolean;
 }
 
 const initialState: UserStateType = {
     user: getItem("user") ? getItem("user") : null,
     loading: false,
     error: null,
+    isVerified: getItem("verified") || getItem("user") ? true : false
 };
 
 export const updateUserNameAsyncThunk = createAsyncThunk("updateUserName", async ({ id, userName }: {id : number, userName : string},{ rejectWithValue, dispatch })=> {
@@ -53,12 +55,24 @@ const UserSlice = createSlice({
             removeItem("user");
             state.user = null;
             return state;
+        },
+        setUserVerified : (state,action : PayloadAction<boolean>) => {
+            state.isVerified = action.payload;
+            return state;
+        },
+        setUserLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+            return state;
         }
     },
 })
 
-export const {setUser, removeUser} = UserSlice.actions;
+export const {setUser, removeUser, setUserLoading, setUserVerified} = UserSlice.actions;
 
 export const selectUser = (state : { userReducer : { user : User }}) => state.userReducer.user;
+
+export const selectUserLoading = (state : { userReducer : { loading : boolean } }) => state.userReducer.loading;
+
+export const selectUserVerified = (state: { userReducer: { isVerified: boolean } }) => state.userReducer.isVerified;
 
 export default UserSlice.reducer;
