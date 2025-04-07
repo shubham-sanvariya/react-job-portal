@@ -22,9 +22,10 @@ export const loginUser = async (login: any) => {
     }
 }
 
-export const sendOtp = async (email: string) => {
+export const sendOtp = async (email: string, check : string) => {
     try {
-        const res = await axios.post(`${base_URL}/sendOtp/${email}`);
+        const params = { email, check };
+        const res = await axios.post(`${base_URL}/sendOtp`,null,{params});
         return res.data;
     } catch (error: unknown) {
         console.log(error);
