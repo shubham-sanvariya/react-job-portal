@@ -30,7 +30,7 @@ const ResetPassword = (props: any) => {
     const handleSendOtp = async () => {
         try {
             setOtpSending(true);
-            const res = await sendOtp(email);
+            const res = await sendOtp(email, "reset");
             console.log(res);
             setOtpSent(true);
             setResendLoader(true);
