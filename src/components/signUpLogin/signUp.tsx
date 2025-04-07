@@ -13,7 +13,6 @@ import { AppDispatch } from "@/store";
 import OtpBox from "./otpBox";
 import { useDisclosure, useInterval } from "@mantine/hooks";
 import { errorNotification, successNotification } from "@/services/notificationServices";
-import { removeItem, setItem } from "@/services/localStorageService";
 
 const form = {
     name: "",
@@ -28,7 +27,7 @@ const SignUp = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [data, setData] = useState<{ [key : string] : string }>(form);
     const [formError, setFormError] = useState(form);
-   
+
     const loadingState = useSelector(selectUserLoading);
     const [opened, { open, close }] = useDisclosure(false);
 
@@ -52,13 +51,12 @@ const SignUp = () => {
         try {
             open();
             setOtpSending(true);
-            const res = await sendOtp(data.email);
+            const res = await sendOtp(data.email, "register");
             console.log(res);
             setOtpSent(true);
             setResendLoader(true);
             interval.start();
             successNotification("OTP send Successfully", "Enter OTP to Verify Email.");
-            setItem("verified",true);
         } catch (err: unknown) {
             let errMsg: string;
             if (axios.isAxiosError(err)) {
@@ -68,6 +66,7 @@ const SignUp = () => {
                 errMsg = "An unexpected error occurred"
                 console.log(errMsg, err);
             }
+            close();
             errorNotification("OTP sending failed.", errMsg);
         } finally {
             setOtpSending(false);
@@ -133,7 +132,6 @@ const SignUp = () => {
                     navigate('/login')
                 },3000)
 
-                removeItem("verified");
             }
         }catch (e : unknown) {
             dispatch(setUserLoading(false));
@@ -257,7 +255,7 @@ const SignUp = () => {
                 </span>
             </div>
         </div>
-        <OtpBox opened={opened} closeFn={close} email={form.email} otpSent={otpSent} otpSending={otpSending} resendLoader={resendLoader} seconds={seconds} resendOtp={handleSendOtp}/>
+        <OtpBox opened={opened} closeFn={close} email={data.email} otpSent={otpSent} otpSending={otpSending} resendLoader={resendLoader} seconds={seconds} resendOtp={handleSendOtp}/>
         </>
     )
 }
