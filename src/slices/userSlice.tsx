@@ -6,8 +6,9 @@ interface User {
     id: string;
     name: string;
     email: string;
-    accountType: "APPLICANT" | "EMPLOYER";
     profileId : number;
+    accountType: "APPLICANT" | "EMPLOYER";
+    token: string;
 }
 
 interface UserStateType {
@@ -21,7 +22,7 @@ const initialState: UserStateType = {
     user: getItem("user") ? getItem("user") : null,
     loading: false,
     error: null,
-    isVerified: getItem("verified") || getItem("user") ? true : false
+    isVerified: false
 };
 
 export const updateUserNameAsyncThunk = createAsyncThunk("updateUserName", async ({ id, userName }: {id : number, userName : string},{ rejectWithValue, dispatch })=> {
@@ -42,11 +43,12 @@ const UserSlice = createSlice({
         setUser : (state, action) => {
             const user = action.payload;
             setItem("user", {
-                id: user.id,
-                name: user.name,
+                id: user.userId,
+                name: user.username,
                 email: user.email,
-                accountType: user.accountType,
-                profileId : user.profileId
+                accountType: user.authority,
+                profileId : user.profileId,
+                token : user.token
             });
             state.user = getItem("user");
             return state;
