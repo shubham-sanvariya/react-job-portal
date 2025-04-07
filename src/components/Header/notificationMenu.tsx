@@ -46,7 +46,7 @@ const NotificationMenu = () => {
         <Menu opened={opened} onChange={setOpened} shadow="md" width={400}>
             <Menu.Target>
                 <div className={'bg-mine-shaft-900 p-1.5 rounded-full'}>
-                    <Indicator disabled={notifications.length===0} color={'bright-sun.4'} offset={6} size={7} processing>
+                    <Indicator disabled={notifications?.length===0} color={'bright-sun.4'} offset={6} size={7} processing>
                         <IconBell stroke={'1.5'}/>
                     </Indicator>
                 </div>
@@ -55,7 +55,7 @@ const NotificationMenu = () => {
             <Menu.Dropdown onChange={() => setOpened(true)}>
                 <div className={'flex flex-col gap-1'}>
                     {
-                        notifications.map((item: NotificationType, index: number) => (
+                        notifications?.map((item: NotificationType, index: number) => (
                             <Notification onClick={() => {
                                 navigate(item.route);
                                 setOpened(false);
@@ -69,7 +69,7 @@ const NotificationMenu = () => {
                         ))
                     }
                     {
-                        notifications.length === 0 && (
+                        notifications?.length === 0 && (
                             <div className="text-center text-mine-shaft-300">
                                 No Notifications
                             </div>
