@@ -11,6 +11,8 @@ import ResetPassword from "@/components/signUpLogin/resetPassword.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUserLoading, setUser, setUserLoading} from "@/slices/userSlice.tsx";
 import { loginUser } from "@/services/authService";
+import {setItem} from "@/services/localStorageService.tsx";
+import {jwtDecode} from "jwt-decode";
 
 type FormType = {
     email: string;
@@ -65,7 +67,9 @@ const Login = () => {
                 setData(form);
                 setTimeout(() => {
                     dispatch(setUserLoading(false))
-                    dispatch(setUser(res))
+                    setItem("token", res);
+                    const decode = jwtDecode(res);
+                    dispatch(setUser(decode))
                     navigate('/')
                 }, 3000)
             }
