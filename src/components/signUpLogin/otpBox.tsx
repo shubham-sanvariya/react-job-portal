@@ -25,7 +25,8 @@ const OtpBox: React.FC<OtpBoxProps> = ({ opened, closeFn, seconds, email, otpSen
             const res = await verifyOtp(email, otp);
             console.log(res);
             dispatch(setUserVerified(true));
-            successNotification("OTP verified", "Enter new password");
+            successNotification("OTP verified", "Email Verified Successfully");
+            closeFn();
         } catch (err: unknown) {
             let errMsg: string;
             if (axios.isAxiosError(err)) {
