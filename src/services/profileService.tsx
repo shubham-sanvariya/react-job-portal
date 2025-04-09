@@ -4,7 +4,7 @@ import {ProfileType} from "@/types/profileType.ts";
 import {errorNotification} from "@/services/notificationServices.tsx";
 import api from "@/services/axiosConfig.ts";
 
-const base_URL = "http://localhost:8080/profiles"
+const base_URL = "/profiles"
 
 export const getProfile = async ( id: number, notificationMessage : string) => {
     try {
