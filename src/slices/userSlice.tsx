@@ -1,12 +1,10 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {getItem, removeItem} from "@/services/localStorageService.tsx";
 import {updateUserName} from "@/services/userService.tsx";
-import {jwtDecode} from "jwt-decode";
+import {getItem, removeItem, setItem} from "@/services/localStorageService.tsx";
 
 interface User {
     id: string;
     name: string;
-    email: string;
     profileId: number;
     accountType: "APPLICANT" | "EMPLOYER";
 }
@@ -18,20 +16,8 @@ interface UserStateType {
     isVerified: boolean;
 }
 
-const getUserDetailsFromToken = () => {
-    const token = getItem("token");
-    const user : any = jwtDecode(token);
-    return {
-        id: user.id,
-        name: user.name,
-        email: user.sub,
-        accountType: user.accountType,
-        profileId: user.profileId,
-    }
-}
-
 const initialState: UserStateType = {
-    user: getItem("token") ? getUserDetailsFromToken() : null,
+    user: getItem("user") !== undefined ? getItem("user") :  null,
     loading: false,
     error: null,
     isVerified: false
@@ -57,18 +43,18 @@ const UserSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            const user = action.payload;
+            const user : User = action.payload;
+            setItem("user",user);
             state.user = {
                 id: user.id,
                 name: user.name,
-                email: user.sub,
                 accountType: user.accountType,
                 profileId: user.profileId,
             }
             return state;
         },
         removeUser: (state) => {
-            removeItem("token");
+            removeItem("user")
             state.user = null;
             return state;
         },
