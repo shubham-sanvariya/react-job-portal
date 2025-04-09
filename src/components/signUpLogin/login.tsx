@@ -123,7 +123,7 @@ const Login = () => {
                 placeholder={'Password'}
             />
 
-            <Button onClick={handleSubmit} loading={loadingState} autoContrast variant={'filled'}>Login</Button>
+            <Button onClick={handleSubmit} loading={loadingState} autoContrast={true} variant={'filled'}>Login</Button>
             <div className={'mx-auto'}>don't have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/signup')

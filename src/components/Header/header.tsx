@@ -16,7 +16,7 @@ const Header = () => {
 
     useEffect(() => {
         if (user?.profileId) {
-            dispatch(getProfileAsyncThunk(Number(user.profileId)));
+            dispatch(getProfileAsyncThunk(Number(user?.profileId)));
         }
     }, [dispatch, user?.profileId]);
     const location = useLocation();

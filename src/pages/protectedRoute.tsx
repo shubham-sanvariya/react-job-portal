@@ -5,7 +5,7 @@ import {selectUser} from "@/slices/userSlice.tsx";
 const ProtectedRoute = ( { role } : { role?: string } ) => {
     const user = useSelector(selectUser);
 
-    if (user == null) {
+    if (user === null) {
         return <Navigate to="/login" replace/>;
     }
 

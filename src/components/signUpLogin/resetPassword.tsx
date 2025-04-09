@@ -117,7 +117,7 @@ const ResetPassword = (props: any) => {
                     rightSectionWidth={"xl"}
                     rightSection={<Button
                         loading={otpSending && !otpSent}
-                        size={"xs"} className={'mr-1'} onClick={handleSendOtp} autoContrast
+                        size={"xs"} className={'mr-1'} onClick={handleSendOtp} autoContrast={true}
                         disabled={email === "" || otpSent} variant={"filled"}>
                         Send OTP
                     </Button>}

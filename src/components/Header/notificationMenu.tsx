@@ -18,7 +18,7 @@ const NotificationMenu = () => {
 
     useEffect(() => {
         if (!ref.current) {
-            getAllNotificationByUserId(Number(userState.id))
+            getAllNotificationByUserId(Number(userState?.id))
                 .then(res => {
                     console.log(res);
                     setNotifications(res as NotificationType[]);
@@ -26,7 +26,7 @@ const NotificationMenu = () => {
             )
             ref.current = true;
         }
-    }, [userState.id]);
+    }, [userState?.id]);
 
     const unRead = async (removeIndex: number) => {
         try {
