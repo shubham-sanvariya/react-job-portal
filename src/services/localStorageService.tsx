@@ -6,7 +6,8 @@ function setItem<T>(key: string, value: T): void {
 
 const getItem = (key: string) => {
 
-    return JSON.parse(localStorage.getItem(key) as string) ?? "";
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
 
 }
 
