@@ -1,6 +1,6 @@
 import Header from "@/components/Header/header.tsx";
 import {Divider} from "@mantine/core";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import FindJobs from "@/pages/findJobs.tsx";
 import FindTalent from "@/pages/findTalent.tsx";
 import JobDescPage from "@/pages/jobDescPage.tsx";
@@ -41,12 +41,12 @@ const AppRoutes = () => {
                         <Route path={'/post-job/:id?'} element={<PostJobPage/>}/>
                         <Route path={'*'} element={<HomePage/>}/>
                     </Route>
-                    <Route element={<ProtectedRoute />}>
+                    <Route element={<ProtectedRoute/>}>
                         <Route path={'/company/:name'} element={<CompanyPage/>}/>
-                        <Route path={'/signup'} element={user ? <Navigate to={'/'}/> : <SignUpPage/>}/>
-                        <Route path={'/login'} element={user ? <Navigate to={'/'}/> : <SignUpPage/>}/>
                         <Route path={'/profile'} element={<ProfilePage/>}/>
                     </Route>
+                    <Route path={'/signup'} element={user ? <HomePage/> : <SignUpPage/>}/>
+                    <Route path={'/login'} element={user ? <HomePage/> : <SignUpPage/>}/>
                 </Routes>
                 <Footer/>
             </div>
