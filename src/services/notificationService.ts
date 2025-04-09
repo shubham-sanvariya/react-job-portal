@@ -1,11 +1,12 @@
 import axios from "axios";
 import {errorNotification} from "@/services/notificationServices.tsx";
+import api from "@/services/axiosConfig.ts";
 
-const BASE_URL = "http://localhost:8080/notifications"
+const BASE_URL = "/notifications"
 
 export const getAllNotificationByUserId = async (userId: number) => {
     try {
-        const res = await axios.get(`${BASE_URL}/unread/${userId}`);
+        const res = await api.get(`${BASE_URL}/unread/${userId}`);
         return res.data;
     } catch (err: unknown) {
         let errMsg: string;
@@ -22,7 +23,7 @@ export const getAllNotificationByUserId = async (userId: number) => {
 
 export const readNotificationById = async (id: number) => {
     try {
-        const res = await axios.patch(`${BASE_URL}/read/${id}`);
+        const res = await api.patch(`${BASE_URL}/read/${id}`);
         return res.data;
     } catch (err: unknown) {
         let errMsg: string;
