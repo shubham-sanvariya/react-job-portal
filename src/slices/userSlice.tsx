@@ -17,7 +17,7 @@ interface UserStateType {
 }
 
 const initialState: UserStateType = {
-    user: getItem("user") !== undefined ? getItem("user") :  null,
+    user: getItem("user"),
     loading: false,
     error: null,
     isVerified: false
@@ -71,7 +71,7 @@ const UserSlice = createSlice({
 
 export const {setUser, removeUser, setUserLoading, setUserVerified} = UserSlice.actions;
 
-export const selectUser = (state: { userReducer: { user: User } }) => state.userReducer.user;
+export const selectUser = (state: { userReducer: { user: User | null } }) => state.userReducer.user;
 
 export const selectUserLoading = (state: { userReducer: { loading: boolean } }) => state.userReducer.loading;
 
