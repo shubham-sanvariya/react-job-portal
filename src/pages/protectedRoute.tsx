@@ -1,18 +1,16 @@
-import {getItem} from "@/services/localStorageService.tsx";
-import {jwtDecode} from "jwt-decode";
 import {Navigate, Outlet} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {selectUser} from "@/slices/userSlice.tsx";
 
 const ProtectedRoute = ( { role } : { role?: string } ) => {
+    const user = useSelector(selectUser);
 
-    const token = getItem("token");
-
-    if (!token) {
+    if (user == null) {
         return <Navigate to="/login" replace/>;
     }
 
     if (role) {
-        const decode: any = jwtDecode(token);
-        const accountType = decode?.accountType;
+        const accountType = user.accountType;
         if (role !== accountType) return <Navigate to="/" replace/>;
     }
 
