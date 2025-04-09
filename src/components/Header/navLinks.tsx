@@ -4,7 +4,7 @@ import {selectUser} from "@/slices/userSlice.tsx";
 
 const NavLinks = () => {
     const userState = useSelector(selectUser);
-    const links = userState.accountType === "APPLICANT" ? [
+    const links = userState?.accountType === "APPLICANT" ? [
         {name: "Find Jobs", url: "find-jobs"},
         {name: "Job History", url: "job-history"},
     ] : [
