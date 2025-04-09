@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
 import {errorNotification} from "@/services/notificationServices.tsx";
+import { removeItem } from "./localStorageService";
 
 const api = axios.create({
     baseURL: 'http://localhost:8080',
@@ -7,7 +8,7 @@ const api = axios.create({
 })
 
 api.interceptors.response.use(
-    response => response,
+    (response) => response,
     async (error : AxiosError) => {
         const originalRequest = error.config as AxiosRequestConfig & { _retry? : boolean};
 
@@ -19,6 +20,7 @@ api.interceptors.response.use(
                 return api(originalRequest);
             }catch (refreshError){
                 errorNotification("Session Expired","Please Login again.")
+                removeItem("user");
                 window.location.href = "/login";
                 console.log(refreshError);
             }
