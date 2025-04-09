@@ -1,4 +1,5 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import {errorNotification} from "@/services/notificationServices.tsx";
 
 const api = axios.create({
     baseURL: 'http://localhost:8080',
@@ -17,8 +18,9 @@ api.interceptors.response.use(
                 await api.post(`/auth/refresh-token`);
                 return api(originalRequest);
             }catch (refreshError){
+                errorNotification("Session Expired","Please Login again.")
+                window.location.href = "/login";
                 console.log(refreshError);
-
             }
         }
 
