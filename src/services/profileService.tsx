@@ -2,12 +2,13 @@
 import axios from "axios";
 import {ProfileType} from "@/types/profileType.ts";
 import {errorNotification} from "@/services/notificationServices.tsx";
+import api from "@/services/axiosConfig.ts";
 
 const base_URL = "http://localhost:8080/profiles"
 
 export const getProfile = async ( id: number, notificationMessage : string) => {
     try {
-        const res = await axios.get(`${base_URL}/${id}`);
+        const res = await api.get(`${base_URL}/${id}`);
         return res.data;
     }catch (err : unknown){
         let errMsg: string;
@@ -29,7 +30,7 @@ export const getAllProfiles = async (page = 0, size = 5, sort? :string) => {
         if (sort !== undefined){
             params = {...params,sort}
         }
-        const res = await axios.get(base_URL, { params });
+        const res = await api.get(base_URL, { params });
         return res.data;
     }catch (err : unknown){
         let errMsg: string;
@@ -46,7 +47,7 @@ export const getAllProfiles = async (page = 0, size = 5, sort? :string) => {
 
 export const updateProfile = async (profile : ProfileType) => {
     try {
-        const res = await axios.put(`${base_URL}/update`,profile);
+        const res = await api.put(`${base_URL}/update`,profile);
         return res.data;
     }catch (err : unknown){
         let errMsg: string;
@@ -63,7 +64,7 @@ export const updateProfile = async (profile : ProfileType) => {
 
 export const updateProfileSavedJobs = async (profileId : number, jobIds : number[]) => {
     try {
-        const res = await axios.patch(`${base_URL}/update/saved-jobs/${profileId}`,jobIds);
+        const res = await api.patch(`${base_URL}/update/saved-jobs/${profileId}`,jobIds);
         return res.data;
     }catch (err : unknown){
         let errMsg: string;
