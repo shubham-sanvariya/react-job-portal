@@ -1,12 +1,13 @@
 import axios from "axios";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
+import api from "@/services/axiosConfig.ts";
 
-const base_URL = "http://localhost:8080/users"
+const base_URL = "/users"
 
 
 const changePassword = async ( email : string, password : string) => {
     try {
-        const res = await axios.post(`${base_URL}/changePass`, {email,password});
+        const res = await api.post(`${base_URL}/changePass`, {email,password});
         return res.data;
     }catch (error : unknown) {
         console.log(error);
@@ -16,7 +17,7 @@ const changePassword = async ( email : string, password : string) => {
 
 const updateUserName = async ( id : number, newUsername : string) => {
     try {
-        const res = await axios.patch(`${base_URL}/update/${id}/username?userName=${newUsername}`);
+        const res = await api.patch(`${base_URL}/update/${id}/username?userName=${newUsername}`);
         return res.data;
     }catch (err : unknown){
         let errMsg: string;
