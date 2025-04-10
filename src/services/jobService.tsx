@@ -1,6 +1,6 @@
 import axios from "axios";
 import {ApplicantType, ApplicationType, JobType} from "@/types/jobType.ts";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
 import api from "@/services/axiosConfig.ts";
 
 const base_URL = "/jobs"

@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {AppDispatch} from "@/store.tsx";
 import {ProfileType} from "@/types/profileType.ts";
-import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationUtils.tsx";
 import axios from "axios";
 
 const ExpInput = (props: any) => {

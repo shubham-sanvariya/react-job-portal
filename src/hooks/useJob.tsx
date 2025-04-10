@@ -7,7 +7,7 @@ import {
     updateProfileSavedJobsAsyncThunk,
     clearProfileError
 } from "@/slices/profileSlice.tsx";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
 
 
 const UseJob = () => {

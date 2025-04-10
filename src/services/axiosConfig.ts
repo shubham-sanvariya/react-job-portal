@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
 import { removeItem } from "./localStorageService";
 
 const api = axios.create({

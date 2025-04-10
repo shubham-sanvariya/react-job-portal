@@ -12,7 +12,7 @@ import { selectUserLoading, selectUserVerified, setUserLoading } from "@/slices/
 import { AppDispatch } from "@/store";
 import OtpBox from "./otpBox";
 import { useDisclosure, useInterval } from "@mantine/hooks";
-import { errorNotification, successNotification } from "@/services/notificationServices";
+import { errorNotification, successNotification } from "@/services/notificationUtils.tsx";
 
 const form = {
     name: "",

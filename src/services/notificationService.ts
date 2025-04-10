@@ -1,5 +1,5 @@
 import axios from "axios";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
 import api from "@/services/axiosConfig.ts";
 
 const BASE_URL = "/notifications"

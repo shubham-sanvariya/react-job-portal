@@ -1,5 +1,5 @@
 import { verifyOtp } from "@/services/authService";
-import { errorNotification, successNotification } from "@/services/notificationServices";
+import { errorNotification, successNotification } from "@/services/notificationUtils.tsx";
 import { setUserVerified } from "@/slices/userSlice";
 import { AppDispatch } from "@/store";
 import { Button, Modal, PinInput } from "@mantine/core"

@@ -6,7 +6,7 @@ import {hasLength, isEmail, isNotEmpty, useForm} from "@mantine/form";
 import {getBase64} from "@/services/utilService.tsx";
 import {applyJob} from "@/services/jobService.tsx";
 import axios from "axios";
-import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationUtils.tsx";
 import {useSelector} from "react-redux";
 import {selectProfile} from "@/slices/profileSlice.tsx";
 

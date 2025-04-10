@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "@/store.tsx";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {CertificationType, ProfileType} from "@/types/profileType.ts";
-import {successNotification} from "@/services/notificationServices.tsx";
+import {successNotification} from "@/services/notificationUtils.tsx";
 
 const CertiCard = (props: any) => {
 

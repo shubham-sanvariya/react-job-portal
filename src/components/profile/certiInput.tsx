@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {AppDispatch} from "@/store.tsx";
 import {ProfileType} from "@/types/profileType.ts";
-import {successNotification} from "@/services/notificationServices.tsx";
+import {successNotification} from "@/services/notificationUtils.tsx";
 
 
 const CertiInput = ( props : any ) => {

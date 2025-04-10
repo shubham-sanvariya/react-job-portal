@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import {ProfileType} from "@/types/profileType.ts";
-import {errorNotification} from "@/services/notificationServices.tsx";
+import {errorNotification} from "@/services/notificationUtils.tsx";
 import api from "@/services/axiosConfig.ts";
 
 const base_URL = "/profiles"

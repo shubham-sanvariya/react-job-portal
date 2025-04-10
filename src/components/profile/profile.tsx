@@ -11,7 +11,7 @@ import Certification from "@/components/profile/certification.tsx";
 import {useHover} from "@mantine/hooks";
 import {IconEdit} from "@tabler/icons-react";
 import {ProfileType} from "@/types/profileType.ts";
-import {successNotification} from "@/services/notificationServices.tsx";
+import {successNotification} from "@/services/notificationUtils.tsx";
 import {getBase64} from "@/services/utilService.tsx";
 
 

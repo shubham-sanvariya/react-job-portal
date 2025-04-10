@@ -5,7 +5,7 @@ import {AppDispatch} from "@/store.tsx";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {useState} from "react";
 import {ProfileType} from "@/types/profileType.ts";
-import {successNotification} from "@/services/notificationServices.tsx";
+import {successNotification} from "@/services/notificationUtils.tsx";
 
 const Skills = () => {
     const dispatch = useDispatch<AppDispatch>();

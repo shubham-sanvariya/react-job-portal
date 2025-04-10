@@ -4,7 +4,7 @@ import {Button, NumberInput, TagsInput, Textarea} from "@mantine/core";
 import TextEditor from "@/components/postJob/textEditor.tsx";
 import {hasLength, isNotEmpty, useForm} from "@mantine/form";
 import {getJobById, postJob} from "@/services/jobService.tsx";
-import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationUtils.tsx";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";

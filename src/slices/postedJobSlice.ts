@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {ApplicationType, ApplicationStatusEnum, JobType} from "@/types/jobType.ts";
 import {getPostedByJobs, updateApplicantStatus} from "@/services/jobService.tsx";
 import axios from "axios";
-import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationUtils.tsx";
 
 interface JobState {
     jobs : JobType[];

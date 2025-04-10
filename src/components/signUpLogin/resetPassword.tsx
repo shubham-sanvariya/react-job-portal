@@ -4,7 +4,7 @@ import {IconAt, IconLock} from "@tabler/icons-react";
 import {changePassword} from "@/services/userService.tsx";
 import axios from "axios";
 import {signUpValidation} from "@/services/fromValidation.tsx";
-import {errorNotification, successNotification} from "@/services/notificationServices.tsx";
+import {errorNotification, successNotification} from "@/services/notificationUtils.tsx";
 import {useInterval} from "@mantine/hooks";
 import { sendOtp, verifyOtp } from "@/services/authService";
 

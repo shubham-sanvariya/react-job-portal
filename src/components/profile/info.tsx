@@ -8,7 +8,7 @@ import { useMemo, useState } from "react";
 import { hasLength, useForm } from "@mantine/form";
 import { selectUser, updateUserNameAsyncThunk } from "@/slices/userSlice.tsx";
 import { ProfileType } from "@/types/profileType.ts";
-import { successNotification } from "@/services/notificationServices.tsx";
+import { successNotification } from "@/services/notificationUtils.tsx";
 import { AppDispatch } from "@/store.tsx";
 
 const Info = () => {
