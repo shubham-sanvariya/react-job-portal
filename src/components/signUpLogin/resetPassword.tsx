@@ -71,7 +71,7 @@ const ResetPassword = (props: any) => {
     };
 
     const resendOtp = () => {
-        handleSendOtp()
+        handleSendOtp().then()
     }
 
     const changeEmail = () => {

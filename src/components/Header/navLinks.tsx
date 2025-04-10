@@ -1,18 +1,9 @@
 import {Link, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {selectUser} from "@/slices/userSlice.tsx";
+import useNavLinks from "@/hooks/useNavLinks.tsx";
+
 
 const NavLinks = () => {
-    const userState = useSelector(selectUser);
-    const links = userState?.accountType === "APPLICANT" ? [
-        {name: "Find Jobs", url: "find-jobs"},
-        {name: "Job History", url: "job-history"},
-    ] : [
-        {name: "Find Talent", url: "find-talent"},
-        {name: "Post Jobs", url: "post-job"},
-        {name: "Posted Job", url: "posted-jobs"},
-    ]
-
+    const { links } = useNavLinks();
     const location = useLocation();
 
     return (
