@@ -6,16 +6,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectUser} from "@/slices/userSlice.tsx";
 import {AppDispatch} from "@/store.tsx";
 import {getProfileAsyncThunk} from "@/slices/profileSlice.tsx";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import NotificationMenu from "@/components/Header/notificationMenu.tsx";
 
 const Header = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const user = useSelector(selectUser);
+    const ref = useRef(false);
 
     useEffect(() => {
-        if (user?.profileId) {
+        if (user?.profileId && !ref.current) {
+            ref.current = true;
             dispatch(getProfileAsyncThunk(Number(user?.profileId)));
         }
     }, [dispatch, user?.profileId]);
