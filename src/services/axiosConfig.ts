@@ -7,6 +7,8 @@ const api = axios.create({
     withCredentials: true
 })
 
+let refreshTokenPromise : Promise<any> | null = null;
+
 api.interceptors.response.use(
     (response) => response,
     async (error : AxiosError) => {
@@ -15,14 +17,22 @@ api.interceptors.response.use(
         if (error.response?.status === 401 && !originalRequest._retry){
             originalRequest._retry = true;
 
+            if (!refreshTokenPromise) {
+                refreshTokenPromise = api.post(`/auth/refresh-token`)
+                    .finally(() => {
+                        refreshTokenPromise = null;
+                    });
+            }
+
             try {
-                await api.post(`/auth/refresh-token`);
+                await refreshTokenPromise;
                 return api(originalRequest);
             }catch (refreshError){
                 errorNotification("Session Expired","Please Login again.")
                 removeItem("user");
                 window.location.href = "/login";
                 console.log(refreshError);
+                return Promise.reject(refreshError);
             }
         }
 
