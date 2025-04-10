@@ -13,7 +13,7 @@ const RecommendedJobs = () => {
 
     useEffect(() => {
         if (jobsState.length === 0){
-            dispatch(getJobsAsyncThunk());
+            dispatch(getJobsAsyncThunk({jobStatus : "ACTIVE"}));
         }
     }, [dispatch, jobsState.length]);
 
