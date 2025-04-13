@@ -36,7 +36,7 @@ const PostJob = () => {
     const handleSave = async (jobStatus : string) => {
         try {
             const jobId = id ? id : 0;
-            const res = await postJob({...form.getValues(), id : Number(jobId) , postedBy : Number(userState.id), jobStatus});
+            const res = await postJob({...form.getValues(), id : Number(jobId) , postedBy : Number(userState?.id), jobStatus});
             navigate(`/posted-jobs/${res.id}`)
             const pass = jobStatus === "ACTIVE" ? "Published" : "Drafted";
             successNotification(pass, `Job ${pass} Successfully`);
@@ -56,7 +56,14 @@ const PostJob = () => {
 
     const handlePost = async () => {
         form.validate();
-        if (!form.isValid()) return;
+        if (!form.isValid()) {
+            for (const key in form.errors) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                errorNotification(key, form.errors[key].toString())
+            }
+            return;
+        }
 
         await handleSave("ACTIVE");
     }
@@ -82,24 +89,24 @@ const PostJob = () => {
         }
     })
     return (
-        <div className={'w-4/5 mx-auto'}>
+        <div className={'px-16 py-5 bs-mx:px-10 md-mx:px-5'}>
             <div className={'text-2xl font-semibold mb-5'}>Post a Job</div>
             <div className={'flex flex-col gap-5'}>
-                <div className={'flex gap-10 [&>*]:w-1/2'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 md-mx:gap-5 sm-mx:flex-wrap sm-mx:[&>*]:w-full'}>
                     <SelectInput form={form} name={"jobTitle"} {...fields[0]} />
                     <SelectInput form={form} name={"company"} {...fields[1]} />
                 </div>
-                <div className={'flex gap-10 [&>*]:w-1/2'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 md-mx:gap-5 sm-mx:flex-wrap sm-mx:[&>*]:w-full'}>
                     <SelectInput form={form} name={"experience"} {...fields[2]} />
                     <SelectInput form={form} name={"jobType"} {...fields[3]} />
                 </div>
-                <div className={'flex gap-10 [&>*]:w-1/2'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 md-mx:gap-5 sm-mx:flex-wrap sm-mx:[&>*]:w-full'}>
                     <SelectInput form={form} name={"location"} {...fields[4]} />
                     <NumberInput {...form.getInputProps('packageOffered')} label={"Salary"} min={1} max={300}
                             placeholder={"Enter Salary"}  clampBehavior={"strict"}   hideControls />
                 </div>
                 <TagsInput {...form.getInputProps('skillRequired')}  withAsterisk label={"skills"} placeholder={'Enter Skills'} clearable acceptValueOnBlur
-                           splitChars={[',', ' ', '|']}
+                           splitChars={[',', '|']}
                 />
                 <Textarea
                     {...form.getInputProps('about')}
