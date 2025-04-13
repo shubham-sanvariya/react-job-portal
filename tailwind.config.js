@@ -56,7 +56,7 @@ module.exports = {
 				'2xl-mx' : { 'max' : '1535px'},
 				'xl-mx' : { 'max' : '1979px'},
 				'lg-mx' : { 'max' : '1023px'},
-				'bs-mx' : { 'max' : '899px'},
+				'bs-mx' : { 'max' : '900px'},
 				'md-mx' : { 'max' : '767px'},
 				'sm-mx' : { 'max' : '639px'},
 				'xs-mx' : { 'max' : '475px'},
