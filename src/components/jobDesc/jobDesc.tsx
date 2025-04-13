@@ -76,22 +76,24 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
     }, [id]);
 
     return (
-        <div className={'w-2/3'}>
-            <div className={'flex justify-between'}>
+        <div className={'w-2/3 bs-mx:w-full'}>
+            <div className={'flex justify-between items-center flex-wrap'}>
                 <div className={'flex items-center gap-2'}>
-                    <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-14'}
+                    <div className={'flex shrink-0 p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-14 xs-mx:h-10 xs-mx:w-10'}
                                                                              src={`/src/assets/Icons/${job?.company}.png`}
                                                                              alt="company"/></div>
                     <div>
-                        <div className={'font-semibold text-2xl'}>{job?.jobTitle}</div>
+                        <div className={'font-semibold text-2xl xs-mx:text-xl'}>{job?.jobTitle}</div>
                         <div
-                            className={'text-lg text-mine-shaft-300'}>{job?.company} &bull; {timeAgo(job?.postTime ?? "")} &bull;
+                            className={'flex flex-wrap text-lg text-mine-shaft-300  xs-mx:text-base'}><span>{job?.company} </span> &bull; <span>{timeAgo(job?.postTime ?? "")}</span> &bull;
                             &nbsp;
-                            {job?.applicants ? job?.applicants.length : 0} Applicants
+                            <span>
+                                {job?.applicants ? job?.applicants.length : 0} Applicants
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div className={'flex flex-col items-center gap-2'}>
+                <div className={'flex sm:flex-col items-center gap-2 sm-mx:my-5 sm-mx:[&>button]:w-1/2'}>
                     {(edit || !applied) && <Link to={edit ? `/post-job/${job.id}` :  `/apply-job/${job?.id}`} >
                         <Button onClick={closed ? () => handleJobStatusChange("active") : () => {}} size={"sm"} color={'bright-sun.4'} variant={"light"}>
                             {closed ? "Reopen" : edit ? "Edit" : "Apply"}
@@ -118,17 +120,17 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
                 </div>
             </div>
             <Divider my={'xl'}/>
-            <div className={'flex justify-between'}>
+            <div className={'flex justify-between sm-mx:flex-wrap'}>
                 {
                     card.map((item, index: number) => (
                         <div key={index} className={'flex flex-col items-center gap-1 '}>
-                            <ActionIcon color={'bright-sun.4'} className="!h-12 !w-12" variant="light" radius="xl"
+                            <ActionIcon color={'bright-sun.4'} className="!h-12 !w-12 xs-mx:!h-8 xs-mx:!w-8" variant="light" radius="xl"
                                         aria-label="Settings">
                                 <item.icon className="h-4/5 w-4/5" stroke={1.5}/>
                             </ActionIcon>
                             <div className={'text-sm text-mine-shaft-300'}>{item.name}</div>
                             <div
-                                className={'font-semibold'}>{formatJobValue(item.id, job)} {item.id === "packageOffered" && <>LPA</>}</div>
+                                className={'text-base font-semibold xs-mx:text-sm'}>{formatJobValue(item.id, job)} {item.id === "packageOffered" && <>LPA</>}</div>
                         </div>
                     ))
                 }
@@ -142,7 +144,7 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
                     {
                         job?.skillRequired?.map((skill: string, index: number) => (
                             <ActionIcon key={index} color={'bright-sun.4'}
-                                        className="!text-sm !h-fit !w-fit font-medium" variant="light"
+                                        className="!text-sm !h-fit !w-fit font-medium xs-mx:!text-xs" variant="light"
                                         radius="xl" p={"xs"}
                                         aria-label="Settings">
                                 {skill}
@@ -152,7 +154,7 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
                 </div>
                 <Divider my={'xl'}/>
                 <div
-                    className={'[&_h4]:text-xl [&_*]:text-mine-shaft-300 [&_li]: mb-1 [&_li]:marker:text-bright-sun-400 [&_h4]:my-5 [&_h4]:font-semibold [&_h4]:text-mine-shaft-200 [&_p]:text-justify'}
+                    className={'[&_h4]:text-xl [&_*]:text-mine-shaft-300 [&_li]: mb-1 [&_li]:marker:text-bright-sun-400 [&_h4]:my-5 [&_h4]:font-semibold [&_h4]:text-mine-shaft-200 [&_p]:text-justify [&_p]:text-xs [&_li]:text-sm'}
                     dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(job.description)}}>
 
                 </div>
@@ -162,7 +164,7 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
                         About Company
                     </div>
 
-                    <div className={'flex justify-between mb-3'}>
+                    <div className={'flex items-center justify-between mb-3 xs-mx:flex-wrap xs-mx:gap-2'}>
                         <div className={'flex items-center gap-2'}>
                             <div className={'p-3 bg-mine-shaft-800 rounded-xl'}><img className={'h-8'}
                                                                                      src={`/src/assets/Icons/${job.company}.png`}
