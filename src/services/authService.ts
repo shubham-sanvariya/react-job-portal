@@ -1,11 +1,10 @@
-import axios from "axios";
 import api from "@/services/axiosConfig.ts";
 
 const base_URL = "http://localhost:8080/auth"
 
 export const registerUser = async (user: any) => {
     try {
-        const response = await axios.post(`${base_URL}/register`, user);
+        const response = await api.post(`${base_URL}/register`, user);
         return response.data;
     } catch (error: unknown) {
         console.log(error);
@@ -15,7 +14,7 @@ export const registerUser = async (user: any) => {
 
 export const loginUser = async (login: any) => {
     try {
-        const response = await axios.post(`${base_URL}/login`, login);
+        const response = await api.post(`${base_URL}/login`, login);
         return response.data;
     } catch (error: unknown) {
         console.log(error);
