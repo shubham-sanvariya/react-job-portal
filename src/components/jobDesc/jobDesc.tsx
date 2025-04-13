@@ -49,12 +49,12 @@ const JobDesc = ({edit, closed}: { edit: boolean, closed: boolean }) => {
     }, [job])
 
     const checkIfApplied = useCallback(() => {
-        if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState.id))) {
+        if (profileState && job.applicants?.some(applicant => applicant.applicantId === Number(userState?.id))) {
             setApplied(true);
         } else {
             setApplied(false);
         }
-    }, [profileState, job.applicants, userState.id]);
+    }, [profileState, job.applicants, userState?.id]);
 
     useEffect(() => {
         // window.scrollTo(0, 0);
