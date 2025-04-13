@@ -20,18 +20,18 @@ const SearchBar = () => {
     }
 
     return (
-        <div className={'flex px-5 py-8'}>
+        <div className={'flex px-5 py-8 lg-mx:flex-wrap items-center !text-mine-shaft-100'}>
             {
                 dropdownData.map((item, index) =>
                     <React.Fragment key={index}>
-                        <div key={index} className={'w-1/5'}>
+                        <div key={index} className={'w-1/5 lg-mx:w-1/4 bs-mx:w-[30%]'}>
                             <MultiInput {...item} />
                         </div>
                         <Divider mr={'xs'} size={'xs'} orientation={'vertical'}/>
                     </React.Fragment>
                 )
             }
-            <div className={'w-1/5 [&_.mantine-Slider-label]:!translate-y-10'}>
+            <div className={'w-1/5 lg-mx:mt-7 lg-mx:w-1/4 bs-mx:w-[30%]  [&_.mantine-Slider-label]:!translate-y-10'}>
                 <div className={'flex text-sm justify-between'}>
                     <div>Salary</div>
                     <div>&#8377;{value[0]} LPA - &#8377;{value[1]} LPA</div>
