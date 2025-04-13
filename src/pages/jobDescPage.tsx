@@ -12,8 +12,8 @@ const JobDescPage = () => {
                     Back
                 </Button>
             </Link>
-            <div className={'flex justify-around gap-5'}>
-                <JobDesc/>
+            <div className={'flex justify-around gap-5 bs-mx:flex-wrap'}>
+                <JobDesc edit={false} closed={false}/>
                 <RecommendedJobs/>
             </div>
         </div>
