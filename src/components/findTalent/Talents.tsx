@@ -50,7 +50,7 @@ const Talents = () => {
                 <div className={'text-2xl font-semibold'}>Talents</div>
                 <Sort sortFor={"talents"} />
             </div>
-            <div className={'flex flex-wrap mt-10 gap-5 justify-between'}>
+            <div className={'flex flex-wrap mt-10 gap-5'}>
                 {
                     filteredProfiles?.length > 0 ? filteredProfiles
                         .map((talent, index) => (
