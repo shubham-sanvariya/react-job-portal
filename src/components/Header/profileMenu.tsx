@@ -22,7 +22,7 @@ const ProfileMenu = () => {
         <Menu opened={opened} onChange={setOpened} shadow="md" width={200}>
             <Menu.Target>
                 <div className={'flex items-center gap-2 cursor-pointer'}>
-                    <div>
+                    <div className='xs-mx:hidden'>
                         {profileState?.name}
                     </div>
                     <Avatar src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'src/assets/avatar.png'}/>
