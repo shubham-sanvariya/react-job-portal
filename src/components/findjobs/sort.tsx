@@ -81,7 +81,7 @@ const Sort : React.FC<SortProps> =  ( { sortFor } ) => {
             >
                 <Combobox.Target>
                     <div onClick={() => combobox.toggleDropdown()}
-                         className={'flex items-center gap-2 px-2 py-1 text-sm rounded-xl border border-bright-sun-400 cursor-pointer'}>
+                         className={'flex items-center gap-2 px-2 py-1  text-sm xsm-mx:mt-2 xs-mx:text-xs xs-mx:px-1 xs-mx:py-0 rounded-xl border border-bright-sun-400 cursor-pointer'}>
                         {selectedItem}<IconAdjustments className="h-5 w-5 text-bright-sun-400"/>
                     </div>
                 </Combobox.Target>
