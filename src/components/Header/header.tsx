@@ -47,7 +47,7 @@ const Header = () => {
                 {/*    <IconSettings stroke={'1.5'}/>*/}
                 {/*</div>*/}
 
-                <Burger opened={opened} onClick={open} aria-label="Toggle navigation" />
+                <Burger className="bs:hidden" opened={opened} onClick={open} aria-label="Toggle navigation" />
                 <Drawer size={"xs"} overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={opened} onClose={close} position={"right"} title="Authentication" closeButtonProps={{ icon: <IconX size={30} /> }}>
                     <div className={`flex flex-col gap-6 items-center`}>
                         {links.map((link, index) => (
