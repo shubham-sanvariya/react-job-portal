@@ -45,8 +45,8 @@ const Jobs = () => {
 
     return (
         <div className={'p-5'}>
-            <div className={'flex justify-between'}>
-                <div className={'text-2xl font-semibold'}>Recommended Jobs</div>
+            <div className={'flex justify-between flex-wrap mt-5'}>
+                <div className={'text-2xl xs-mx:text-xl font-semibold'}>Recommended Jobs</div>
                 <Sort sortFor="jobs" />
             </div>
             <div className={'flex flex-wrap mt-10 gap-5'}>
