@@ -38,7 +38,7 @@ const JobCard = (props : JobType) => {
                                stroke={1.5}/>}
             </div>
             <div
-                className={'flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-800 [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs'}>
+                className={'flex flex-wrap gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-800 [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs'}>
                 <div>{props.experience}</div>
                 <div>{props.jobType}</div>
                 <div>{props.location}</div>
