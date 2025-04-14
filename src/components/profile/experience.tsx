@@ -23,7 +23,7 @@ const Experience = () => {
 
     return (
         <div>
-            <div className={'flex justify-between text-2xl font-semibold mb-5'}>Experience
+            <div className={'flex flex-wrap justify-between text-2xl font-semibold mb-5'}>Experience
                 <div className={'flex gap-2'}>
                     <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
                                 onClick={() => setAddExp(true)}
