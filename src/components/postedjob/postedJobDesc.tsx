@@ -53,22 +53,22 @@ const PostedJobDesc = () => {
     }, [job?.applicants, handleJobStatus]);
 
     return (
-        <div className={'mt-5 w-3/4 px-5'}>
+        <div className={'mt-5 w-3/4 px-5 md-mx:w-full md-mx:p-0 md-mx:-mt-4'}>
             {job.jobTitle? <>
-                <div className={'flex items-center text-2xl font-semibold mb-5'}>
+                <div className={'flex items-center text-2xl font-semibold mb-5 xs-mx:text-xl'}>
                     {job.jobTitle}
                     <Badge variant={'light'} ml={'sm'} size={"sm"} color={'bright-sun.4'}
                     >
                         {job.jobStatus}
                     </Badge>
                 </div>
-                <div className={'font-medium text-mine-shaft-300 mb-5'}>
+                <div className={'font-medium text-mine-shaft-300 mb-5 xs-mx:text-sm'}>
                     {job.location}
                 </div>
                 <div>
                     <Tabs variant={"outline"} radius={"lg"} onChange={setActiveTab} value={activeTab}>
                         <Tabs.List
-                            className={'[&_button]:!text-lg mb-5 font-semibold [&_button[data-active="true"]]:text-bright-sun-400'}>
+                            className={'[&_button]:text-xl mb-5 font-semibold [&_button[data-active="true"]]:text-bright-sun-400 sm-mx:[&_button]:!text-lg xs-mx:[&_button]:!text-base xsm-mx:[&_button]:!text-sm xs-mx:[&_button]:!px-1.5 xs-mx:[&_button]:!py-1.5 xs-mx:font-bold'}>
                             <Tabs.Tab value={'overview'}>Overview</Tabs.Tab>
                             <Tabs.Tab value={'applicants'}>Applicants</Tabs.Tab>
                             <Tabs.Tab value={'invited'}>Invited</Tabs.Tab>
