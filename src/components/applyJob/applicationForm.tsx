@@ -89,7 +89,7 @@ const ApplicationForm = () => {
                 Submit Your Application
             </div>
             <div className="flex flex-col gap-5">
-                <div className={'flex gap-10 [&>*]:w-1/2'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 md-mx:gap-5 sm-mx:flex-wrap sm-mx:[&>*]:w-full'}>
                     <TextInput {...form.getInputProps("name")}
                                className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
                                readOnly={preview}
@@ -101,7 +101,7 @@ const ApplicationForm = () => {
                                variant={preview ? 'unstyled' : 'default'} label={'Email'} withAsterisk
                                placeholder={'Enter Email'}/>
                 </div>
-                <div className={'flex gap-10 [&>*]:w-1/2'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 md-mx:gap-5 sm-mx:flex-wrap sm-mx:[&>*]:w-full'}>
                     <NumberInput className={`${preview ? 'text-mine-shaft-300 font-semibold' : ''}`}
                                  {...form.getInputProps("phone")}
                                  readOnly={preview}
