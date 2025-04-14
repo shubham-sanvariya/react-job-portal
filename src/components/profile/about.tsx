@@ -6,12 +6,14 @@ import {AppDispatch} from "@/store.tsx";
 import {selectProfile, updateProfileAsyncThunk} from "@/slices/profileSlice.tsx";
 import {ProfileType} from "@/types/profileType.ts";
 import {successNotification} from "@/services/notificationUtils.tsx";
+import {useMediaQuery} from "@mantine/hooks";
 
 const About = () => {
     const dispatch = useDispatch<AppDispatch>();
     const profileState = useSelector(selectProfile);
     const [edit, setEdit] = useState<boolean>(false);
     const [about, setAbout] = useState(profileState?.about || "");
+    const matches = useMediaQuery('(min-width: 475px)');
 
     const handleEdit = () => {
         if (!edit) {
@@ -33,12 +35,12 @@ const About = () => {
         <div>
             <div className={'flex justify-between text-2xl font-semibold mb-3'}>About
                 <div>
-                    <ActionIcon size={"lg"} color={'green.8'} variant={'subtle'}
+                    <ActionIcon size={matches ? "md" : "lg"} color={'green.8'} variant={'subtle'}
                                 onClick={handleSave}
                     >
                         {edit && <IconCheck className={'h-4/5 w-4/5'}/>}
                     </ActionIcon>
-                    <ActionIcon size={"lg"} color={edit ? 'red.8':'bright-sun.4'} variant={'subtle'}
+                    <ActionIcon size={matches ? "md" : "lg"} color={edit ? 'red.8':'bright-sun.4'} variant={'subtle'}
                                 onClick={handleEdit}
                     >
                         {edit ? <IconX className={'h-4/5 w-4/5'}/> :

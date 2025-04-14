@@ -13,7 +13,7 @@ const SearchBar = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [value, setValue] = useState<[number, number]>([0, 50]);
     const [talentName, setTalentName] = useState("");
-    const matches = useMediaQuery('(max-width: 475px)');
+    const matches = useMediaQuery('(min-width: 475px)');
     const [opened, {toggle}] = useDisclosure(false);
 
 

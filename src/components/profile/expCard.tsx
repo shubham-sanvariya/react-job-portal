@@ -37,7 +37,7 @@ const ExpCard = (props : any) => {
                     {formatDate(props.startDate)} - {props.working ? "Present": formatDate(props.endDate)}
                 </div>
             </div>
-            <div className={'text-sm text-mine-shaft-300 text-justify'}>
+            <div className={'text-sm text-mine-shaft-300 text-justify xs-mx:text-xs'}>
                 {props.description}
             </div>
             {props.edit && <div className="flex gap-5">

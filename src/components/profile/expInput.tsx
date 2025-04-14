@@ -96,7 +96,7 @@ const ExpInput = (props: any) => {
     return (
         <div className={'flex flex-col gap-3'}>
             <div className={'text-lg font-semibold'}>{props.add ? "Add " : 'Edit '}Experience</div>
-            <div className={'flex gap-10 [&>*]:w-1/2'}>
+            <div className={'flex gap-10 [&>*]:w-1/2 [&>*]:xs-mx:w-full xs-mx:flex-wrap xs-mx:gap-5'}>
                 <SelectInput form={form} name="title" {...fields[0]} />
                 <SelectInput form={form} name="company" {...fields[1]} />
             </div>

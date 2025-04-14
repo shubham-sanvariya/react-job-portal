@@ -6,12 +6,13 @@ import {useSelector} from "react-redux";
 import {selectProfile} from "@/slices/profileSlice.tsx";
 import {useState} from "react";
 import {ExperienceType} from "@/types/profileType.ts";
+import {useMediaQuery} from "@mantine/hooks";
 
 const Experience = () => {
     const profileState = useSelector(selectProfile);
     const [edit, setEdit] = useState<boolean>(false);
     const [addExp, setAddExp] = useState(false);
-
+    const matches = useMediaQuery('(min-width: 475px)');
 
     const handleEdit = () => {
         if (!edit) {
@@ -25,14 +26,14 @@ const Experience = () => {
         <div>
             <div className={'flex flex-wrap justify-between text-2xl font-semibold mb-5'}>Experience
                 <div className={'flex gap-2'}>
-                    <ActionIcon size={"lg"} color={'bright-sun.4'} variant={'subtle'}
+                    <ActionIcon size={matches ? "md" : "lg"} color={'bright-sun.4'} variant={'subtle'}
                                 onClick={() => setAddExp(true)}
                     >
                         <IconPlus
                             className="h-4/5 w-4/5"
                         />
                     </ActionIcon>
-                    <ActionIcon size={"lg"} color={edit ? 'red.8':'bright-sun.4'} variant={'subtle'}
+                    <ActionIcon size={matches ? "md" : "lg"} color={edit ? 'red.8':'bright-sun.4'} variant={'subtle'}
                                 onClick={handleEdit}
                     >
                         {edit ? <IconX className={'h-4/5 w-4/5'}/> :
