@@ -7,7 +7,7 @@ const TalentCard = ({applicantProfile}: { applicantProfile: ProfileType }) => {
 
     return (applicantProfile &&
         <div
-            className={'flex flex-col gap-3 rounded-xl bg-mine-shaft-900 p-4 w-96 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400 bs-mx:w-[48%] sm-mx:w-full'}>
+            className={'flex flex-col gap-3 rounded-xl bg-mine-shaft-900 p-4 w-96 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400 bs-mx:w-[48%] md-mx:w-full'}>
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-full'}><Avatar size={"lg"}
