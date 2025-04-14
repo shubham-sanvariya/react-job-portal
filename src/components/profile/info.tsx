@@ -35,8 +35,8 @@ const Info = () => {
         if (isFormValid) {
             console.log("Form values before dispatch:", form.getValues());
             const updatedProfile = { ...profileState, ...form.getValues() };
-            if (userState.name !== updatedProfile.name) {
-                dispatch(updateUserNameAsyncThunk({ id: Number(userState.id), userName: updatedProfile.name }));
+            if (userState?.name !== updatedProfile.name) {
+                dispatch(updateUserNameAsyncThunk({ id: Number(userState?.id), userName: updatedProfile.name }));
             }
             dispatch(updateProfileAsyncThunk(updatedProfile as ProfileType));
             successNotification("Success", "Profile Updated Successfully.")
@@ -62,7 +62,7 @@ const Info = () => {
 
     return (
         <>
-            <div className={'flex justify-between text-3xl font-semibold '}>{profileState?.name}
+            <div className={'flex justify-between text-3xl font-semibold xs-mx:text-2xl'}>{profileState?.name}
                 <div>
 
                     <ActionIcon size={"lg"} color={'green.8'} variant={'subtle'}
@@ -80,11 +80,11 @@ const Info = () => {
             </div>
             {edit ? <>
                 <SelectInput form={form} name={"name"} {...fields[0]} />
-                <div className={'flex gap-10 [&>*]:w-1/2 my-3'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 my-3 [&>*]:xs-mx:w-full xs-mx:flex-wrap xs-mx:gap-5'}>
                     <SelectInput form={form} name={"jobTitle"} {...fields[1]} />
                     <SelectInput form={form} name={"company"} {...fields[2]} />
                 </div>
-                <div className={'flex gap-10 [&>*]:w-1/2 my-3'}>
+                <div className={'flex gap-10 [&>*]:w-1/2 my-3 [&>*]:xs-mx:w-full xs-mx:flex-wrap xs-mx:gap-5'}>
                     <SelectInput form={form} name={"location"} {...fields[3]} />
                     <NumberInput label={"Total Experience"} min={0}
                                  max={50} {...form.getInputProps('totalExp')} hideControls withAsterisk/>
@@ -92,13 +92,13 @@ const Info = () => {
             </>
                 :
                 <>
-                    <div className={'text-xl flex gap-1 items-center'}><IconBriefcase
+                    <div className={'text-xl flex gap-1 items-center xs-mx:text-base'}><IconBriefcase
                         className={'h-5 w-5'} /> {profileState?.jobTitle} &bull; {profileState?.company}
                     </div>
-                    <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center'}>
+                    <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center xs-mx:text-base'}>
                         <IconMapPin className={'h-5 w-5'} stroke={1.5} /> {profileState?.location}
                     </div>
-                    <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center'}>
+                    <div className={'flex gap-1 text-lg text-mine-shaft-400 items-center xs-mx:text-base'}>
                         <IconBriefcase className={'h-5 w-5'} stroke={1.5} />Experience : {profileState?.totalExperience}
                     </div>
                 </>
