@@ -22,7 +22,7 @@ const JobHistory = () => {
         window.scrollTo(0, 0);
         if (!refConst.current){
             if (!jobsState || jobsState.length === 0) {
-                dispatch(getJobsAsyncThunk());
+                dispatch(getJobsAsyncThunk({jobStatus:"ACTIVE"}));
             }
             else handleFilterByStatus(activeTab);
         }
@@ -54,7 +54,7 @@ const JobHistory = () => {
     const handleFilterByStatus = (value: string | null) => {
         const list = jobsState?.filter(job => {
             return job.applicants?.some(applicant => {
-                return applicant.applicantId === Number(userState.id) && applicant.applicationStatus === value
+                return applicant.applicantId === Number(userState?.id) && applicant.applicationStatus === value
             })
         })
 
