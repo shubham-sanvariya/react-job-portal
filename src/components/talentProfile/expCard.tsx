@@ -1,7 +1,9 @@
+import {formatDate} from "@/services/utilService.tsx";
+
 const ExpCard = (props : any) => {
     return (
         <div className={'flex flex-col gap-2'}>
-            <div className={'flex justify-between'}>
+            <div className={'flex justify-between flex-wrap gap-2'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-md'}><img className={'h-7'} src={`/src/assets/Icons/${props.company}.png`} alt="microsoft"/></div>
                     <div className={'flex flex-col'}>
@@ -10,10 +12,10 @@ const ExpCard = (props : any) => {
                     </div>
                 </div>
                 <div className={'text-sm text-mine-shaft-300'}>
-                    {props.startDate} - {props.endDate}
+                    {formatDate( props.startDate)} - {formatDate( props.endDate)}
                 </div>
             </div>
-            <div className={'text-sm text-mine-shaft-300 text-justify'}>
+            <div className={'text-sm xs-mx:text-xs text-mine-shaft-300 text-justify'}>
                 {props.description}
             </div>
         </div>
