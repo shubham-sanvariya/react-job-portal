@@ -36,7 +36,7 @@ const CertiCard = (props: any) => {
             <div className={'flex items-center gap-2'}>
 
                 <div className={'flex flex-col items-end sm-mx:flex-row sm-mx:mt-2'}>
-                    <div className={'text-sm text-mine-shaft-300 xs-mx:text-sm'}>{formatDate(props.issueDate)}</div>
+                    <div className={'text-sm text-mine-shaft-300 xs-mx:text-sm'}>Issued {formatDate(props.issueDate)}</div>
                     <div className={'text-sm text-mine-shaft-300 xs-mx:text-sm'}>ID: {props.certificateId}</div>
                 </div>
 
