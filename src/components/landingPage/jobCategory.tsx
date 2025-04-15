@@ -10,7 +10,7 @@ const JobCategory = () => {
                 Job
             </span> Category
             </div>
-            <div className={'text-lg mb-10 mx-auto text-mine-shaft-300 text-center w-1/2'}>
+            <div className={'text-lg mb-10 mx-auto text-mine-shaft-300 text-center w-1/2 sm-mx:text-base sm-mx:w-11/12 xs-mx:text-sm'}>
                 Explore diverse job opportunities tailored to your skills. Start your career journey today!
             </div>
             <Carousel slideSize="18%" slideGap="md" loop className={'focus-visible:[&_button]:!outline-none [&_button]:!bg-bright-sun-400 [&_button]:!border-none [&_button]:hover:opacity-75 [&_button]:opacity-0 hover:[&_button]:opacity-100'}
@@ -19,20 +19,20 @@ const JobCategory = () => {
                 >
                 {jobCategory.map((jc, index) => (
                     <CarouselSlide key={index}>
-                        <div className={'flex flex-col items-center w-64 gap-2 border border-bright-sun-400 p-5 my-5 rounded-xl hover:cursor-pointer hover:shadow-[0_0_5px_2px_black] transition duration-300 ease-in-out !shadow-bright-sun-300'}>
+                        <div className={'flex flex-col items-center w-64 gap-2 border border-bright-sun-400 p-5 my-5 rounded-xl hover:cursor-pointer hover:shadow-[0_0_5px_2px_black] transition duration-300 ease-in-out !shadow-bright-sun-300 sm-mx:w-56 xs-mx:w-48'}>
                             <div className={'p-2 bg-amber-300 rounded-full'}>
                                 <img
-                                    className={'h-8 w-8'}
+                                    className={'h-8 w-8 sm-mx:h-6 sm-mx:w-6 xs-mx:h-4 xs-mx:w-4'}
                                     src={`/src/assets/Category/${jc.name}.png`}
                                     alt={jc.name}/>
                             </div>
-                            <div className={'text-xl font-semibold text-mine-shaft-100'}>
+                            <div className={'text-xl font-semibold text-mine-shaft-100 sm-mx:text-lg xs-mx:text-base'}>
                                 {jc.name}
                             </div>
-                            <div className={'text-sm text-center text-mine-shaft-300'}>
+                            <div className={'text-sm text-center text-mine-shaft-300 sm-mx:text-lg xs-mx:text-xs'}>
                                 {jc.desc}
                             </div>
-                            <div className={'text-lg text-bright-sun-300'}>
+                            <div className={'text-lg text-bright-sun-300 sm-mx:text-base xs-mx:text-sm'}>
                                 {jc.jobs}+ new job posted
                             </div>
                         </div>
