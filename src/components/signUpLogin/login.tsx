@@ -97,7 +97,7 @@ const Login = () => {
                 overlayProps={{ radius: 'sm', blur: 2 }}
                 loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
             />
-        <div className={'flex flex-col justify-center gap-3 w-1/2 px-20'}>
+        <div className={'flex flex-col justify-center gap-3 w-1/2 px-20 bs-mx:px-10 md-mx:px-5 sm-mx:w-full'}>
             <div className={'text-2xl font-semibold'}>
                 Login
             </div>
