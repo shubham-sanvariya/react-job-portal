@@ -46,7 +46,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
                 interviewTime: date.toISOString()
             }
 
-            dispatch(updateApplicantStatusAsyncThunk({application, postedById: Number(userState.id)}));
+            dispatch(updateApplicantStatusAsyncThunk({application, postedById: Number(userState?.id)}));
         }
         close();
     }
