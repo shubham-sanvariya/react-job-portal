@@ -51,7 +51,7 @@ export const getJobsByCompanyName = async (companyName : string, page = 0, size 
          if (sort !== undefined){
              params = {...params,sort}
          }
-        const res = await api.get(base_URL,{ params });
+        const res = await api.get(`${base_URL}/find`,{ params });
         return res.data;
     }catch (err : unknown){
         console.log(err);
