@@ -1,6 +1,6 @@
 import api from "@/services/axiosConfig.ts";
 
-const base_URL = "http://localhost:8080/auth"
+const base_URL = "/auth"
 
 export const registerUser = async (user: any) => {
     try {
