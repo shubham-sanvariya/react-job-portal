@@ -245,12 +245,12 @@ const SignUp = () => {
                 </>}
             />
                 <Button disabled={!isVerifiedState} className={isVerifiedState ? `` : "!bg-red-500 !text-white"} onClick={handleSubmit} autoContrast variant={'filled'}>Sign Up</Button>
-            <div className={'mx-auto'}>Already have an Account ? &nbsp;
+            <div className={'mx-auto sm-mx:text-sm xs-mx:text-sm'}>Already have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/login')
                     setData(form)
                     setFormError(form)
-                }} className={'text-bright-sun-400 hover:underline cursor-pointer'}>
+                }} className={'text-bright-sun-400 hover:underline cursor-pointer sm-mx:text-sm xs-mx:text-sm'}>
                     Login
                 </span>
             </div>
