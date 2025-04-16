@@ -3,7 +3,22 @@ import {Avatar, Button, Divider, Text} from "@mantine/core";
 import {ProfileType} from "@/types/profileType.ts";
 import {Link} from "react-router-dom";
 
-const TalentCard = ({applicantProfile}: { applicantProfile: ProfileType }) => {
+interface TalentCardProps {
+    applicantProfile: ProfileType | {
+        id: number;
+        name: string;
+        jobTitle: string;
+        company: string;
+        skills: string[];
+        about: string;
+        expectedCtc: string;
+        location: string;
+        picture: string;
+        totalExperience: number;
+    },
+}
+
+const TalentCard = ({ applicantProfile }: TalentCardProps) => {
 
     return (applicantProfile &&
         <div
