@@ -9,17 +9,17 @@ const Company = () => {
     return (
         <div className={'w-3/4'}>
             <div className={'relative'}>
-                <img className={'rounded-t-2xl'} src={`dist/assets/Profile/banner.jpg`} alt={""}/>
+                <img className={'rounded-t-2xl'} src={`/assets/Profile/banner.jpg`} alt={""}/>
                 <img
                     className={'w-48 h-48 mb-10 rounded-3xl p-2 -bottom-1/3 absolute left-5 border-8 border-mine-shaft-950 bg-mine-shaft-950'}
-                    src={`dist/assets/Icons/Google.png`} alt={""}/>
+                    src={`/assets/Icons/Google.png`} alt={""}/>
             </div>
             <div className={'px-3 mt-12'}>
                 <div className={'flex justify-between text-3xl font-semibold '}>name
                     <Avatar.Group>
-                        <Avatar src={'dist/assets/avatar.png'}/>
-                        <Avatar src={'dist/assets/avatar1.png'}/>
-                        <Avatar src={'dist/assets/avatar2.png'}/>
+                        <Avatar src={'/assets/avatar.png'}/>
+                        <Avatar src={'/assets/avatar1.png'}/>
+                        <Avatar src={'/assets/avatar2.png'}/>
                         <Avatar>+10K</Avatar>
                     </Avatar.Group>
                 </div>

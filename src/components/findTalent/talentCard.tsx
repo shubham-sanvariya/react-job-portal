@@ -26,7 +26,7 @@ const TalentCard = ({ applicantProfile }: TalentCardProps) => {
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-full'}><Avatar size={"lg"}
-                                                                                  src={applicantProfile?.picture ? `data:image/jpeg;base64,${applicantProfile.picture}` : 'dist/assets/avatar.png'}
+                                                                                  src={applicantProfile?.picture ? `data:image/jpeg;base64,${applicantProfile.picture}` : '/assets/avatar.png'}
                                                                                   alt="profile"/></div>
                     <div className={'flex flex-col gap-1'}>
                         <div className={'font-semibold text-lg'}>{applicantProfile.name}</div>

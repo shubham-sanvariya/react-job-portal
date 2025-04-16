@@ -57,7 +57,7 @@ const ApplicantTalentCard = ({applicant, jobStatus}: { applicant: ApplicantType,
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-full'}><Avatar size={"lg"}
-                                                                                  src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : 'dist/assets/avatar.png'}
+                                                                                  src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : '/assets/avatar.png'}
                                                                                   alt="profile"/></div>
                     <div className={'flex flex-col gap-1'}>
                         <div className={'font-semibold text-lg'}>{applicant.name}</div>
