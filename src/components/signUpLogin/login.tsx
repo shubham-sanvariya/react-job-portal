@@ -124,7 +124,7 @@ const Login = () => {
             />
 
             <Button onClick={handleSubmit} loading={loadingState} autoContrast={true} variant={'filled'}>Login</Button>
-            <div className={'mx-auto'}>don't have an Account ? &nbsp;
+            <div className={'mx-auto sm-mx:text-sm xs-mx:text-sm'}>don't have an Account ? &nbsp;
                 <span onClick={() => {
                     navigate('/signup')
                     setData(form)
@@ -133,7 +133,7 @@ const Login = () => {
                     SignUp
                 </span>
             </div>
-            <div onClick={open} className={'text-bright-sun-400 hover:underline cursor-pointer text-center'}>Forgot Password ?</div>
+            <div onClick={open} className={'text-bright-sun-400 hover:underline cursor-pointer text-center sm-mx:text-sm xs-mx:text-sm'}>Forgot Password ?</div>
         </div>
         <ResetPassword opened={opened} close={close}/>
         </>
