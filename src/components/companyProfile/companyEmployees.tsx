@@ -6,7 +6,7 @@ const CompanyEmployees = () => {
         <div className={'flex flex-wrap mt-10 gap-10'}>
             {
                 talents.map((talent,index) => index < 6 && (
-                    <TalentCard key={index} {...talent}/>
+                    <TalentCard applicantProfile={{...talent, id: index}} key={index} />
 
                 ))
             }
