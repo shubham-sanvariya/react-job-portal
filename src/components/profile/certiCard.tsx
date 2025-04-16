@@ -26,7 +26,7 @@ const CertiCard = (props: any) => {
         <div className={'flex justify-between sm-mx:flex-wrap'}>
             <div className={'flex items-center gap-2'}>
                 <div className={'p-2 bg-mine-shaft-800 rounded-md shrink-0'}><img className={'h-7'}
-                                                                         src={`/dist/assets/Icons/${props.issuer}.png`}
+                                                                         src={`/assets/Icons/${props.issuer}.png`}
                                                                          alt="microsoft"/></div>
                 <div className={'flex flex-col'}>
                     <div className={'font-semibold xs-mx:text-sm'}>{props.title}</div>

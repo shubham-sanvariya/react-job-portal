@@ -17,7 +17,7 @@ const JobHistoryCard = ({job , jobStatus} : { job : JobType, jobStatus : string}
             <div className={'flex justify-between'}>
                 <div className={'flex items-center gap-2'}>
                     <div className={'p-2 bg-mine-shaft-800 rounded-md'}><img className={'h-7'}
-                                                                             src={`/dist/assets/Icons/${job.company}.png`}
+                                                                             src={`/assets/Icons/${job.company}.png`}
                                                                              alt="microsoft"/></div>
                     <div>
                         <div className={'font-semibold'}>{job.jobTitle}</div>

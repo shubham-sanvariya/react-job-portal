@@ -23,7 +23,7 @@ const JobCategory = () => {
                             <div className={'p-2 bg-amber-300 rounded-full'}>
                                 <img
                                     className={'h-8 w-8 sm-mx:h-6 sm-mx:w-6 xs-mx:h-4 xs-mx:w-4'}
-                                    src={`/dist/assets/Category/${jc.name}.png`}
+                                    src={`/assets/Category/${jc.name}.png`}
                                     alt={jc.name}/>
                             </div>
                             <div className={'text-xl font-semibold text-mine-shaft-100 sm-mx:text-lg xs-mx:text-base'}>

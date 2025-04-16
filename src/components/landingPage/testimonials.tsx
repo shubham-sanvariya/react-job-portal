@@ -16,7 +16,7 @@ const Testimonials = () => {
                     <div key={index}
                          className={'flex flex-col gap-3 w-[23%] border rounded-xl mt-10 border-bright-sun-400 p-3 md-mx:w-[46%] xs-mx:w-full'}>
                         <div className={'flex gap-2 items-center'}>
-                            <Avatar className={'!h-14 !w-14'} src="/dist/assets/avatar.png" alt={"it's me"}/>
+                            <Avatar className={'!h-14 !w-14'} src="/assets/avatar.png" alt={"it's me"}/>
                             <div>
                                 <div className={'text-lg text-mine-shaft-100 font-semibold sm-mx:text-base xs-mx:text-sm'}>{data.name}</div>
                                 <Rating value={3.5} fractions={2} readOnly/>
