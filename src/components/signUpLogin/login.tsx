@@ -1,6 +1,6 @@
 import {Button, LoadingOverlay, PasswordInput, rem, TextInput} from "@mantine/core";
 import {IconAt, IconCheck, IconLock, IconX} from "@tabler/icons-react";
-import { useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import * as React from "react";
 import axios from "axios";
@@ -10,14 +10,14 @@ import {useDisclosure} from "@mantine/hooks";
 import ResetPassword from "@/components/signUpLogin/resetPassword.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUserLoading, setUser, setUserLoading} from "@/slices/userSlice.tsx";
-import { loginUser } from "@/services/authService";
+import {loginUser} from "@/services/authService";
 
 type FormType = {
     email: string;
     password: string;
 };
 
-const form : FormType = {
+const form: FormType = {
     email: "",
     password: "",
 }
@@ -27,14 +27,14 @@ const Login = () => {
     const navigate = useNavigate();
     const [data, setData] = useState<FormType>(form);
     const [formError, setFormError] = useState<FormType>(form);
-    const [opened, { open, close }] = useDisclosure(false);
+    const [opened, {open, close}] = useDisclosure(false);
 
     const loadingState = useSelector(selectUserLoading);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name, value = event.target.value;
         setData({...data, [name]: value})
-        setFormError({...formError, [name] : loginValidation(name, value) })
+        setFormError({...formError, [name]: loginValidation(name, value)})
     }
 
     const handleSubmit = async () => {
@@ -63,11 +63,9 @@ const Login = () => {
                     className: "!border-green-500"
                 })
                 setData(form);
-                setTimeout(() => {
-                    dispatch(setUserLoading(false))
-                    dispatch(setUser(res))
-                    navigate('/')
-                }, 3000)
+                dispatch(setUserLoading(false))
+                dispatch(setUser(res))
+                navigate('/')
             }
         } catch (e: unknown) {
             dispatch(setUserLoading(false));
@@ -94,48 +92,52 @@ const Login = () => {
             <LoadingOverlay
                 visible={loadingState}
                 zIndex={1000}
-                overlayProps={{ radius: 'sm', blur: 2 }}
-                loaderProps={{ color: 'bright-sun.4', type: 'bars' }}
+                overlayProps={{radius: 'sm', blur: 2}}
+                loaderProps={{color: 'bright-sun.4', type: 'bars'}}
             />
-        <div className={'flex flex-col justify-center gap-3 w-1/2 px-20 bs-mx:px-10 md-mx:px-5 sm-mx:w-full'}>
-            <div className={'text-2xl font-semibold'}>
-                Login
-            </div>
-            <TextInput
-                name={"email"}
-                value={data.email}
-                onChange={handleChange}
-                error={formError.email}
-                withAsterisk
-                leftSectionPointerEvents={'none'}
-                leftSection={<IconAt style={{width: rem(16), height: rem(16)}}/>}
-                label={"Your Email"}
-                placeholder={'Your Email'}
-            />
-            <PasswordInput
-                name={"password"}
-                value={data.password}
-                onChange={handleChange}
-                error={formError.password}
-                withAsterisk
-                leftSection={<IconLock style={{width: rem(18), height: rem(18)}} stroke={1.5}/>}
-                label={'Password'}
-                placeholder={'Password'}
-            />
+            <div className={'flex flex-col justify-center gap-3 w-1/2 px-20 bs-mx:px-10 md-mx:px-5 sm-mx:w-full'}>
+                <div className={'text-2xl font-semibold'}>
+                    Login
+                </div>
+                <TextInput
+                    name={"email"}
+                    value={data.email}
+                    onChange={handleChange}
+                    error={formError.email}
+                    withAsterisk
+                    leftSectionPointerEvents={'none'}
+                    leftSection={<IconAt style={{width: rem(16), height: rem(16)}}/>}
+                    label={"Your Email"}
+                    placeholder={'Your Email'}
+                />
+                <PasswordInput
+                    name={"password"}
+                    value={data.password}
+                    onChange={handleChange}
+                    error={formError.password}
+                    withAsterisk
+                    leftSection={<IconLock style={{width: rem(18), height: rem(18)}} stroke={1.5}/>}
+                    label={'Password'}
+                    placeholder={'Password'}
+                />
 
-            <Button onClick={handleSubmit} loading={loadingState} autoContrast={true} variant={'filled'}>Login</Button>
-            <div className={'mx-auto sm-mx:text-sm xs-mx:text-sm'}>don't have an Account ? &nbsp;
-                <span onClick={() => {
-                    navigate('/signup')
-                    setData(form)
-                    setFormError(form)
-                }} className={'text-bright-sun-400 hover:underline cursor-pointer'}>
+                <Button onClick={handleSubmit} loading={loadingState} autoContrast={true}
+                        variant={'filled'}>Login</Button>
+                <div className={'mx-auto sm-mx:text-sm xs-mx:text-sm'}>don't have an Account ? &nbsp;
+                    <span onClick={() => {
+                        navigate('/signup')
+                        setData(form)
+                        setFormError(form)
+                    }} className={'text-bright-sun-400 hover:underline cursor-pointer'}>
                     SignUp
                 </span>
+                </div>
+                <div onClick={open}
+                     className={'text-bright-sun-400 hover:underline cursor-pointer text-center sm-mx:text-sm xs-mx:text-sm'}>Forgot
+                    Password ?
+                </div>
             </div>
-            <div onClick={open} className={'text-bright-sun-400 hover:underline cursor-pointer text-center sm-mx:text-sm xs-mx:text-sm'}>Forgot Password ?</div>
-        </div>
-        <ResetPassword opened={opened} close={close}/>
+            <ResetPassword opened={opened} close={close}/>
         </>
 
     )
