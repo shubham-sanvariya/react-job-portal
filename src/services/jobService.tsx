@@ -42,7 +42,7 @@ export const getJobs = async (jobStatus? : string, page = 0, size = 5, sort? :st
     }
 }
 
-export const getJobsByComapanyName = async (companyName : string, page = 0, size = 6, sort? :string) => {
+export const getJobsByCompanyName = async (companyName : string, page = 0, size = 6, sort? :string) => {
     try {
         let params : Record<string, number | string> = { page, size };
          if (companyName !== undefined && companyName.length > 0){
