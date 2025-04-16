@@ -19,7 +19,7 @@ const SignUpPage = () => {
                 <div
                     className={`flex flex-col justify-center items-center gap-5 w-1/2 h-full transition-all duration-1000  ease-in-out bg-mine-shaft-900 ${location.pathname === '/signup' ? 'rounded-r-[200px]' : 'rounded-l-[200px]'} sm-mx:hidden sm-mx:min-h-full`}>
                     <div className={'flex gap-3 items-center text-bright-sun-400'}>
-                        <img src="src/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-16 h-16" />
+                        <img src="dist/assets/Fishing-Rod.svg" alt="SVG Icon" className="w-16 h-16" />
                         <div className={'text-6xl font-bold bs-mx:text-5xl md-mx:text-4xl sm-mx:text-3xl'}>
                             JobFetch
                         </div>

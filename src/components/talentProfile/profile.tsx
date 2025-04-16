@@ -35,7 +35,7 @@ const Profile = () => {
                 <img className={'rounded-t-2xl xs-mx:!h-32 xl-mx:h-40 w-full'} src={banner} alt={"banner"}/>
                 <div className={'absolute flex items-center justify-center -bottom-1/4 left-6 md-mx:-bottom-10 sm-mx:-bottom-16'}>
                     <Avatar className="!w-48 !h-48  border-mine-shaft-950 border-8 rounded-full md-mx:!w-40 md-mx:!h-40 sm-mx:!w-36 sm-mx:!h-36 xs-mx:!w-32 xs-mx:!h-32 "
-                            src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : 'src/assets/avatar.png'}/>
+                            src={profileApplicantState?.picture ? `data:image/jpeg;base64,${profileApplicantState.picture}` : 'dist/assets/avatar.png'}/>
                 </div>
             </div>
             <div className={'px-3 mt-16'}>

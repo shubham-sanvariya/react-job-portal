@@ -38,7 +38,7 @@ const ApplyJobComp = () => {
                 <div className={'flex justify-between'}>
                     <div className={'flex items-center gap-2'}>
                         <div className={'p-3 bg-mine-shaft-800 rounded-xl shrink-0'}><img className={'h-14 xs-mx:h-10 xs-mx:w-10'}
-                                                                                 src={`/src/assets/Icons/${job.company}.png`}
+                                                                                 src={`/dist/assets/Icons/${job.company}.png`}
                                                                                  alt="microsoft"/></div>
                         <div>
                             <div className={'font-semibold text-2xl xs-mx:text-xl'}>{job.jobTitle}</div>

@@ -20,7 +20,7 @@ const JobCard = (props : JobType) => {
                         e.preventDefault();
                         e.stopPropagation(); // Prevent parent <Link> navigation
                         navigate(`/company/${props.company}`);
-                    }}><img className={'h-7'} src={`/src/assets/Icons/${props.company}.png`} alt="microsoft"/></div>
+                    }}><img className={'h-7'} src={`/dist/assets/Icons/${props.company}.png`} alt="microsoft"/></div>
                     <div>
                         <div className={'font-semibold'}>{props.jobTitle}</div>
                         <div className={'text-xs text-mine-shaft-300'}><span className="text-mine-shaft-300 cursor-pointer hover:underline" onClick={(e) => {

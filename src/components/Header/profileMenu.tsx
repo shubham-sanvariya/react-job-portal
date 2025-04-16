@@ -25,7 +25,7 @@ const ProfileMenu = () => {
                     <div className='xs-mx:hidden'>
                         {profileState?.name}
                     </div>
-                    <Avatar src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'src/assets/avatar.png'}/>
+                    <Avatar src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'dist/assets/avatar.png'}/>
                 </div>
             </Menu.Target>
 

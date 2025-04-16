@@ -36,9 +36,9 @@ const Profile = () => {
     return (
         <div className={'w-4/5 mx-auto'}>
             <div className={'relative'}>
-                <img className={'rounded-t-2xl xs-mx:!h-32'} src={`src/assets/Profile/banner.jpg`} alt={"profile"}/>
+                <img className={'rounded-t-2xl xs-mx:!h-32'} src={`dist/assets/Profile/banner.jpg`} alt={"profile"}/>
                 <div ref={ref} className={'absolute flex items-center justify-center -bottom-1/4 left-6 md-mx:-bottom-10 sm-mx:-bottom-16'}>
-                    <Avatar className="!w-48 !h-48  border-mine-shaft-950 border-8 rounded-full md-mx:!w-40 md-mx:!h-40 sm-mx:!w-36 sm-mx:!h-36 xs-mx:!w-32 xs-mx:!h-32 " src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'src/assets/avatar.png'}/>
+                    <Avatar className="!w-48 !h-48  border-mine-shaft-950 border-8 rounded-full md-mx:!w-40 md-mx:!h-40 sm-mx:!w-36 sm-mx:!h-36 xs-mx:!w-32 xs-mx:!h-32 " src={profileState?.picture?`data:image/jpeg;base64,${profileState.picture}`:'dist/assets/avatar.png'}/>
                     {hovered && <Overlay className="!rounded-full" backgroundOpacity={0.75}/>}
                     {hovered && <IconEdit className={'absolute z-[300] !w-16 !h-16'}/>}
                     {hovered && <FileInput className={'absolute [&_*]:!rounded-full z-[301] [&_*]:!h-full !h-full w-full'}
