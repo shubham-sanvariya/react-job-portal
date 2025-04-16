@@ -3,7 +3,7 @@ import {errorNotification} from "@/services/notificationUtils.tsx";
 import { removeItem } from "./localStorageService";
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: import.meta.env.VITE_BACKEND_URL,
     withCredentials: true
 })
 
