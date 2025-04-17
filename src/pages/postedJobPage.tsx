@@ -29,7 +29,7 @@ const PostedJobPage = () => {
         <div className="min-h-[90vh] bg-mine-shaft-950 font-[poppins] px-5">
             <Divider size={"xs"}/>
             <Drawer opened={opened} onClose={close} title={"All Jobs"} size={240}>
-                <PostedJob/>
+                <PostedJob closeFn={close}/>
             </Drawer>
             {matches && <Button my={"xs"} size={"xs"} autoContrast={true} onClick={open}>All Jobs</Button>}
             <div className={'flex gap-4 justify-around py-5'}>
