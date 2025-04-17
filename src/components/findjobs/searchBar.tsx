@@ -11,7 +11,7 @@ const SearchBar = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [value, setValue] = useState<[number, number]>([1, 200]);
     const [opened, {toggle}] = useDisclosure(false);
-    const matches = useMediaQuery('(min-width: 475px)');
+    const matches = useMediaQuery('(max-width: 475px)');
 
     const debounceValue = useDebouncedCallback((packageRange: [number, number]) => {
         dispatch(updateFieldFilter({key: "packageOffered", value: packageRange}));
