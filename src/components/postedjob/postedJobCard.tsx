@@ -14,7 +14,7 @@ const PostedJobCard = ( props : any) => {
     },[props.jobStatus])
 
     return (
-        <Link to={`/posted-jobs/${props.id}`} className={`w-52 rounded-xl p-2 border-l-2 border-l-bright-sun-400 ${props.id == id ? "!bg-bright-sun-400 text-black" : "bg-mine-shaft-900 text-mine-shaft-300"} hover:bg-opacity-80 cursor-pointer lg-mx:w-48 bs-mx:w-44`}>
+        <Link data-id={props.id} to={`/posted-jobs/${props.id}`} className={`w-52 rounded-xl p-2 border-l-2 border-l-bright-sun-400 ${props.id == id ? "!bg-bright-sun-400 text-black" : "bg-mine-shaft-900 text-mine-shaft-300"} hover:bg-opacity-80 cursor-pointer lg-mx:w-48 bs-mx:w-44`}>
             <div className={'text-sm font-semibold'}>{props.jobTitle}</div>
             <div className={'text-sm  font-medium'}>{props.location}</div>
             <div className={'text-sm '}>{status} {timeAgo(props.postTime)}</div>
