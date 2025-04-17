@@ -49,16 +49,14 @@ const Header = () => {
 
                 <Burger className="bs:hidden" opened={opened} onClick={open} aria-label="Toggle navigation" />
                 <Drawer size={"xs"} overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={opened} onClose={close} position={"right"} title="Authentication" closeButtonProps={{ icon: <IconX size={30} /> }}>
-                    <div className={`flex flex-col gap-6 items-center`}>
+                    <div className={`flex flex-col gap-6 items-center`} onClick={(e) => {
+                        const target = e.target as HTMLElement;
+                        const targetDiv = target.closest("[datatype='child']")
+                        if (targetDiv) close();
+                    }}>
                         {links.map((link, index) => (
-                            // <div key={index}
-                            //      className={`${location.pathname == "/" + link.url ? "border-bright-sun-400 text-bright-sun-400" : "border-transparent"} flex items-center border-t-[3px] h-full`}>
-                            //     <Link to={`/${link.url}`}>
-                            //         {link.name}
-                            //     </Link>
-                            // </div>
                             <div key={index}
-                                className={`h-full flex items-center`}>
+                                className={`h-full flex items-center`} datatype={"child"}>
                                 <Link to={`/${link.url}`} className="hover:text-bright-sun-400 text-xl">
                                     {link.name}
                                 </Link>
